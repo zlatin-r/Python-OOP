@@ -6,7 +6,7 @@ class Music:
         self.lyrics = lyrics
 
     def print_info(self):
-        return f'This is "{self.title}" from {self.artist}"'
+        return f'This is "{self.title}" from "{self.artist}"'
 
     def play(self):
         return self.lyrics
