@@ -6,7 +6,7 @@ def print_row(size, row):
 
 
 def print_upper_part(size):
-    for row in range(1, size):
+    for row in range(size):
         print_row(size, row)
 
 
