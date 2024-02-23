@@ -11,6 +11,8 @@ class Smartphone:
         else:
             self.is_on = False
 
+        # self.is_on = not self.is_on
+
     def install(self, app, memory: int):
         if self.memory >= memory:
             if self.is_on:
