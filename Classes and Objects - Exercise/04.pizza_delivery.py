@@ -7,13 +7,16 @@ class PizzaDelivery:
         self.ordered = False
 
     def add_extra(self, ingredient, quantity, price_per_quantity):
-        if ingredient not in self.ingredients.keys():
-            self.ingredients[ingredient] = 0
+        if self.ordered:
+            return f"Pizza {self.name} already prepared, and we can't make any changes!"
 
-        self.ingredients[ingredient] += quantity
+        self.ingredients[ingredient] = self.ingredients.get(ingredient, 0) + quantity
         self.price += quantity * price_per_quantity
 
     def remove_ingredient(self, ingredient, quantity, price_per_quantity):
+        if self.ordered:
+            return f"Pizza {self.name} already prepared, and we can't make any changes!"
+        
         if ingredient not in self.ingredients.keys():
             return f"Wrong ingredient selected! We do not use {ingredient} in {self.name}!"
 
@@ -24,15 +27,10 @@ class PizzaDelivery:
         self.price -= quantity * price_per_quantity
 
     def make_order(self):
-        if not self.ordered:
-            self.ordered = True
-            ingredients = ""
+        self.ordered = True
+        ingredients = ', '.join(f"{k}: {v}" for k, v in self.ingredients.items())
 
-            for k, v in self.ingredients.items():
-                ingredients += f"{k} : {v}, "
-
-            return f"You've ordered pizza {self.name} prepared with {ingredients}and the price will be {self.price}lv."
-        return f"Pizza {self.name} already prepared, and we can't make any changes!"
+        return f"You've ordered pizza {self.name} prepared with {ingredients} and the price will be {self.price}lv."
 
 
 margarita = PizzaDelivery('Margarita', 11, {'cheese': 2, 'tomatoes': 1})
