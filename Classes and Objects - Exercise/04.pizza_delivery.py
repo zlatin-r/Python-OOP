@@ -9,6 +9,7 @@ class PizzaDelivery:
     def add_extra(self, ingredient, quantity, price_per_quantity):
         if ingredient not in self.ingredients.keys():
             self.ingredients[ingredient] = 0
+
         self.ingredients[ingredient] += quantity
         self.price += quantity * price_per_quantity
 
@@ -26,8 +27,10 @@ class PizzaDelivery:
         if not self.ordered:
             self.ordered = True
             ingredients = ""
+
             for k, v in self.ingredients.items():
                 ingredients += f"{k} : {v}, "
+
             return f"You've ordered pizza {self.name} prepared with {ingredients}and the price will be {self.price}lv."
         return f"Pizza {self.name} already prepared, and we can't make any changes!"
 
