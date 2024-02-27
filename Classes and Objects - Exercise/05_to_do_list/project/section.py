@@ -17,4 +17,21 @@ class Section:
         return f"Task {task.details()} is added to the section"
 
     def complete_task(self, task_name):
-        pass
+        try:
+            task = next(filter(lambda t: t.name == task_name, self.tasks))
+        except StopIteration:
+            return f"Could not find task with name {task_name}"
+
+        task.completed = True
+
+        return f"Completed task {task_name}"
+
+    def clean_section(self):
+        count_tasks = len(self.tasks)
+        self.tasks.clear()
+
+        return f"Cleared {count_tasks} tasks."
+
+    def view_section(self):
+        tasks_with_details = "\n".join(t.details() for t in self.tasks)
+        return f"Section {self.name}:\n{tasks_with_details}"
