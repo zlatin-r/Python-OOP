@@ -21,5 +21,7 @@ class Player:
         info += f"Name: {self.name}\nGuild: {self.guild}\nHP: {self.hp}\nMP: {self.mp}\n"
         info += "\n".join(f"==={k} - {v}" for k, v, in self.skills.items())
 
+        return info
+
 
 
