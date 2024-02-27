@@ -15,7 +15,7 @@ class Task:
             return self.name
         return "Name cannot be the same."
 
-    def change_duo_date(self, new_date):
+    def change_due_date(self, new_date):
         if self.due_date != new_date:
             self.due_date = new_date
             return self.due_date
