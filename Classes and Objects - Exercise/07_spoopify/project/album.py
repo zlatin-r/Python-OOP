@@ -11,11 +11,15 @@ class Album:
 
     def add_song(self, song: Song):
         if song.single:
-            return f"Cannot add {self.name}. It's a single"
+            return f"Cannot add {song.name}. It's a single"
         if self.published:
             return f"Cannot add songs. Album is published"
         if song in self.songs:
             return "Song is already in the album."
+
+        self.songs.append(song)
+
+        return f"Song {song.name} has been added to the album {self.name}."
 
     def remove_song(self, song_name: str):
         if song_name in self.songs:
@@ -36,3 +40,5 @@ class Album:
     def details(self):
         songs_details = "\n".join(f"== {s.get_info()}" for s in self.songs)
         return f"Album {self.name}\n{songs_details}"
+
+
