@@ -16,12 +16,6 @@ class Player:
             return f"Skill {skill_name} added to the collection of the player {self.name}"
         return "Skill already added"
 
-    def player_info(self) -> str:
-        info = ""
-        info += f"Name: {self.name}\nGuild: {self.guild}\nHP: {self.hp}\nMP: {self.mp}\n"
-        info += "\n".join(f"==={k} - {v}" for k, v, in self.skills.items())
-
-        return info
-
-
-
+    def player_info(self):
+        skill_info = '\n'.join([f"==={skill} - {cost}" for skill, cost in self.skills.items()])
+        return f"Name: {self.name}\nGuild: {self.guild}\nHP: {self.hp}\nMP: {self.mp}\n{skill_info}"
