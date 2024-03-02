@@ -29,6 +29,7 @@ class Profile:
 
         if not is_valid:
             raise ValueError("The password must be 8 or more characters with at least 1 digit and 1 uppercase letter.")
+
         self.__password = value
 
     def __str__(self):
