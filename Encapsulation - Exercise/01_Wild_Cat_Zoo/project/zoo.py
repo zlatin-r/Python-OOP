@@ -47,7 +47,7 @@ class Zoo:
             return f"There is no {worker_name} in the zoo"
 
         self.workers.remove(name)
-        self.__workers_capacity -= 1
+        self.__workers_capacity += 1
         return f"{worker_name} fired successfully"
 
     def pay_workers(self):
