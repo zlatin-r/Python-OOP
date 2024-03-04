@@ -36,6 +36,7 @@ print(zoo.pay_workers())
 
 # Fireing worker
 print(zoo.fire_worker("Adam"))
+print(zoo.fire_worker("Zlatin"))
 
 # Printing statuses
 print(zoo.animals_status())

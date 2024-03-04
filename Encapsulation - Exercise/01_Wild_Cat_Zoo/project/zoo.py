@@ -10,7 +10,7 @@ class Zoo:
 
     def __init__(self, name, budget, animal_capacity, workers_capacity):
         self.name = name
-        self.__budget = budget
+        self.__budget: int = budget
         self.__animal_capacity = animal_capacity
         self.__workers_capacity = workers_capacity
         self.animals = []
@@ -64,7 +64,7 @@ class Zoo:
         return "You have no budget to tend the animals. They are unhappy."
 
     def profit(self, amount):
-        self.__budget += amount
+        self.__budget += int(amount)
 
     def animals_status(self):
         animals_status = ""
