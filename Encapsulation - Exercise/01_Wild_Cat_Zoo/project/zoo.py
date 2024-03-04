@@ -10,13 +10,14 @@ class Zoo:
 
     def __init__(self, name, budget, animal_capacity, workers_capacity):
         self.name = name
-        self.__budget: int = budget
+        self.__budget = budget
         self.__animal_capacity = animal_capacity
         self.__workers_capacity = workers_capacity
         self.animals = []
         self.workers = []
 
     def add_animal(self, animal: Lion or Cheetah or Tiger, price):
+
         if self.__budget < price:
             return "Not enough budget"
 
@@ -30,13 +31,12 @@ class Zoo:
         return f"{animal.name} the {class_name} added to the zoo"
 
     def hire_worker(self, worker: Keeper or Vet or Caretaker):
-        if self.__workers_capacity <= 0:
-            return "Not enough space for worker"
-
-        self.__workers_capacity -= 1
-        self.workers.append(worker)
-        class_name = type(worker).__name__
-        return f"{worker.name} the {class_name} hired successfully"
+        if self.__workers_capacity > 0:
+            self.__workers_capacity -= 1
+            self.workers.append(worker)
+            class_name = type(worker).__name__
+            return f"{worker.name} the {class_name} hired successfully"
+        return "Not enough space for worker"
 
     def fire_worker(self, worker_name: str):
 
@@ -64,13 +64,13 @@ class Zoo:
         return "You have no budget to tend the animals. They are unhappy."
 
     def profit(self, amount):
-        self.__budget += int(amount)
+        self.__budget += amount
 
     def animals_status(self):
         animals_status = ""
-        animals_status += f"You have {len(self.animals)} animals\n"
-
         dict_animals = {}
+
+        animals_status += f"You have {len(self.animals)} animals\n"
 
         for animal in self.animals:
             animal_class = type(animal).__name__
@@ -90,9 +90,9 @@ class Zoo:
 
     def workers_status(self):
         workers_status = ""
-        workers_status += f"You have {len(self.workers)} workers\n"
-
         dict_workers = {}
+
+        workers_status += f"You have {len(self.workers)} workers\n"
 
         for worker in self.workers:
             worker_class = type(worker).__name__
