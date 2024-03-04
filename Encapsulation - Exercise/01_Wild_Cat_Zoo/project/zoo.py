@@ -93,7 +93,7 @@ class Zoo:
 
     def workers_status(self):
         workers_status = ""
-        workers_status += f"You have {len(self.animals)} animals\n"
+        workers_status += f"You have {len(self.workers)} workers\n"
 
         dict_workers = {}
 
