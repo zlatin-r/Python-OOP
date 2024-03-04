@@ -33,8 +33,8 @@ class Zoo:
     def hire_worker(self, worker: Keeper or Vet or Caretaker):
 
         if self.__workers_capacity > 0:
-            self.__workers_capacity -= 1
             self.workers.append(worker)
+            self.__workers_capacity -= 1
             class_name = type(worker).__name__
             return f"{worker.name} the {class_name} hired successfully"
         return "Not enough space for worker"
