@@ -31,6 +31,7 @@ class Zoo:
         return f"{animal.name} the {class_name} added to the zoo"
 
     def hire_worker(self, worker: Keeper or Vet or Caretaker):
+
         if self.__workers_capacity > 0:
             self.__workers_capacity -= 1
             self.workers.append(worker)
@@ -51,6 +52,7 @@ class Zoo:
 
     def pay_workers(self):
         total_salaries = sum(list(map(lambda w: w.salary, self.workers)))
+
         if total_salaries <= self.__budget:
             self.__budget -= total_salaries
             return f"You payed your workers. They are happy. Budget left: {self.__budget}"
@@ -58,6 +60,7 @@ class Zoo:
 
     def tend_animals(self):
         total_money_needed = sum(list(map(lambda w: w.money_for_care, self.animals)))
+
         if total_money_needed <= self.__budget:
             self.__budget -= total_money_needed
             return f"You tended all the animals. They are happy. Budget left: {self.__budget}"
@@ -74,6 +77,7 @@ class Zoo:
 
         for animal in self.animals:
             animal_class = type(animal).__name__
+
             if animal_class not in dict_animals.keys():
                 dict_animals[animal_class] = []
             dict_animals[animal_class].append(animal)
@@ -83,6 +87,7 @@ class Zoo:
         for species in species_order:
             animals_list = dict_animals.get(species)
             animals_status += f"----- {len(animals_list)} {species}s:\n"
+
             for data in animals_list:
                 animals_status += f"{data}\n"
 
@@ -96,6 +101,7 @@ class Zoo:
 
         for worker in self.workers:
             worker_class = type(worker).__name__
+
             if worker_class not in dict_workers.keys():
                 dict_workers[worker_class] = []
             dict_workers[worker_class].append(worker)
@@ -105,6 +111,7 @@ class Zoo:
         for work in workers_order:
             workers_list = dict_workers.get(work)
             workers_status += f"----- {len(workers_list)} {work}s:\n"
+
             for data in workers_list:
                 workers_status += f"{data}\n"
 
