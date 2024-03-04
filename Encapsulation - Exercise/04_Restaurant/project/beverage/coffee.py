@@ -6,7 +6,7 @@ class Coffee(HotBeverage):
     MILLILITERS = 50
     PRICE = 3.50
 
-    def __init__(self, name, caffeine: float):
+    def __init__(self, name: str, caffeine: float):
         HotBeverage.__init__(self, name, self.PRICE, self.MILLILITERS)
         self.__caffeine = caffeine
 
