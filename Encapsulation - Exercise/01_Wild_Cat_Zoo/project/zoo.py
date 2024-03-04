@@ -45,11 +45,12 @@ class Zoo:
 
         try:
             name = next(filter(lambda w: w.name == worker_name, self.workers))
-            self.workers.remove(name)
-            self.__workers_capacity -= 1
-            return f"{worker_name} fired successfully"
         except StopIteration:
             return f"There is no {worker_name} in the zoo"
+
+        self.workers.remove(name)
+        self.__workers_capacity -= 1
+        return f"{worker_name} fired successfully"
 
     def pay_workers(self):
         total_salaries = sum(list(map(lambda w: w.salary, self.workers)))
@@ -69,55 +70,45 @@ class Zoo:
         self.__budget += amount
 
     def animals_status(self):
-        status = ""
-        status += f"You have {len(self.animals)} animals\n"
-        lions = []
-        cheetahs = []
-        tigers = []
+        animals_status = ""
+        animals_status += f"You have {len(self.animals)} animals\n"
+
+        dict_animals = {}
 
         for animal in self.animals:
-            if type(animal) == Lion:
-                lions.append(animal)
-            elif type(animal) == Cheetah:
-                cheetahs.append(animal)
-            elif type(animal) == Tiger:
-                tigers.append(animal)
+            animal_class = type(animal).__name__
+            if animal_class not in dict_animals.keys():
+                dict_animals[animal_class] = []
+            dict_animals[animal_class].append(animal)
 
-        status += f"----- {len(lions)} Lions:\n"
-        for lion in lions:
-            status += f"{lion}\n"
-        status += f"----- {len(tigers)} Tigers:\n"
-        for tiger in tigers:
-            status += f"{tiger}\n"
-        status += f"----- {len(cheetahs)} Cheetahs:\n"
-        for cheetah in cheetahs:
-            status += f"{cheetah}"
+        species_order = ["Lion", "Tiger", "Cheetah"]
 
-        return status
+        for species in species_order:
+            animals_list = dict_animals.get(species)
+            animals_status += f"----- {len(animals_list)} {species}s:\n"
+            for data in animals_list:
+                animals_status += f"{data}\n"
+
+        return animals_status.strip()
 
     def workers_status(self):
-        status = ""
-        status += f"You have {len(self.workers)} workers\n"
-        keepers = []
-        caretakers = []
-        vets = []
+        workers_status = ""
+        workers_status += f"You have {len(self.animals)} animals\n"
+
+        dict_workers = {}
 
         for worker in self.workers:
-            if type(worker) == Keeper:
-                keepers.append(worker)
-            elif type(worker) == Caretaker:
-                caretakers.append(worker)
-            elif type(worker) == Vet:
-                vets.append(worker)
+            worker_class = type(worker).__name__
+            if worker_class not in dict_workers.keys():
+                dict_workers[worker_class] = []
+            dict_workers[worker_class].append(worker)
 
-        status += f"----- {len(keepers)} Keepers:\n"
-        for keeper in keepers:
-            status += f"{keeper}\n"
-        status += f"----- {len(caretakers)} Caretakers:\n"
-        for caretaker in caretakers:
-            status += f"{caretaker}\n"
-        status += f"----- {len(vets)} Vets:\n"
-        for vet in vets:
-            status += f"{vet}"
+        workers_order = ["Keeper", "Caretaker", "Vet"]
 
-        return status
+        for work in workers_order:
+            workers_list = dict_workers.get(work)
+            workers_status += f"----- {len(workers_list)} {work}s:\n"
+            for data in workers_list:
+                workers_status += f"{data}\n"
+
+        return workers_status.strip()

@@ -1,9 +1,3 @@
-from project.lion import Lion
-from project.zoo import Zoo
-from project.worker import Worker
-
-
-
 from project.caretaker import Caretaker
 from project.cheetah import Cheetah
 from project.keeper import Keeper
