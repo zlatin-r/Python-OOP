@@ -1,6 +1,6 @@
 class Worker:
 
-    def __init__(self, name, age, salary):
+    def __init__(self, name: str, age: str, salary: int) -> None:
         self.name = name
         self.age = age
         self.salary = salary
