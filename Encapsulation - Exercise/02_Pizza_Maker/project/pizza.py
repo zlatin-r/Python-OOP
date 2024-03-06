@@ -1,7 +1,5 @@
-from typing import Dict
-from project.topping import Topping
-
 from project.dough import Dough
+from project.topping import Topping
 
 
 class Pizza:
