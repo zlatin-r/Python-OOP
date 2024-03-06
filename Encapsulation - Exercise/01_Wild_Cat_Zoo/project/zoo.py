@@ -51,7 +51,7 @@ class Zoo:
         return "You have no budget to pay your workers. They are unhappy"
 
     def tend_animals(self):
-        total_money_needed = sum([w.money_for_care for w in self.animals])
+        total_money_needed = sum([a.money_for_care for a in self.animals])
 
         if total_money_needed <= self.__budget:
             self.__budget -= total_money_needed
