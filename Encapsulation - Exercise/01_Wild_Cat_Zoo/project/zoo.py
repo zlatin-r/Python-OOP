@@ -1,14 +1,10 @@
-from project.keeper import Keeper
-from project.caretaker import Caretaker
-from project.vet import Vet
-from project.lion import Lion
-from project.cheetah import Cheetah
-from project.tiger import Tiger
+from project.animal import Animal
+from project.worker import Worker
 
 
 class Zoo:
 
-    def __init__(self, name, budget, animal_capacity, workers_capacity):
+    def __init__(self, name: str, budget: int, animal_capacity: int, workers_capacity: int) -> None:
         self.name = name
         self.__budget = budget
         self.__animal_capacity = animal_capacity
@@ -16,7 +12,7 @@ class Zoo:
         self.animals = []
         self.workers = []
 
-    def add_animal(self, animal: Lion or Cheetah or Tiger, price):
+    def add_animal(self, animal: Animal, price: int) -> str:
 
         if self.__budget < price:
             return "Not enough budget"
@@ -27,16 +23,16 @@ class Zoo:
         self.__budget -= price
         self.__animal_capacity -= 1
         self.animals.append(animal)
-        class_name = type(animal).__name__
-        return f"{animal.name} the {class_name} added to the zoo"
 
-    def hire_worker(self, worker: Keeper or Vet or Caretaker):
+        return f"{animal.name} the {animal.__class__.__name__} added to the zoo"
+
+    def hire_worker(self, worker: Worker) -> str:
 
         if self.__workers_capacity > 0:
             self.workers.append(worker)
             self.__workers_capacity -= 1
-            class_name = type(worker).__name__
-            return f"{worker.name} the {class_name} hired successfully"
+
+            return f"{worker.name} the {worker.__class__.__name__} hired successfully"
         return "Not enough space for worker"
 
     def fire_worker(self, worker_name: str):
@@ -51,7 +47,7 @@ class Zoo:
         return f"{worker_name} fired successfully"
 
     def pay_workers(self):
-        total_salaries = sum(list(map(lambda w: w.salary, self.workers)))
+        total_salaries = sum([w.salary for w in self.workers])
 
         if total_salaries <= self.__budget:
             self.__budget -= total_salaries
@@ -59,7 +55,7 @@ class Zoo:
         return "You have no budget to pay your workers. They are unhappy"
 
     def tend_animals(self):
-        total_money_needed = sum(list(map(lambda w: w.money_for_care, self.animals)))
+        total_money_needed = sum([w.money_for_care for w in self.animals])
 
         if total_money_needed <= self.__budget:
             self.__budget -= total_money_needed
