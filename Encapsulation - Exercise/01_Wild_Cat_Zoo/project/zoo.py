@@ -70,10 +70,9 @@ class Zoo:
             dict_animals[animal_class].append(animal)
 
         for species in dict_animals.keys():
-            animals_list = dict_animals.get(species)
-            animals_status += f"----- {len(animals_list)} {species}s:\n"
+            animals_status += f"----- {len(dict_animals.get(species))} {species}s:\n"
 
-            for data in animals_list:
+            for data in dict_animals.get(species):
                 animals_status += f"{data}\n"
 
         return animals_status.strip()
@@ -87,10 +86,9 @@ class Zoo:
             dict_workers[worker_class].append(worker)
 
         for work in dict_workers.keys():
-            workers_list = dict_workers.get(work)
-            workers_status += f"----- {len(workers_list)} {work}s:\n"
+            workers_status += f"----- {len(dict_workers.get(work))} {work}s:\n"
 
-            for data in workers_list:
+            for data in dict_workers.get(work):
                 workers_status += f"{data}\n"
 
         return workers_status.strip()
