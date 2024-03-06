@@ -62,19 +62,16 @@ class Zoo:
         self.__budget += amount
 
     def animals_status(self):
-        animals_status = ""
+        animals_status = f"You have {len(self.animals)} animals\n"
+        species_order = ["Lion", "Tiger", "Cheetah"]
         dict_animals = {}
 
-        animals_status += f"You have {len(self.animals)} animals\n"
-
         for animal in self.animals:
-            animal_class = type(animal).__name__
+            animal_class = animal.__class__.__name__
 
             if animal_class not in dict_animals.keys():
                 dict_animals[animal_class] = []
             dict_animals[animal_class].append(animal)
-
-        species_order = ["Lion", "Tiger", "Cheetah"]
 
         for species in species_order:
             animals_list = dict_animals.get(species)
@@ -86,19 +83,16 @@ class Zoo:
         return animals_status.strip()
 
     def workers_status(self):
-        workers_status = ""
+        workers_status = f"You have {len(self.workers)} workers\n"
+        workers_order = ["Keeper", "Caretaker", "Vet"]
         dict_workers = {}
 
-        workers_status += f"You have {len(self.workers)} workers\n"
-
         for worker in self.workers:
-            worker_class = type(worker).__name__
+            worker_class = worker.__class__.__name__
 
             if worker_class not in dict_workers.keys():
                 dict_workers[worker_class] = []
             dict_workers[worker_class].append(worker)
-
-        workers_order = ["Keeper", "Caretaker", "Vet"]
 
         for work in workers_order:
             workers_list = dict_workers.get(work)
