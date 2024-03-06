@@ -63,17 +63,13 @@ class Zoo:
 
     def animals_status(self):
         animals_status = f"You have {len(self.animals)} animals\n"
-        species_order = ["Lion", "Tiger", "Cheetah"]
-        dict_animals = {}
+        dict_animals = {"Lion": [], "Tiger": [], "Cheetah": []}
 
         for animal in self.animals:
             animal_class = animal.__class__.__name__
-
-            if animal_class not in dict_animals.keys():
-                dict_animals[animal_class] = []
             dict_animals[animal_class].append(animal)
 
-        for species in species_order:
+        for species in dict_animals.keys():
             animals_list = dict_animals.get(species)
             animals_status += f"----- {len(animals_list)} {species}s:\n"
 
@@ -84,17 +80,13 @@ class Zoo:
 
     def workers_status(self):
         workers_status = f"You have {len(self.workers)} workers\n"
-        workers_order = ["Keeper", "Caretaker", "Vet"]
-        dict_workers = {}
+        dict_workers = {"Keeper": [], "Caretaker": [], "Vet": []}
 
         for worker in self.workers:
             worker_class = worker.__class__.__name__
-
-            if worker_class not in dict_workers.keys():
-                dict_workers[worker_class] = []
             dict_workers[worker_class].append(worker)
 
-        for work in workers_order:
+        for work in dict_workers.keys():
             workers_list = dict_workers.get(work)
             workers_status += f"----- {len(workers_list)} {work}s:\n"
 
