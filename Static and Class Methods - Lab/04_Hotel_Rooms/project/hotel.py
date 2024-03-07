@@ -26,4 +26,21 @@ class Hotel:
         if not result:
             self.guests += people
 
+    def free_room(self, room_number: int) -> None:
+        try:
+            room = next(filter(lambda r: r.number == room_number, self.rooms))
+        except StopIteration:
+            return
+
+        people = room.guests
+        result = room.free_room()
+
+        if not result:
+            self.guests -= people
+
+    def status(self) -> str:
+        return f"Hotel {self.name} has {self.guests} total guests\n" \
+               f"Free rooms: {', '.join(str(r.number) for r in self.rooms if not r.is_taken)}\n" \
+               f"Taken rooms: {', '.join(str(r.number) for r in self.rooms if r.is_taken)}"
+
 
