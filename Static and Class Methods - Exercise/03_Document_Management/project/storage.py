@@ -48,5 +48,8 @@ class Storage:
         curr_document = self.documents[document_id]
         self.documents.remove(curr_document)
 
+    def get_document(self, document_id: int) -> Document:
+        return self.documents[document_id - 1]
+
     def __repr__(self) -> str:
-        return '\n'.join(*[str(d) for d in self.documents])
+        return '\n'.join([str(d) for d in self.documents])
