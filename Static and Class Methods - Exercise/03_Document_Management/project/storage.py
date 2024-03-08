@@ -24,28 +24,27 @@ class Storage:
             self.documents.append(document)
 
     def edit_category(self, category_id: int, new_name: str) -> None:
-        category = self.categories[category_id]
-        category.name = new_name
+        category = self.categories[category_id - 1]
+        category.edit(new_name)
 
     def edit_topic(self, topic_id: int, new_topic: str, new_storage_folder: str) -> None:
-        topic = self.topics[topic_id]
-        topic.title = new_topic
-        topic.storage_folder = new_storage_folder
+        topic = self.topics[topic_id - 1]
+        topic.edit(new_topic, new_storage_folder)
 
     def edit_document(self, document_id: int, new_filename: str) -> None:
-        document = self.documents[document_id]
-        document.filename = new_filename
+        document = self.documents[document_id - 1]
+        document.edit(new_filename)
 
     def delete_category(self, category_id: int) -> None:
-        curr_category = self.categories[category_id]
+        curr_category = self.categories[category_id - 1]
         self.categories.remove(curr_category)
 
     def delete_topic(self, topic_id: int) -> None:
-        curr_topic = self.topics[topic_id]
+        curr_topic = self.topics[topic_id - 1]
         self.topics.remove(curr_topic)
 
     def delete_document(self, document_id: int) -> None:
-        curr_document = self.documents[document_id]
+        curr_document = self.documents[document_id - 1]
         self.documents.remove(curr_document)
 
     def get_document(self, document_id: int) -> Document:
