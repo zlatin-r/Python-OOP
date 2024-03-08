@@ -19,8 +19,8 @@ class PhotoAlbum:
     def add_photo(self, label: str):
         for page in range(len(self.photos)):
             if len(self.photos[page]) < self.PHOTOS_PER_PAGE:
-                self.photos[page].append(label)
                 slot = len(self.photos[page]) + 1
+                self.photos[page].append(label)
                 return f"{label} photo added successfully on page {page + 1} slot {slot}"
 
         return "No more free slots"
