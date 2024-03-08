@@ -1,6 +1,6 @@
 class DVD:
 
-    def __init__(self, name: str, _id: int, creation_year: int, creation_month: str, age_restriction: int )
+    def __init__(self, name: str, _id: int, creation_year: int, creation_month: str, age_restriction: int ):
         self.name = name
         self.id = _id
         self.creation_year = creation_year
