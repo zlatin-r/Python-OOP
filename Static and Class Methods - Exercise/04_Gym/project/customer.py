@@ -1,3 +1,5 @@
+
+
 class Customer:
 
     id = 1
@@ -6,14 +8,8 @@ class Customer:
         self.name = name
         self.address = address
         self.email = email
-
-    @classmethod
-    def get_next_id(cls):
-        return cls.id
-
-    @classmethod
-    def increment_id(cls):
-        cls.id += 1
+        self.id = self.get_next_id()
+        self.increment_id()
 
     def __repr__(self):
         return f"Customer <{self.id}> {self.name}; Address: {self.address}; Email: {self.email}"
