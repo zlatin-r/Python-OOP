@@ -27,3 +27,14 @@ class Account:
 
     def balance(self):
         return sum(self._transactions) + self.amount
+
+    def __len__(self):
+        return len(self._transactions)
+
+    def
+
+    def __str__(self):
+        return f"Account of {self.owner} with starting amount: {self.amount}"
+
+    def __repr__(self):
+        return f"Account({self.owner}, {self.amount})"
