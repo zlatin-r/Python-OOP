@@ -13,3 +13,17 @@ class Account:
         self._transactions.append(transaction_amount)
 
         return f"New balance: {self.amount}"
+
+    def add_transaction(self, amount):
+        if not amount.isdigit():
+            raise ValueError("please use int for amount")
+        if self.amount < amount:
+            raise ValueError("sorry cannot go in debt!")
+
+        self.amount -= amount
+        self._transactions.append(amount)
+
+        return f"New balance: {self.amount}"
+
+    def balance(self):
+        return sum(self._transactions) + self.amount
