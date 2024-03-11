@@ -7,6 +7,7 @@ class Animal(ABC):
         self.age = age
         self.gender = gender
 
+    @abstractmethod
     def __repr__(self):
         pass
 
