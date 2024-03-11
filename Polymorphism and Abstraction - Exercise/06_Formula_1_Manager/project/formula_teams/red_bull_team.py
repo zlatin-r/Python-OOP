@@ -6,7 +6,7 @@ class RedBullTeam(FormulaTeam):
     EXPENSES = 250000
 
     def __init__(self, budget):
-        self.budget = budget
+        super().__init__(budget)
 
     def calculate_revenue_after_race(self, race_pos: int):
         if race_pos in self.rewards:
