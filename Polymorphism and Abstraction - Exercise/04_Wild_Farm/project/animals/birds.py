@@ -1,5 +1,5 @@
-from abc import ABC
+from project.animals import animal
 
 
-class Bird(ABC):
+class Bird(animal):
     pass
