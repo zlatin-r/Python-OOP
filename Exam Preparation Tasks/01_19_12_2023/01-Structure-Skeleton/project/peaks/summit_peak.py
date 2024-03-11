@@ -6,7 +6,8 @@ class SummitPeak(BasePeak):
     def __init__(self, name: str, elevation: int):
         super().__init__(name, elevation)
 
-    def get_recommended_gear(self):
+    @classmethod
+    def get_recommended_gear(cls):
         return ["Climbing helmet", "Harness", "Climbing shoes", "Ropes"]
 
     def calculate_difficulty_level(self):

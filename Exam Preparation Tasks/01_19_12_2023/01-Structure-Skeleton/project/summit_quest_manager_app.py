@@ -1,8 +1,8 @@
 from typing import List
-
 from project.climbers.arctic_climber import ArcticClimber
 from project.climbers.summit_climber import SummitClimber
 from project.peaks.arctic_peak import ArcticPeak
+from project.peaks.base_peak import BasePeak
 from project.peaks.summit_peak import SummitPeak
 
 
@@ -41,13 +41,20 @@ class SummitQuestManagerApp:
 
     def check_gear(self, climber_name: str, peak_name: str, gear: List[str]):
         peak = next(filter(lambda p: p.name == peak_name, self.peaks))
-        missing_items = [item for item in gear if item not in peak.gears]
+        peak_type = peak.__class__.__name__
         climber = next(filter(lambda p: p.name == climber_name, self.climbers))
 
-        if missing_items:
+        if peak_type == "ArcticPeak":
+            missing_items = [item for item in ArcticPeak.get_recommended_gear() if item not in gear]
+        if peak_type == "SummitPeak":
+            missing_items = [item for item in SummitPeak.get_recommended_gear() if item not in gear]
+
+        if len(missing_items) > 0:
             climber.is_prepared = False
             return (f"{climber_name} is not prepared to climb {peak_name}. "
                     f"Missing gear: {', '.join(sorted(missing_items))}.")
+
+        return f"{climber_name} is prepared to climb {peak_name}."
 
     def perform_climbing(self, climber_name: str, peak_name: str):
         climber = next(filter(lambda p: p.name == climber_name, self.climbers), None)
@@ -67,3 +74,4 @@ class SummitQuestManagerApp:
             return f"{climber_name} needs more strength to climb {peak_name} and is therefore taking some rest."
 
     def get_statistics(self):
+        pass

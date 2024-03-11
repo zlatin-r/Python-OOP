@@ -6,7 +6,8 @@ class ArcticPeak(BasePeak):
     def __init__(self, name: str, elevation: int):
         super().__init__(name, elevation)
 
-    def get_recommended_gear(self):
+    @classmethod
+    def get_recommended_gear(cls):
         return ["Ice axe", "Crampons", "Insulated clothing", "Helmet"]
 
     def calculate_difficulty_level(self):
