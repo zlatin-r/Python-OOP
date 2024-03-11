@@ -2,15 +2,19 @@ from project.formula_teams.formula_team import FormulaTeam
 
 
 class RedBullTeam(FormulaTeam):
-    rewards = {1: 1500000, 2: 800000, 8: 20000, 10: 10000}
-    EXPENSES = 250000
-    REV = 0
 
     def __init__(self, budget):
-        super().__init__(budget)
-
-    def calculate_revenue_after_race(self, race_pos: int):
-        if race_pos in self.rewards:
-            self.REV = self.rewards[race_pos] - self.EXPENSES
-            self.budget += self.REV
-            return f"The revenue after the race is {self.REV}$. Current budget {self.budget}$"
+        self.budget = budget
+        self.expenses = 250000
+        self.sponsors = {
+            1: 1_520_000,
+            2: 820_000,
+            3: 20_000,
+            4: 20_000,
+            5: 20_000,
+            6: 20_000,
+            7: 20_000,
+            8: 20_000,
+            9: 10_000,
+            10: 10_000
+        }

@@ -17,6 +17,7 @@ class FormulaTeam(ABC):
             raise ValueError("F1 is an expensive sport, find more sponsors!")
         self.__budget = value
 
-    @abstractmethod
     def calculate_revenue_after_race(self, race_pos: int):
-        pass
+        revenue = self.sponsors.get(race_pos, 0) - self.expenses
+        self.budget += revenue
+        return f"The revenue after the race is {revenue}$. Current budget {self.budget}$"
