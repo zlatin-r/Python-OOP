@@ -4,8 +4,8 @@ from project.peaks.base_peak import BasePeak
 
 class ArcticClimber(BaseClimber):
 
-    def __init__(self, name, strength):
-        super().__init__(name, strength)
+    def __init__(self, name):
+        super().__init__(name, 200)
 
     def can_climb(self):
         return self.strength >= 100
