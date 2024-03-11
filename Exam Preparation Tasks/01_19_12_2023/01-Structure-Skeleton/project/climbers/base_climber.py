@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from project.peaks.base_peak import BasePeak
+
 
 class BaseClimber(ABC):
 
@@ -28,3 +30,27 @@ class BaseClimber(ABC):
         if value <= 0:
             raise ValueError("A climber cannot have negative strength or strength equal to 0!")
         self.__strength = value
+
+    @property
+    def is_prepared(self):
+        return self.__is_prepared
+
+    @is_prepared.setter
+    def is_prepared(self, value):
+        self.__is_prepared = value
+
+    @abstractmethod
+    def can_climb(self):
+        pass
+
+    @abstractmethod
+    def climb(self, peak: BasePeak):
+        pass
+
+    def rest(self):
+        self.strength += 15
+
+    def __str__(self):
+        return (f"{type.__class__.__name__}: /// Climber name: {self.name} "
+                f"* Left strength: {self.strength} "
+                f"* Conquered peaks: {self.conquered_peaks} ///")
