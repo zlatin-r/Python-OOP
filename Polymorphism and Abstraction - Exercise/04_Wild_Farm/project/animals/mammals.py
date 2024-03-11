@@ -9,7 +9,7 @@ class Mouse(Mammal):
         return "Squeak"
 
 
-class Dog:
+class Dog(Mammal):
     def __init__(self, name: str, weight: int, living_region: str):
         super().__init__(name, weight, living_region)
 
@@ -17,7 +17,7 @@ class Dog:
         return "Woof!"
 
 
-class Cat:
+class Cat(Mammal):
     def __init__(self, name: str, weight: int, living_region: str):
         super().__init__(name, weight, living_region)
 
@@ -25,7 +25,7 @@ class Cat:
         return "Meow"
 
 
-class Tiger:
+class Tiger(Mammal):
     def __init__(self, name: str, weight: int, living_region: str):
         super().__init__(name, weight, living_region)
 
