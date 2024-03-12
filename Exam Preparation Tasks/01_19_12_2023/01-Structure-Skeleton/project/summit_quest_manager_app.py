@@ -69,6 +69,7 @@ class SummitQuestManagerApp:
         elif not climber.is_prepared:
             return f"{climber_name} will need to be better prepared next time."
         else:
+            climber.rest()
             return f"{climber_name} needs more strength to climb {peak_name} and is therefore taking some rest."
 
     def get_statistics(self):
