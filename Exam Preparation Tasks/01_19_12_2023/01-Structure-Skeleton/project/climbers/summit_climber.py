@@ -12,9 +12,9 @@ class SummitClimber(BaseClimber):
 
     def climb(self, peak: BasePeak):
         if peak.difficulty_level == "Extreme":
-            self.strength = (self.strength - 30) * 2.5
+            self.strength -= 30 * 2.5
 
         if peak.difficulty_level == "Advanced":
-            self.strength = (self.strength - 30) * 1.3
+            self.strength -= 30 * 1.3
 
         self.conquered_peaks.append(peak)

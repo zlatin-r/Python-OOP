@@ -30,14 +30,6 @@ class BaseClimber(ABC):
             raise ValueError("A climber cannot have negative strength or strength equal to 0!")
         self.__strength = value
 
-    @property
-    def is_prepared(self):
-        return self.__is_prepared
-
-    @is_prepared.setter
-    def is_prepared(self, value):
-        self.__is_prepared = value
-
     @abstractmethod
     def can_climb(self):
         pass
