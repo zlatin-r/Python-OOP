@@ -72,7 +72,6 @@ class SummitQuestManagerApp:
             return f"{climber_name} needs more strength to climb {peak_name} and is therefore taking some rest."
 
     def get_statistics(self):
-        climber_names = [climber for climber in self.climbers if climber.conquered_peaks]
         sorted_climbers = sorted([climber for climber in self.climbers if climber.conquered_peaks], key=lambda climber: (-len(climber.conquered_peaks), climber.name))
 
         result = [

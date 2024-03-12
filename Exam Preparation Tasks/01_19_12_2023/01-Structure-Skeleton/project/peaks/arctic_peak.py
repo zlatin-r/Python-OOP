@@ -12,6 +12,5 @@ class ArcticPeak(BasePeak):
     def calculate_difficulty_level(self):
         if self.elevation > 3000:
             return "Extreme"
-
-        if 2000 <= self.elevation <= 3000:
+        elif 2000 <= self.elevation <= 3000:
             return "Advanced"
