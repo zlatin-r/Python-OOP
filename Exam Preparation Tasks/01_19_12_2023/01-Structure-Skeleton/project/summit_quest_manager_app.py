@@ -2,7 +2,6 @@ from typing import List
 from project.climbers.arctic_climber import ArcticClimber
 from project.climbers.summit_climber import SummitClimber
 from project.peaks.arctic_peak import ArcticPeak
-from project.peaks.base_peak import BasePeak
 from project.peaks.summit_peak import SummitPeak
 
 
@@ -40,25 +39,23 @@ class SummitQuestManagerApp:
         return f"{peak_name} is successfully added to the wish list as a {peak_type}."
 
     def check_gear(self, climber_name: str, peak_name: str, gear: List[str]):
-        peak = next(filter(lambda p: p.name == peak_name, self.peaks))
-        peak_type = peak.__class__.__name__
-        climber = next(filter(lambda p: p.name == climber_name, self.climbers))
+        climber = self._get_climber(climber_name)
+        peak = self._get_peak(peak_name)
 
-        if peak_type == "ArcticPeak":
-            missing_items = [item for item in ArcticPeak.get_recommended_gear() if item not in gear]
-        if peak_type == "SummitPeak":
-            missing_items = [item for item in SummitPeak.get_recommended_gear() if item not in gear]
+        required_gear = set(peak.get_recommended_gear())
+        missing_gear = required_gear - set(gear)
 
-        if len(missing_items) > 0:
+        if missing_gear:
             climber.is_prepared = False
+            sorted_missing_gear = sorted(missing_gear)
             return (f"{climber_name} is not prepared to climb {peak_name}. "
-                    f"Missing gear: {', '.join(sorted(missing_items))}.")
-
-        return f"{climber_name} is prepared to climb {peak_name}."
+                    f"Missing gear: {', '.join(sorted_missing_gear)}.")
+        else:
+            return f"{climber_name} is prepared to climb {peak_name}."
 
     def perform_climbing(self, climber_name: str, peak_name: str):
-        climber = next(filter(lambda p: p.name == climber_name, self.climbers), None)
-        peak = next(filter(lambda p: p.name == peak_name, self.peaks), None)
+        climber = self._get_climber(climber_name)
+        peak = self._get_peak(peak_name)
 
         if climber is None:
             return f"Climber {climber_name} is not registered yet."
@@ -74,4 +71,23 @@ class SummitQuestManagerApp:
             return f"{climber_name} needs more strength to climb {peak_name} and is therefore taking some rest."
 
     def get_statistics(self):
-        pass
+        sorted_climbers = sorted([climber for climber in self.climbers if climber.conquered_peaks],
+                                 key=lambda climber: (-len(climber.conquered_peaks), climber.name))
+
+        result = [
+            f"Total climbed peaks: {len(self.peaks)}",
+            "**Climber's statistics:**"
+        ]
+
+        climber_statistics = "\n".join(str(c) for c in sorted_climbers)
+        result.append(climber_statistics)
+
+        return '\n'.join(result)
+
+    def _get_climber(self, climber_name: str):
+        climbers = [c for c in self.climbers if c.name == climber_name]
+        return climbers[0] if climbers else None
+
+    def _get_peak(self, peak_name: str):
+        peaks = [p for p in self.peaks if p.name == peak_name]
+        return peaks[0] if peaks else None

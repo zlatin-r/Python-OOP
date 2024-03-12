@@ -17,4 +17,4 @@ class ArcticClimber(BaseClimber):
         if peak.difficulty_level == "Advanced":
             self.strength -= 20 * 1.5
 
-        self.conquered_peaks.append(peak)
+        self.conquered_peaks.append(peak.name)

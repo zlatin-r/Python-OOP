@@ -17,4 +17,4 @@ class SummitClimber(BaseClimber):
         if peak.difficulty_level == "Advanced":
             self.strength -= 30 * 1.3
 
-        self.conquered_peaks.append(peak)
+        self.conquered_peaks.append(peak.name)
