@@ -21,6 +21,7 @@ class NauticalCatchChallengeApp:
             return f"{diver_name} is already a participant."
         new_diver = self.VALID_DIVERS_TYPES[diver_type](diver_name)
         self.divers.append(new_diver)
+        return f"{diver_name} is successfully registered for the competition as a {diver_type}."
 
     def swim_into_competition(self, fish_type: str, fish_name: str, points: float):
         if fish_type not in self.VALID_FISH_TYPES:
@@ -29,6 +30,7 @@ class NauticalCatchChallengeApp:
             return f"{fish_name} is allowed for chasing as a {fish_type}."
         new_fish = self.VALID_FISH_TYPES[fish_type](fish_name, points)
         self.fish_list.append(new_fish)
+        return f"{fish_name} is allowed for chasing as a {fish_type}."
 
     def chase_fish(self, diver_name: str, fish_name: str, is_lucky: bool):
         diver = self.find_diver(diver_name)
@@ -76,7 +78,6 @@ class NauticalCatchChallengeApp:
         sorted_divers = sorted(divers, key=lambda x: (-x.competition_points, -len(x.catch), x.name))
         result = "**Nautical Catch Challenge Statistics**"
         result += "\n".join(sorted_divers)
-
 
     def find_diver(self, diver_name: str):
         return next(filter(lambda d: d.name == diver_name, self.divers), None)
