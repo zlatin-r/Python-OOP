@@ -39,16 +39,16 @@ class BaseDiver(ABC):
     def renew_oxy(self):
         pass
 
-    def hit(self,fish: BaseFish):
+    def hit(self, fish: BaseFish):
         if self.oxygen_level < fish.time_to_catch:
             self.oxygen_level = 0
         else:
             self.oxygen_level -= fish.time_to_catch
-            self.competition_points += fish.points
             self.catch.append(fish)
+            self.competition_points += round(fish.points, 1)
 
     def update_health_status(self):
-        self.has_health_issue = True if self.has_health_issue else False
+        self.has_health_issue = not self.has_health_issue
 
     def __str__(self):
         return (f"{self.__class__.__name__}: "
