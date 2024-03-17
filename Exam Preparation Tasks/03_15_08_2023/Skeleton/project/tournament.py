@@ -36,7 +36,7 @@ class Tournament:
             raise ValueError("Invalid team type!")
         if self.capacity <= 0:
             return "Not enough tournament capacity."
-        new_team = self.VALID_TEAM_TYPES[team_name](country, advantage)
+        new_team = self.VALID_TEAM_TYPES[team_type](team_name, country, advantage)
         self.teams.append(new_team)
         return f"{team_type} was successfully added."
 
@@ -90,7 +90,12 @@ class Tournament:
         return '\n'.join(result)
 
     def _find_equipment(self, equipment_type: str):
-        collection = [eq for eq in self.equipment if eq.TYPE_ == equipment_type]
+        collection = []
+        for eq in self.equipment:
+            class_name = type(eq).__name__
+            if class_name == equipment_type:
+                collection.append(eq)
+
         return collection[-1] if collection else None
 
     def _find_team(self, team_name: str):
