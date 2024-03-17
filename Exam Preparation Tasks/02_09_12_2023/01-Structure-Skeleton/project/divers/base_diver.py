@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-
 from project.fish.base_fish import BaseFish
 
 
@@ -32,7 +31,7 @@ class BaseDiver(ABC):
         self.__oxygen_level = value
 
     @abstractmethod
-    def miss(self, time_to_catch: int):
+    def miss(self):
         pass
 
     @abstractmethod
