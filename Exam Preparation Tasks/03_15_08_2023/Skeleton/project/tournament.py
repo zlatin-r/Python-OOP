@@ -5,7 +5,7 @@ from project.teams.outdoor_team import OutdoorTeam
 
 
 class Tournament:
-    VALID_EQUIPMENT_TYPES = {"KneePad": KneePad , "ElbowPad": ElbowPad}
+    VALID_EQUIPMENT_TYPES = {"KneePad": KneePad, "ElbowPad": ElbowPad}
     VALID_TEAM_TYPES = {"OutdoorTeam": OutdoorTeam, "IndoorTeam": IndoorTeam}
 
     def __init__(self, name: str, capacity: int):
@@ -70,6 +70,24 @@ class Tournament:
 
         if team1.TYPE_ != team2.TYPE_:
             raise Exception("Game cannot start! Team types mismatch!")
+
+        if team1.sum_points() == team2.sum_points():
+            return "No winner in this game."
+
+        if team1.sum_points() > team2.sum_points():
+            team1.win()
+            return f"The winner is {team1.name}."
+        else:
+            team2.win()
+            return f"The winner is {team2.name}."
+
+    def get_statistics(self):
+        sorted_teams = sorted(self.teams, key=lambda team: -team.wins)
+        result = [(f"Tournament: {self.name}\n"
+                   f"Number of Teams: {len(self.teams)}\n"
+                   f"Teams:")]
+        [result.append(t.get_statistics()) for t in sorted_teams]
+        return '\n'.join(result)
 
     def _find_equipment_by_type(self, equipment_type: str):
         collection = [eq for eq in self.equipment if eq.TYPE_ == equipment_type]
