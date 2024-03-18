@@ -46,6 +46,7 @@ class Tournament:
 
         if team.budget < equipment.price:
             raise Exception("Budget is not enough!")
+        team.budget -= equipment.price
         self.equipment.remove(equipment)
         team.equipment.append(equipment)
         return f"Successfully sold {equipment_type} to {team_name}."
@@ -60,10 +61,10 @@ class Tournament:
         return f"Successfully removed {team_name}."
 
     def increase_equipment_price(self, equipment_type: str):
-        changed_eq_pcs = len([eq.increase_price() for eq in self.equipment if eq.TYPE_ == equipment_type])
-        return f"Successfully changed {changed_eq_pcs}pcs of equipment."
+        increased_pieces = len([eq.increase_price() for eq in self.equipment if eq.TYPE_ == equipment_type])
+        return f"Successfully changed {increased_pieces}pcs of equipment."
 
-def play(self, team_name1: str, team_name2: str):
+    def play(self, team_name1: str, team_name2: str):
         team1 = self._find_team_by_name(team_name1)
         team2 = self._find_team_by_name(team_name2)
 
