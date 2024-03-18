@@ -5,6 +5,7 @@ class KneePad(BaseEquipment):
     PROTECTION = 120
     PRICE = 15.0
     INCREASE_FACTOR = 0.20
+    TYPE_ = "KneePad"
 
     def __init__(self):
         super().__init__(self.PROTECTION, self.PRICE)
