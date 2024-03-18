@@ -38,6 +38,7 @@ class Tournament:
             return "Not enough tournament capacity."
         new_team = self.VALID_TEAM_TYPES[team_type](team_name, country, advantage)
         self.teams.append(new_team)
+        self.capacity -= 1
         return f"{team_type} was successfully added."
 
     def sell_equipment(self, equipment_type: str, team_name: str):
@@ -58,35 +59,41 @@ class Tournament:
         if team.wins > 0:
             raise Exception(f"The team has {team.wins} wins! Removal is impossible!")
         self.teams.remove(team)
-        return f"Successfully removed {team_name}."  # TODO Check if alwayse return
+        self.capacity += 1
+        return f"Successfully removed {team_name}."
 
     def increase_equipment_price(self, equipment_type: str):
-        changed_eq_pcs = len([eq.increase_price() for eq in self.equipment if eq.TYPE_ == equipment_type])
+        changed_eq_pcs = len([eq.increase_price for eq in self.equipment if eq.TYPE_ == equipment_type])
         return f"Successfully changed {changed_eq_pcs}pcs of equipment."
 
     def play(self, team_name1: str, team_name2: str):
+        winner = ""
         team1 = self._find_team(team_name1)
         team2 = self._find_team(team_name2)
 
         if type(team1).__name__ != type(team2).__name__:
             raise Exception("Game cannot start! Team types mismatch!")
 
-        team1_points = team1.advantage + sum(e.protection for e in team1.equipment)
-        team2_points = team2.advantage + sum(e.protection for e in team2.equipment)
+        team1_points = team1.advantage + sum(e.PROTECTION for e in team1.equipment)
+        team2_points = team2.advantage + sum(e.PROTECTION for e in team2.equipment)
 
         if team1_points == team2_points:
             return "No winner in this game."
 
         if team1_points > team2_points:
             team1.win()
+            winner = team1.name
         else:
             team2.win()
+            winner = team2.name
+
+        return f"The winner is {winner}."
 
     def get_statistics(self):
         sorted_teams = sorted(self.teams, key=lambda t: -t.wins)
         result = [(f"Tournament: {self.name}\n"
                    f"Number of Teams: {len(self.teams)}\n"
-                   "Teams:\n")]
+                   "Teams:")]
         [result.append(t.get_statistics()) for t in sorted_teams]
         return '\n'.join(result)
 
