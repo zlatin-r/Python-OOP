@@ -27,7 +27,7 @@ class BaseTeam(ABC):
 
     @country.setter
     def country(self, value):
-        if len(value) < 2:
+        if len(value.strip()) < 2:
             raise ValueError("Team country should be at least 2 symbols long!")
         self.__country = value
 
@@ -46,8 +46,8 @@ class BaseTeam(ABC):
         pass
 
     def get_statistics(self):
-        avg_protection = sum(eq.protection for eq in self.equipment) / len(self.equipment) if self.equipment else 0
-        total_eq_price = sum(eq.price for eq in self.equipment)
+        avg_protection = sum([eq.protection for eq in self.equipment]) / len(self.equipment) if self.equipment else 0
+        total_eq_price = sum([eq.price for eq in self.equipment])
         return (f"Name: {self.name}\n"
                 f"Country: {self.country}\n"
                 f"Advantage: {self.advantage} points\n"
@@ -57,5 +57,5 @@ class BaseTeam(ABC):
                 f"Average Protection: {floor(avg_protection)}")
 
     def sum_points(self):
-        points = self.advantage + sum(eq.protection for eq in self.equipment)
+        points = self.advantage + sum([eq.protection for eq in self.equipment])
         return points
