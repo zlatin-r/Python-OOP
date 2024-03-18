@@ -43,9 +43,10 @@ class Tournament:
     def sell_equipment(self, equipment_type: str, team_name: str):
         equipment = self._find_equipment(equipment_type)
         team = self._find_team(team_name)
-        if equipment.price > team.budget:
+
+        if team.budget < equipment.PRICE:
             raise Exception("Budget is not enough!")
-        team.budget -= equipment.price
+        team.budget -= equipment.PRICE
         team.equipment.append(equipment)
         self.equipment.remove(equipment)
         return f"Successfully sold {equipment_type} to {team_name}."
