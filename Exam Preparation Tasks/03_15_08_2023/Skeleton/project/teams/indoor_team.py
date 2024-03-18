@@ -6,7 +6,7 @@ class IndoorTeam(BaseTeam):
     TYPE_ = 'IndoorTeam'
 
     def __init__(self, name: str, country: str, advantage: int):
-        super().__init__(name, country, advantage, self.INITIAL_BUDGET)
+        super().__init__(name, country, advantage, budget=self.INITIAL_BUDGET)
 
     def win(self):
         self.advantage += 145
