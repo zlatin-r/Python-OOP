@@ -4,11 +4,10 @@ from project.equipment.base_equipment import BaseEquipment
 class ElbowPad(BaseEquipment):
     PROTECTION = 90
     PRICE = 25.0
-    INCREASE_FACTOR = 0.10
     TYPE_ = "ElbowPad"
 
     def __init__(self):
-        super().__init__(protection=self.PROTECTION, price=self.PRICE)
+        super().__init__(self.PROTECTION, self.PRICE)
 
     def increase_price(self):
-        self.PRICE += self.PRICE * self.INCREASE_FACTOR
+        self.PRICE *= 1.1
