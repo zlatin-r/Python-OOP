@@ -64,6 +64,13 @@ class Tournament:
             if eq.TYPE_ == equipment_type:
                 eq.increase_price()
 
+    def play(self, team_name1: str, team_name2: str):
+        team1 = self._find_team_by_name(team_name1)
+        team2 = self._find_team_by_name(team_name2)
+
+        if team1.TYPE_ != team2.TYPE_:
+            raise Exception("Game cannot start! Team types mismatch!")
+
     def _find_equipment_by_type(self, equipment_type: str):
         collection = [eq for eq in self.equipment if eq.TYPE_ == equipment_type]
         return collection[-1] if collection else None

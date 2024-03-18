@@ -55,3 +55,7 @@ class BaseTeam(ABC):
                 f"Wins: {self.wins}\n"
                 f"Total Equipment Price: {total_eq_price:.2f}\n"
                 f"Average Protection: {floor(avg_protection)}")
+
+    def sum_points(self):
+        points = self.advantage + sum(eq.protection for eq in self.equipment)
+        return points
