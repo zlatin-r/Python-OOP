@@ -27,7 +27,7 @@ class Tournament:
     def add_equipment(self, equipment_type: str):
         if equipment_type not in self.VALID_EQUIPMENT_TYPES:
             raise Exception("Invalid equipment type!")
-        new_equipment = self.VALID_EQUIPMENT_TYPES[equipment_type]
+        new_equipment = self.VALID_EQUIPMENT_TYPES[equipment_type]()
         self.equipment.append(new_equipment)
         return f"{equipment_type} was successfully added."
 
@@ -60,11 +60,10 @@ class Tournament:
         return f"Successfully removed {team_name}."
 
     def increase_equipment_price(self, equipment_type: str):
-        for eq in self.equipment:
-            if eq.TYPE_ == equipment_type:
-                eq.increase_price()
+        changed_eq_pcs = len([eq.increase_price() for eq in self.equipment if eq.TYPE_ == equipment_type])
+        return f"Successfully changed {changed_eq_pcs}pcs of equipment."
 
-    def play(self, team_name1: str, team_name2: str):
+def play(self, team_name1: str, team_name2: str):
         team1 = self._find_team_by_name(team_name1)
         team2 = self._find_team_by_name(team_name2)
 
