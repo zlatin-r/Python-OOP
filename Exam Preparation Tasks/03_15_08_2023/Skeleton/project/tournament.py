@@ -90,12 +90,7 @@ class Tournament:
         return '\n'.join(result)
 
     def _find_equipment(self, equipment_type: str):
-        collection = []
-        for eq in self.equipment:
-            class_name = type(eq).__name__
-            if class_name == equipment_type:
-                collection.append(eq)
-
+        collection = [eq for eq in self.equipment if eq.TYPE_ == equipment_type]
         return collection[-1] if collection else None
 
     def _find_team(self, team_name: str):
