@@ -7,3 +7,4 @@ class OutdoorTeam(BaseTeam):
 
     def win(self):
         self.advantage += 115
+        self.wins += 1
