@@ -5,7 +5,7 @@ class ElbowPad(BaseEquipment):
     TYPE_ = "ElbowPad"
 
     def __init__(self):
-        super().__init__(protection=90, price=25)
+        super().__init__(protection=90, price=25.0)
 
     def increase_price(self):
         self.price *= 1.1
