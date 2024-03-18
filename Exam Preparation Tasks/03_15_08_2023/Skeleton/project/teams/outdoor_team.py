@@ -3,6 +3,7 @@ from project.teams.base_team import BaseTeam
 
 class OutdoorTeam(BaseTeam):
     INITIAL_BUDGET = 1000
+    TYPE_ = 'OutdoorTeam'
 
     def __init__(self, name: str, country: str, advantage: int):
         super().__init__(name, country, advantage, self.INITIAL_BUDGET)
