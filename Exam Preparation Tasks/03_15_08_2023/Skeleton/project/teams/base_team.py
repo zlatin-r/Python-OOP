@@ -46,8 +46,8 @@ class BaseTeam(ABC):
         pass
 
     def get_statistics(self):
-        avg_protection = sum(p.protection for p in self.equipment) / len(self.equipment)
-        equipment_price = sum(p.price for p in self.equipment)
+        avg_protection = sum(p.PROTECTION for p in self.equipment) / len(self.equipment) if self.equipment else 0
+        equipment_price = sum(p.PRICE for p in self.equipment)
         return (f"Name: {self.name}\n"
                 f"Country: {self.country}\n"
                 f"Advantage: {self.advantage} points\n"
