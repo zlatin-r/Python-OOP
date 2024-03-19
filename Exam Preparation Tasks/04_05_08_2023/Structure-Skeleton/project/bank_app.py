@@ -31,7 +31,7 @@ class BankApp:
 
     def grant_loan(self, loan_type: str, client_id: str):
         client = self._find_client_by_id(client_id)
-        if not client.POSSIBLE_LOAN_TYPE == loan_type:
+        if not client.POSSIBLE_LOAN_TYPE_ == loan_type:
             raise Exception("Inappropriate loan type!")
         loan = self._find_firs_loan_by_type(loan_type)
         self.loans.remove(loan)
