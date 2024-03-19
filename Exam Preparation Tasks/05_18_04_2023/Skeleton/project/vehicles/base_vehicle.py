@@ -48,9 +48,9 @@ class BaseVehicle(ABC):
         self.battery_level = 100
 
     def change_status(self):
-        self.is_damaged = False if self.is_damaged else self.is_damaged = True
+        self.is_damaged = not self.is_damaged
 
     def __str__(self):
-        status = "OK" if self.is_damaged else "Damaged"
+        status = "OK" if not self.is_damaged else "Damaged"
         return (f"{self.brand} {self.model} License plate: {self.license_plate_number} "
                 f"Battery: {self.battery_level}% Status: {status}")
