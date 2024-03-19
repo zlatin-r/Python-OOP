@@ -32,8 +32,47 @@ class BankApp:
     def grant_loan(self, loan_type: str, client_id: str):
         client = self._find_client_by_id(client_id)
         if (loan_type == "StudentLoan" and client.TYPE_ == "Adult") \
-            or (loan_type == "MortgageLoan" and client.TYPE_ == "Student"):
+                or (loan_type == "MortgageLoan" and client.TYPE_ == "Student"):
+            raise Exception("Inappropriate loan type!")
+        loan = self._find_firs_loan_by_type(loan_type)
+        self.loans.remove(loan)
+        client.loans.append(loan)
+        return f"Successfully granted {loan_type} to {client.name} with ID {client_id}."
+
+    def remove_client(self, client_id: str):
+        client = self._find_client_by_id(client_id)
+        if not client:
+            raise Exception("No such client!")
+        if len(client.loans) > 0:
+            raise Exception("The client has loans! Removal is impossible!")
+        self.clients.remove(client)
+        return f"Successfully removed {client.name} with ID {client_id}."
+
+    def increase_loan_interest(self, loan_type: str):
+        increased_loans = len([ln.increase_interest_rate() for ln in self.loans if ln.TYPE_ == loan_type])
+        return f"Successfully changed {increased_loans} loans."
+
+    def increase_clients_interest(self, min_rate: float):
+        increased_clients = len([cl.increase_clients_interest() for cl in self.clients if cl.interest < min_rate])
+        return f"Number of clients affected: {increased_clients}."
+
+    def get_statistics(self):
+        total_income = sum([client.income for client in self.clients])
+        granted_loans_count = sum([len(client.loans) for client in self.clients])
+        granted_amount = sum([sum([loan.amount for loan in client.loans]) for client in self.clients])
+        not_granted_sum = sum([loan.amount for loan in self.loans])
+        avg_client_rate = sum([client.interest for client in self.clients]) / len(self.clients) if self.clients else 0
+
+        return f"""Active Clients: {len(self.clients)}
+                Total Income: {total_income:.2f}
+                Granted Loans: {granted_loans_count}, Total Sum: {granted_amount:.2f}
+                Available Loans: {len(self.loans)}, Total Sum: {not_granted_sum:.2f}
+                Average Client Interest Rate: {avg_client_rate:.2f}"""
 
     def _find_client_by_id(self, client_id: str):
-        client = next(filter(lambda cl: cl.id == client_id, self.clients))
+        client = next(filter(lambda cl: cl.id == client_id, self.clients), None)
         return client
+
+    def _find_firs_loan_by_type(self, loan_type: str):
+        loan = [ln for ln in self.loans if ln.TYPE_ == loan_type] if self.loans else 0
+        return loan[0]
