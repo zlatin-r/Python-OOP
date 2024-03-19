@@ -31,8 +31,7 @@ class BankApp:
 
     def grant_loan(self, loan_type: str, client_id: str):
         client = self._find_client_by_id(client_id)
-        if (loan_type == "StudentLoan" and client.TYPE_ == "Adult") \
-                or (loan_type == "MortgageLoan" and client.TYPE_ == "Student"):
+        if not client.POSSIBLE_LOAN_TYPE == loan_type:
             raise Exception("Inappropriate loan type!")
         loan = self._find_firs_loan_by_type(loan_type)
         self.loans.remove(loan)
@@ -63,14 +62,14 @@ class BankApp:
         not_granted_sum = sum([loan.amount for loan in self.loans])
         avg_client_rate = sum([client.interest for client in self.clients]) / len(self.clients) if self.clients else 0
 
-        return f"""Active Clients: {len(self.clients)}
-                Total Income: {total_income:.2f}
-                Granted Loans: {granted_loans_count}, Total Sum: {granted_amount:.2f}
-                Available Loans: {len(self.loans)}, Total Sum: {not_granted_sum:.2f}
-                Average Client Interest Rate: {avg_client_rate:.2f}"""
+        return (f"Active Clients: {len(self.clients)}\n"
+                f"Total Income: {total_income:.2f}\n"
+                f"Granted Loans: {granted_loans_count}, Total Sum: {granted_amount:.2f}\n"
+                f"Available Loans: {len(self.loans)}, Total Sum: {not_granted_sum:.2f}\n"
+                f"Average Client Interest Rate: {avg_client_rate:.2f}")
 
     def _find_client_by_id(self, client_id: str):
-        client = next(filter(lambda cl: cl.id == client_id, self.clients), None)
+        client = next(filter(lambda cl: cl.client_id == client_id, self.clients), None)
         return client
 
     def _find_firs_loan_by_type(self, loan_type: str):
