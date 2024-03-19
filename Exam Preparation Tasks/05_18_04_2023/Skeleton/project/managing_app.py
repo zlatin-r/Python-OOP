@@ -1,3 +1,4 @@
+from project.route import Route
 from project.user import User
 from project.vehicles.cargo_van import CargoVan
 from project.vehicles.passenger_car import PassengerCar
@@ -31,8 +32,40 @@ class ManagingApp:
     def allow_route(self, start_point: str, end_point: str, length: float):
         route_id = len(self.routes) + 1
         for route in self.routes:
-            if route.start_point == start_point and route.end_point == end_point and route.length == length:
-                return f"{start_point}/{end_point} - {length} km had already been added to our platform."
-            if route.start_point == start_point and route.end_point == end_point and route.length < length:
-                return f"{start_point}/{end_point} shorter route had already been added to our platform."
+            if route.start_point == start_point and route.end_point == end_point:
+                if route.length == length:
+                    return f"{start_point}/{end_point} - {length} km had already been added to our platform."
+                elif route.length < length:
+                    return f"{start_point}/{end_point} shorter route had already been added to our platform."
+                else:
+                    route.is_locked = True
+        new_road = Route(start_point, end_point, length, route_id)
+        self.routes.append(new_road)
 
+    def make_trip(self, driving_license_number: str, license_plate_number: str, route_id: int,  is_accident_happened: bool):
+        user = next(filter(lambda u: u.driving_license_number == driving_license_number, self.users))
+        vehicle = next(filter(lambda v: v.license_plate_number == license_plate_number, self.vehicles))
+        route = next(filter(lambda r: r.route_id == route_id, self.routes))
+        if user.is_blocked:
+            return f"User {driving_license_number} is blocked in the platform! This trip is not allowed."
+        if vehicle.is_damaged:
+            return f"Vehicle {license_plate_number} is damaged! This trip is not allowed."
+        if route.is_locked:
+            return f"Route {route_id} is locked! This trip is not allowed."
+        vehicle.drive(route.length)
+        if is_accident_happened:
+            vehicle.is_damaged = True
+            user.decrease_rating()
+        user.increase_rating()
+        return vehicle
+
+    def repair_vehicles(self, count: int):
+        damaged_vehicles = [v.recharge().change_status() for v in self.vehicles if v.is_damaged]
+        sorted_vehicles = sorted(damaged_vehicles, key=lambda v: (v.brand, v.model))
+        result = sorted_vehicles[:count] if count > len(sorted_vehicles) else sorted_vehicles
+        return f"{len(result)} vehicles were successfully repaired!"
+
+    def users_report(self):
+        sorted_users = sorted(self.users, key=lambda u: -u.rating)
+        result = "*** E-Drive-Rent ***\n"
+        result += "\n".join(str(u) for u in  sorted_users)
