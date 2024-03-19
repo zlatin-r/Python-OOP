@@ -5,6 +5,7 @@ class StudentLoan(BaseLoan):
     INTEREST_RATE = 1.5
     AMOUNT = 2000
     INCREASE_PERCENTAGE = 0.2
+    TYPE_ = "StudentLoan"
 
     def __init__(self):
         super().__init__(interest_rate=self.INTEREST_RATE, amount=self.AMOUNT)
