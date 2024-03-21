@@ -9,4 +9,4 @@ class CargoVan(BaseVehicle):
         super().__init__(brand, model, license_plate_number, max_milеage=self.MAX_MILEAGE)
 
     def drive(self, mileage: float):
-        self.battery_level -= round(mileage / self.MAX_MILEAGE * 100) + self.ADDITIONAL_PERCENT
+        self.battery_level -= (round(mileage / self.MAX_MILEAGE * 100) + self.ADDITIONAL_PERCENT)
