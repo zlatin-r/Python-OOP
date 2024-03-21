@@ -60,7 +60,7 @@ class ConcertTrackerApp:
 
     def start_concert(self, concert_place: str, band_name: str):
         band = self._find_band_by_name(band_name, self.bands)
-        if self._check_band_members(band):
+        if not self._check_band_members(band):
             raise Exception(f"{band_name} can't start the concert because it doesn't have enough members!")
         concert = self._find_concert_by_place(concert_place)
         if not self._check_if_band_can_play(band, concert):
@@ -83,35 +83,35 @@ class ConcertTrackerApp:
         return concert
 
     def _check_band_members(self, band_obj):
-        member_types = ["Singer", "Drummer", "Guitarist"]
-        filtered_musicians = [member_types.remove(m.TYPE_) for m in band_obj.members if m.TYPE_ in member_types]
-        # TODO -> CHECK IF THE COMPREHENSION IS CORRECT
-        return len(filtered_musicians) == 0
+        types = ["Singer", "Drummer", "Guitarist"]
+        members_types = [m.TYPE_ for m in band_obj.members if m.TYPE_ in types]
+        return set(members_types) == set(types)
 
     def _check_if_band_can_play(self, band_obj, concert_obj):
         if concert_obj.genre == "Rock":
             needed_skills = {"Singer": "sing high pitch notes",
                              "Drummer": "play the drums with drumsticks",
                              "Guitarist": "play rock"}
-
             for member in band_obj.members:
-                return needed_skills[member.TYPE_] in member.skills
+                if not needed_skills[member.TYPE_] in member.skills:
+                    return False
 
-        if concert_obj.genre == "Metal":
+        elif concert_obj.genre == "Metal":
             needed_skills = {Singer: "sing low pitch notes",
                              Drummer: "play the drums with drumsticks",
                              Guitarist: "play metal"}
-
             for member in band_obj.members:
-                return needed_skills[member] in member.skills
+                if not needed_skills[member] in member.skills:
+                    return False
 
-        if concert_obj.genre == "Jazz":
+        elif concert_obj.genre == "Jazz":
             needed_skills = {Singer: "sing high pitch notes and sing low pitch notes",
                              Drummer: "play the drums with drum brushes",
                              Guitarist: "play jazz"}
-
             for member in band_obj.members:
-                return needed_skills[member] in member.skills
+                if not needed_skills[member] in member.skills:
+                    return False
+        return True
 
     def _calculate_profit(self, concert_obj):
         profit = (concert_obj.audience * concert_obj.ticket_price) - concert_obj.expenses
