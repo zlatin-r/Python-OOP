@@ -9,7 +9,7 @@ class Band:
 
     @name.setter
     def name(self, value):
-        if not value == "":
+        if not value.strip():
             raise ValueError("Band name should contain at least one character!")
         self.__name = value
 
