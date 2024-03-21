@@ -2,11 +2,11 @@ from abc import ABC, abstractmethod
 
 
 class BaseVehicle(ABC):
-    def __init__(self, brand: str, model: str, license_plate_number: str, max_milеage: float):
+    def __init__(self, brand: str, model: str, license_plate_number: str, max_mileage: float):
         self.brand = brand
         self.model = model
         self.license_plate_number = license_plate_number
-        self.max_milеage = max_milеage
+        self.max_mileage = max_mileage
         self.battery_level = 100
         self.is_damaged = False
 
@@ -32,13 +32,13 @@ class BaseVehicle(ABC):
 
     @property
     def license_plate_number(self):
-        return self.__license_plate_number
+        return self.__license_plate_plate
 
     @license_plate_number.setter
     def license_plate_number(self, value):
         if not value.strip():
             raise ValueError("License plate number is required!")
-        self.__license_plate_number = value
+        self.__license_plate_plate = value
 
     @abstractmethod
     def drive(self, mileage: float):
@@ -51,6 +51,5 @@ class BaseVehicle(ABC):
         self.is_damaged = not self.is_damaged
 
     def __str__(self):
-        status = "OK" if not self.is_damaged else "Damaged"
-        return (f"{self.brand} {self.model} License plate: {self.license_plate_number} "
-                f"Battery: {self.battery_level}% Status: {status}")
+        return f"{self.brand} {self.model} License plate: {self.license_plate_number} Battery: {self.battery_level}% " \
+               f"Status: {'OK' if not self.is_damaged else 'Damaged'}"
