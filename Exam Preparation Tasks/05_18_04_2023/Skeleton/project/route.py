@@ -1,6 +1,4 @@
 class Route:
-    MIN_LENGTH = 1.00
-
     def __init__(self, start_point: str, end_point: str, length: float, route_id: int):
         self.start_point = start_point
         self.end_point = end_point
@@ -34,9 +32,6 @@ class Route:
 
     @length.setter
     def length(self, value):
-        if value < self.MIN_LENGTH:
-            raise ValueError(f"Length cannot be less than {self.MIN_LENGTH:.2f} kilometer!")
+        if value < 1:
+            raise ValueError("Length cannot be less than 1.00 kilometer!")
         self.__length = value
-
-    # def change_status(self):
-    #     self.is_locked = not self.is_locked

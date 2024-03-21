@@ -2,7 +2,7 @@ from project.vehicles.base_vehicle import BaseVehicle
 
 
 class CargoVan(BaseVehicle):
-    MAX_MILEAGE = 180.00
+    MAX_MILEAGE = 180
     ADDITIONAL_PERCENT = 5
 
     def __init__(self, brand: str, model: str, license_plate_number: str):

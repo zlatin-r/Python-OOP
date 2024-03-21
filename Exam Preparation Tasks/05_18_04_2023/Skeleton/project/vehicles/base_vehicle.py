@@ -32,13 +32,13 @@ class BaseVehicle(ABC):
 
     @property
     def license_plate_number(self):
-        return self.__license_plate_plate
+        return self.__license_plate_number
 
     @license_plate_number.setter
     def license_plate_number(self, value):
         if not value.strip():
             raise ValueError("License plate number is required!")
-        self.__license_plate_plate = value
+        self.__license_plate_number = value
 
     @abstractmethod
     def drive(self, mileage: float):
@@ -51,5 +51,6 @@ class BaseVehicle(ABC):
         self.is_damaged = not self.is_damaged
 
     def __str__(self):
-        return f"{self.brand} {self.model} License plate: {self.license_plate_number} Battery: {self.battery_level}% " \
-               f"Status: {'OK' if not self.is_damaged else 'Damaged'}"
+        status = "OK" if not self.is_damaged else "Damaged"
+        return (f"{self.brand} {self.model} License plate: {self.license_plate_number} "
+                f"Battery: {self.battery_level}% Status: {status}")
