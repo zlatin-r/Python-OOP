@@ -44,7 +44,7 @@ class ConcertTrackerApp:
         band = self._find_band_by_name(band_name, self.bands)
         if not band:
             raise Exception(f"{band_name} isn't a band!")
-        band.musicians.append(musician)
+        band.members.append(musician)
         # TODO -> MAYBE REMOVE MUSICIAN FROM MUSICIANS...???
         return f"{musician_name} was added to {band_name}."
 
@@ -60,7 +60,7 @@ class ConcertTrackerApp:
 
     def start_concert(self, concert_place: str, band_name: str):
         band = self._find_band_by_name(band_name, self.bands)
-        if not self._check_band_members(band):
+        if self._check_band_members(band):
             raise Exception(f"{band_name} can't start the concert because it doesn't have enough members!")
         concert = self._find_concert_by_place(concert_place)
         if not self._check_if_band_can_play(band, concert):
@@ -84,18 +84,18 @@ class ConcertTrackerApp:
 
     def _check_band_members(self, band_obj):
         member_types = ["Singer", "Drummer", "Guitarist"]
-        filtered_musicians = [member_types.pop(m.TYPE_) for m in band_obj.musicians if m.TYPE_ in member_types]
+        filtered_musicians = [member_types.remove(m.TYPE_) for m in band_obj.members if m.TYPE_ in member_types]
         # TODO -> CHECK IF THE COMPREHENSION IS CORRECT
         return len(filtered_musicians) == 0
 
     def _check_if_band_can_play(self, band_obj, concert_obj):
         if concert_obj.genre == "Rock":
-            needed_skills = {Singer: "sing high pitch notes",
-                             Drummer: "play the drums with drumsticks",
-                             Guitarist: "play rock"}
+            needed_skills = {"Singer": "sing high pitch notes",
+                             "Drummer": "play the drums with drumsticks",
+                             "Guitarist": "play rock"}
 
             for member in band_obj.members:
-                return needed_skills[member] in member.skills
+                return needed_skills[member.TYPE_] in member.skills
 
         if concert_obj.genre == "Metal":
             needed_skills = {Singer: "sing low pitch notes",
