@@ -55,7 +55,7 @@ class ConcertTrackerApp:
         if not self._check_band_members(band):
             raise Exception(f"{band_name} can't start the concert because it doesn't have enough members!")
         if not self._check_if_band_can_play(band, concert):
-            return f"The {band_name} band is not ready to play at the concert!"
+            raise Exception(f"The {band_name} band is not ready to play at the concert!")
         profit = self._calculate_profit(concert)
         return f"{band_name} gained {profit}$ from the {concert.genre} concert in {concert_place}."
 
