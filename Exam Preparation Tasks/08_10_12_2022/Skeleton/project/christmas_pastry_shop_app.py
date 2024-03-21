@@ -6,7 +6,7 @@ from project.delicacies.stolen import Stolen
 
 class ChristmasPastryShopApp:
     DELICACY_TYPES = {"Gingerbread": Gingerbread, "Stolen": Stolen}
-    BOOTH_TYPES = {"OpenBooth": OpenBooth, "PrivateBooth": PrivateBooth}
+    BOOTH_TYPES = {"Open Booth": OpenBooth, "Private Booth": PrivateBooth}
 
     def __init__(self):
         self.booths = []
@@ -34,7 +34,7 @@ class ChristmasPastryShopApp:
         booth = next(filter(lambda b: b.capacity >= number_of_people, free_booths), None)
         if not booth:
             raise Exception(f"No available booth for {number_of_people} people!")
-        booth.is_reserved = True
+        booth.reserve(number_of_people)
         return f"Booth {booth.booth_number} has been reserved for {number_of_people} people."
 
     def order_delicacy(self, booth_number: int, delicacy_name: str):
@@ -49,7 +49,7 @@ class ChristmasPastryShopApp:
 
     def leave_booth(self, booth_number: int):
         booth = self._find_booth_by_number(booth_number)
-        bill = sum([b for b in booth.delicacy_orders]) + booth.price_for_reservation
+        bill = sum([b.price for b in booth.delicacy_orders]) + booth.price_for_reservation
         self.income += bill
         booth.delicacy_orders = []
         booth.price_for_reservation = 0
@@ -71,7 +71,7 @@ class ChristmasPastryShopApp:
         return result
 
     def _find_booth_by_number_and_return(self, booth_number: int, collection: list):
-        result = next(filter(lambda b: b.number == booth_number, collection), None)
+        result = next(filter(lambda b: b.booth_number == booth_number, collection), None)
         if result:
             raise Exception(f"Booth number {booth_number} already exists!")
         return result
