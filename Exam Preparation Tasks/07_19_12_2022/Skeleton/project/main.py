@@ -17,6 +17,7 @@ for i in range(3):
     print(app.add_musician_to_band(names[i], "RockName"))
 
 print(app.create_concert("Rock", 20, 5.20, 56.7, "Sofia"))
+print(app.create_concert("Rock", 20, 5.20, 56.7, "Sofia"))
 
 print(list(map(lambda a: a.__class__.__name__, app.bands[0].members)))
 print(app.start_concert("Sofia", "RockName"))

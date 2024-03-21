@@ -16,14 +16,14 @@ class ConcertTrackerApp:
     def create_musician(self, musician_type: str, name: str, age: int):
         if musician_type not in self.VALID_MUSICIAN_TYPES:
             raise ValueError("Invalid musician type!")
-        if self._find_musician_by_name(name, self.musicians):
+        if self._check_if_exists(name, self.musicians):
             raise ValueError(f"{name} is already a musician!")
         new_musician = self.VALID_MUSICIAN_TYPES[musician_type](name, age)
         self.musicians.append(new_musician)
         return f"{name} is now a {musician_type}."
 
     def create_band(self, name: str):
-        if self._find_band_by_name(name, self.bands):
+        if self._check_if_exists(name, self.bands):
             raise ValueError(f"{name} band is already created!")
         new_band = Band(name)
         self.bands.append(new_band)
@@ -39,23 +39,14 @@ class ConcertTrackerApp:
 
     def add_musician_to_band(self, musician_name: str, band_name: str):
         musician = self._find_musician_by_name(musician_name, self.musicians)
-        if not musician:
-            raise Exception(f"{musician_name} isn't a musician!")
         band = self._find_band_by_name(band_name, self.bands)
-        if not band:
-            raise Exception(f"{band_name} isn't a band!")
         band.members.append(musician)
-        # TODO -> MAYBE REMOVE MUSICIAN FROM MUSICIANS...???
         return f"{musician_name} was added to {band_name}."
 
     def remove_musician_from_band(self, musician_name: str, band_name: str):
         band = self._find_band_by_name(band_name, self.bands)
-        if not band:
-            raise Exception(f"{band_name} isn't a band!")
-        musician = self._find_musician_by_name(musician_name, band.musicians)
-        if not musician:
-            raise Exception(f"{musician_name} isn't a member of {band_name}!")
-        band.musicians.remove(musician)
+        musician = self._find_musician_by_name(musician_name, band.members)
+        band.members.remove(musician)
         return f"{musician_name} was removed from {band_name}."
 
     def start_concert(self, concert_place: str, band_name: str):
@@ -72,15 +63,22 @@ class ConcertTrackerApp:
 
     def _find_musician_by_name(self, name: str, collection: list):
         musician = next(filter(lambda m: m.name == name, collection), None)
+        if not musician:
+            raise Exception(f"{name} isn't a musician!")
         return musician
 
     def _find_band_by_name(self, name, collection: list):
         band = next(filter(lambda b: b.name == name, collection), None)
+        if not band:
+            raise Exception(f"{name} isn't a band!")
         return band
 
     def _find_concert_by_place(self, concert_place: str):
         concert = next(filter(lambda c: c.place == concert_place, self.concerts), None)
         return concert
+
+    def _check_if_exists(self, name: str, collection: list):
+        return next(filter(lambda m: m.name == name, collection), None)
 
     def _check_band_members(self, band_obj):
         types = ["Singer", "Drummer", "Guitarist"]
