@@ -48,7 +48,7 @@ class User:
 
     def increase_rating(self):
         self.rating += 0.5
-        if self.rating + 0.5 > 10:
+        if self.rating > 10:
             self.rating = 10
 
     def decrease_rating(self):
