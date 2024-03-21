@@ -12,8 +12,7 @@ class Concert:
 
     @genre.setter
     def genre(self, value):
-        genres = ("Metal", "Rock", "Jazz")
-        if value not in genres:
+        if value not in ["Metal", "Rock", "Jazz"]:
             raise ValueError(f"Our group doesn't play {value}!")
         self.__genre = value
 
@@ -53,7 +52,7 @@ class Concert:
 
     @place.setter
     def place(self, value):
-        if not value.strip() or len(value) < 2:
+        if len(value.strip()) < 2:
             raise ValueError("Place must contain at least 2 chars. It cannot be empty!")
         self.__place = value
 

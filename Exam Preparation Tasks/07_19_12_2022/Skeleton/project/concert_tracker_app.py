@@ -40,13 +40,13 @@ class ConcertTrackerApp:
     def add_musician_to_band(self, musician_name: str, band_name: str):
         musician = self._find_musician_by_name(musician_name, self.musicians)
         band = self._find_band_by_name(band_name, self.bands)
-        band.members.append(musician)
+        band.add_member(musician)
         return f"{musician_name} was added to {band_name}."
 
     def remove_musician_from_band(self, musician_name: str, band_name: str):
         band = self._find_band_by_name(band_name, self.bands)
         musician = self._find_musician_by_name(musician_name, band.members)
-        band.members.remove(musician)
+        band.remove_member(musician)
         return f"{musician_name} was removed from {band_name}."
 
     def start_concert(self, concert_place: str, band_name: str):
@@ -91,23 +91,23 @@ class ConcertTrackerApp:
                              "Drummer": "play the drums with drumsticks",
                              "Guitarist": "play rock"}
             for member in band_obj.members:
-                if not needed_skills[member.TYPE_] in member.skills:
+                if needed_skills[member.TYPE_] not in member.skills:
                     return False
 
         elif concert_obj.genre == "Metal":
-            needed_skills = {Singer: "sing low pitch notes",
-                             Drummer: "play the drums with drumsticks",
-                             Guitarist: "play metal"}
+            needed_skills = {"Singer": "sing low pitch notes",
+                             "Drummer": "play the drums with drumsticks",
+                             "Guitarist": "play metal"}
             for member in band_obj.members:
-                if not needed_skills[member] in member.skills:
+                if needed_skills[member.TYPE_] not in member.skills:
                     return False
 
         elif concert_obj.genre == "Jazz":
-            needed_skills = {Singer: "sing high pitch notes and sing low pitch notes",
-                             Drummer: "play the drums with drum brushes",
-                             Guitarist: "play jazz"}
+            needed_skills = {"Singer": "sing high pitch notes and sing low pitch notes",
+                             "Drummer": "play the drums with drum brushes",
+                             "Guitarist": "play jazz"}
             for member in band_obj.members:
-                if not needed_skills[member] in member.skills:
+                if needed_skills[member.TYPE_] not in member.skills:
                     return False
         return True
 
