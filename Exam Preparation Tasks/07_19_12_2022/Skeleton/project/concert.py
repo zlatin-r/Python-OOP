@@ -56,3 +56,6 @@ class Concert:
         if not value.strip() or len(value) < 2:
             raise ValueError("Place must contain at least 2 chars. It cannot be empty!")
         self.__place = value
+
+    def __str__(self):
+        return f"{self.genre} concert at {self.place}."
