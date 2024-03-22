@@ -8,6 +8,7 @@ class FoodOrdersApp:
         self.menu = []
         self.clients_list = []
 
+
     def register_client(self, client_phone_number: str):
         client = self._find_client_by_phone_number(client_phone_number)
         if client:
@@ -38,8 +39,9 @@ class FoodOrdersApp:
                 if self._check_is_meal_in_menu(m):
                     meal = self._find_meal_by_name(m)
                     if self._check_quantity(meal, q):
+                        meal.quantity -= q
                         meals.append(meal)
-                        bill += meal.quantity * meal.price
+                        bill += q * meal.price
                     else:
                         meals, bill = [], 0.0
                         raise Exception(f"Not enough quantity of {meal.__class__.__name__}: {m}!")
@@ -52,6 +54,10 @@ class FoodOrdersApp:
 
         client.shopping_cart.extend(meals)
         client.bill += bill
+
+    def cancel_order(self, client_phone_number: str):
+        client = self._find_client_by_phone_number(client_phone_number)
+        client.shopping_cart = []
 
 
 
@@ -75,4 +81,7 @@ class FoodOrdersApp:
 
     def _check_quantity(self, meal, quantity):
         return meal.quantity >= quantity
+
+    def _return_products_to_menu(self, shopping_cart):
+
 
