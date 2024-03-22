@@ -6,4 +6,4 @@ class MainDish(Meal):
         super().__init__(name, price, quantity)
 
     def details(self):
-        return f"Main Dish {self.name}: {self.price}lv/piece"
+        return f"Main Dish {self.name}: {self.price:.2f}lv/piece"
