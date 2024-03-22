@@ -83,5 +83,6 @@ class FoodOrdersApp:
         return meal.quantity >= quantity
 
     def _return_products_to_menu(self, shopping_cart):
-
+        for product in shopping_cart:
+            self
 
