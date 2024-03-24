@@ -29,6 +29,21 @@ class TestCat(TestCase):
         self.assertTrue(self.cat.sleepy)
         self.assertEqual(expected_size, self.cat.size)
 
+    def test_if_sleep_when_not_fed_expected_raise_exception(self):
+
+        with self.assertRaises(Exception) as ex:
+            self.cat.sleep()
+
+        self.assertEqual("Cannot sleep while hungry", str(ex.exception))
+
+    def test_sleep_when_cat_is_fed_and_sleeps(self):
+        self.cat.fed = True
+        self.cat.sleepy = True
+
+        self.cat.sleep()
+
+        self.assertFalse(self.cat.sleepy)
+
 
 if __name__ == '__main__':
     main()
