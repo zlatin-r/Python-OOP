@@ -42,5 +42,7 @@ class TestExtendedList(TestCase):
 
         self.assertEqual(expected_result, self.i_list.get_data())
 
+
+
 if __name__ == '__main__':
     main()
