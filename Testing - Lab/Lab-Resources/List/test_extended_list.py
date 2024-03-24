@@ -24,11 +24,23 @@ class TestExtendedList(TestCase):
         self.assertEqual(expected_list, self.i_list.get_data())
 
     def test_remove_element_on_out_of_range_index_expected_index_error(self):
-        with self.assertRaises(IndexError) as ve:
+        with self.assertRaises(IndexError) as ie:
             self.i_list.remove_index(1000)
 
-        self.assertEqual("Index is out of range", str(ve.exception))
+        self.assertEqual("Index is out of range", str(ie.exception))
 
+    def test_get_element_from_index_out_of_range_raises_index_error(self):
+        with self.assertRaises(IndexError) as ie:
+            self.i_list.get(1000)
+
+        self.assertEqual("Index is out of range", str(ie.exception))
+
+    def test_remove_element_from_list_whit_index_in_range(self):
+        expected_result = [1, 3]
+
+        self.i_list.remove_index(1)
+
+        self.assertEqual(expected_result, self.i_list.get_data())
 
 if __name__ == '__main__':
     main()
