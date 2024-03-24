@@ -37,6 +37,9 @@ class TestWorker(TestCase):
 
         self.assertEqual(self.worker.energy, expected_energy)
 
+    def test_get_info_returns_right_string(self):
+        self.assertEqual('Todor has saved 0 money.', self.worker.get_info())
+
 
 if __name__ == '__main__':
     main()
