@@ -19,8 +19,16 @@ class TestCat(TestCase):
             self.cat.eat()
 
         self.assertEqual("Already fed.", str(ex.exception))
-    #
-    # def test_eat_if_is_not_fed(self):
+
+    def test_feed_eat_if_is_sleepy_when_fed_and_size_plus_one(self):
+        expected_size = self.cat.size + 1
+
+        self.cat.eat()
+
+        self.assertTrue(self.cat.fed)
+        self.assertTrue(self.cat.sleepy)
+        self.assertEqual(expected_size, self.cat.size)
+
 
 if __name__ == '__main__':
     main()
