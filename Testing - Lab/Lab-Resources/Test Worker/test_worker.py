@@ -13,6 +13,16 @@ class TestWorker(TestCase):
         self.assertEqual(20_200, self.worker.salary)
         self.assertEqual(200, self.worker.energy)
 
+    def test_work_when_worker_has_energy_expect_money_increase_and_energy_decrease(self):
+        expected_money = self.worker.salary * 2
+        expected_energy = self.worker.energy - 2
+
+        self.worker.work()
+        self.worker.work()
+
+        self.assertEqual(self.worker.money, expected_money)
+        self.assertEqual(self.worker.energy, expected_energy)
+
 
 if __name__ == '__main__':
     main()
