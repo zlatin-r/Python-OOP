@@ -42,5 +42,12 @@ class TestExtendedList(TestCase):
 
         self.assertEqual("Index is out of range", str(ie.exception))
 
+    def test_get_element_from_the_list_on_valid_index(self):
+        result = self.i_list.get(1)
+
+        self.assertEqual(2, result)
+
+
+
 if __name__ == '__main__':
     main()
