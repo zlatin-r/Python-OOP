@@ -23,6 +23,14 @@ class TestWorker(TestCase):
         self.assertEqual(self.worker.money, expected_money)
         self.assertEqual(self.worker.energy, expected_energy)
 
+    def test_work_when_worker_does_not_have_energy_raise_exception(self):
+        self.worker.energy = 0
+
+        with self.assertRaises(Exception) as ex:
+            self.worker.work()
+
+        self.assertEqual("Not enough energy.", str(ex.exception))
+
 
 if __name__ == '__main__':
     main()
