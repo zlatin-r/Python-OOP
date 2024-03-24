@@ -26,11 +26,24 @@ class TestCar(TestCase):
 
         self.assertEqual("Model cannot be null or empty!", str(ex.exception))
 
-    def test_fuel_consumption_with_negative_value_raises_exception(self):
+    def test_fuel_consumption_with_zero_value_raises_exception(self):
         with self.assertRaises(Exception) as ex:
-            self.car.fuel_consumption = -12
+            self.car.fuel_consumption = 0
 
         self.assertEqual("Fuel consumption cannot be zero or negative!", str(ex.exception))
+
+    def test_fuel_capacity_with_zero_value_raises_exception(self):
+        with self.assertRaises(Exception) as ex:
+            self.car.fuel_capacity = 0
+
+        self.assertEqual("Fuel capacity cannot be zero or negative!", str(ex.exception))
+
+    def test_fuel_amount_with_negative_value_raises_exception(self):
+        with self.assertRaises(Exception) as ex:
+            self.car.fuel_amount = -5
+
+        self.assertEqual("Fuel amount cannot be negative!", str(ex.exception))
+
 
 
 if __name__ == '__main__':
