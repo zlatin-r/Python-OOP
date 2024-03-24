@@ -1,9 +1,9 @@
 from unittest import TestCase, main
-
 from extended_list import IntegerList
 
 
 class TestExtendedList(TestCase):
+
     def setUp(self):
         self.i_list = IntegerList(5.5, 1, 2, 3, "hello")
 
@@ -29,20 +29,18 @@ class TestExtendedList(TestCase):
 
         self.assertEqual("Index is out of range", str(ie.exception))
 
-    def test_get_element_from_index_out_of_range_raises_index_error(self):
-        with self.assertRaises(IndexError) as ie:
-            self.i_list.get(1000)
-
-        self.assertEqual("Index is out of range", str(ie.exception))
-
-    def test_remove_element_from_list_whit_index_in_range(self):
+    def test_remove_element_from_list_whit_valid_index(self):
         expected_result = [1, 3]
 
         self.i_list.remove_index(1)
 
         self.assertEqual(expected_result, self.i_list.get_data())
 
+    def test_get_element_from_list_on_invalid_index(self):
+        with self.assertRaises(IndexError) as ie:
+            self.i_list.get(1000)
 
+        self.assertEqual("Index is out of range", str(ie.exception))
 
 if __name__ == '__main__':
     main()
