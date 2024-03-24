@@ -1,4 +1,5 @@
 from unittest import TestCase, main
+
 from extended_list import IntegerList
 
 
@@ -53,8 +54,19 @@ class TestExtendedList(TestCase):
 
         self.assertEqual("Index is out of range", str(ie.exception))
 
+    def test_insert_not_integer_element_raises_value_error(self):
+        with self.assertRaises(ValueError) as ve:
+            self.i_list.insert(1, "hello")
 
+        self.assertEqual("Element is not Integer", str(ve.exception))
 
+    def test_insert_correct_element_and_index(self):
+        expected_list = self.i_list.get_data().copy()
+        expected_list.insert(1, 5)
+
+        self.i_list.insert(1, 5)
+
+        self.assertEqual(expected_list, self.i_list.get_data())
 
 if __name__ == '__main__':
     main()
