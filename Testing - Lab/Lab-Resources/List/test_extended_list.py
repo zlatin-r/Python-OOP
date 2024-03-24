@@ -16,6 +16,18 @@ class TestExtendedList(TestCase):
 
         self.assertEqual("Element is not Integer", str(ve.exception))
 
+    def test_add_integer_to_the_list(self):
+        expected_list = self.i_list.get_data() + [4]
+
+        self.i_list.add(4)
+
+        self.assertEqual(expected_list, self.i_list.get_data())
+
+    def test_remove_element_on_out_of_range_index_expected_index_error(self):
+        with self.assertRaises(ValueError) as ve:
+            self.i_list.remove_index(1000)
+
+        self.assertEqual("Index is out of range", str(ve.exception))
 
 if __name__ == '__main__':
     main()
