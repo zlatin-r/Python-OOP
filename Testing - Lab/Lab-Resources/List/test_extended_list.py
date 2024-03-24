@@ -47,6 +47,13 @@ class TestExtendedList(TestCase):
 
         self.assertEqual(2, result)
 
+    def test_insert_element_on_invalid_index_raises_index_error(self):
+        with self.assertRaises(IndexError) as ie:
+            self.i_list.insert(1000, 5)
+
+        self.assertEqual("Index is out of range", str(ie.exception))
+
+
 
 
 if __name__ == '__main__':
