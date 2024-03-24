@@ -68,5 +68,14 @@ class TestExtendedList(TestCase):
 
         self.assertEqual(expected_list, self.i_list.get_data())
 
+    def test_get_biggest_number(self):
+        result = self.i_list.get_biggest()
+        self.assertEqual(3, result)
+
+    def test_get_index(self):
+        result = self.i_list.get_index(2)
+        self.assertEqual(1, result)
+
+
 if __name__ == '__main__':
     main()
