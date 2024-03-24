@@ -12,13 +12,13 @@ class TestCat(TestCase):
         self.assertFalse(self.cat.sleepy)
         self.assertEqual(0, self.cat.size)
 
-    # def test_eat_if_is_fed_expected_exception(self):
-    #     self.cat.fed = True
-    #
-    #     with self.assertRaises(Exception) as ex:
-    #         self.cat.eat()
-    #
-    #     self.assertEqual(str(ex.exception), "Already fed.")
+    def test_eat_if_is_fed_expected_exception(self):
+        self.cat.fed = True
+
+        with self.assertRaises(Exception) as ex:
+            self.cat.eat()
+
+        self.assertEqual("Already fed.", str(ex.exception))
     #
     # def test_eat_if_is_not_fed(self):
 
