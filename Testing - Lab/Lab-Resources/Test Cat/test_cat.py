@@ -9,6 +9,8 @@ class TestCat(TestCase):
     def test_correct_init(self):
         self.assertEqual(self.cat.name, "Tom")
 
+    def
+
 
 if __name__ == '__main__':
     main()
