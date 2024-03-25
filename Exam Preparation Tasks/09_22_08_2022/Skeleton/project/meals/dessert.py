@@ -1,7 +1,7 @@
 from project.meals.meal import Meal
 
 
-class Desert(Meal):
+class Dessert(Meal):
     def __init__(self,name, price, quantity: int = 30):
         super().__init__(name, price, quantity)
 
