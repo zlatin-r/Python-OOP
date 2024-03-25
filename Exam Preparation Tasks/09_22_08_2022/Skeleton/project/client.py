@@ -4,6 +4,7 @@ class Client:
         self.shopping_cart = []
         self.bill = 0.0
         self.ordered_meals = {}
+        self.orders_price = 0
 
     @property
     def phone_number(self):
