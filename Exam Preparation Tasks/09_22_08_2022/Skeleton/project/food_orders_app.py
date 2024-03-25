@@ -32,6 +32,12 @@ class FoodOrdersApp:
     def add_meals_to_shopping_cart(self, client_phone_number: str, **meal_names_and_quantities):
         self._check_if_menu_is_ready()
         client = self._find_client_by_phone_number(client_phone_number)
+        for meal_name, meal_quantity in meal_names_and_quantities:
+            self._check_if_meal_is_in_menu(meal_name)
+            self._check_if_quantity_is_in_menu(meal_name, meal_quantity)
+            if meal_name not in client.ordered_meals.keys():
+                client.ordered_meals[meal_name] = 0
+            client.ordered_meals[meal_name] += meal_quantity
 
     # Helping functions
 
@@ -44,3 +50,13 @@ class FoodOrdersApp:
         if not client:
             self.clients_list.append(Client(client_phone_number))
         return client
+
+    def _check_if_meal_is_in_menu(self, meal_name: str):
+        meal = next(filter(lambda m: m.name == meal_name, self.menu), None)
+        if not meal:
+            raise Exception(f"{meal_name} is not on the menu!")
+
+    def _check_if_quantity_is_in_menu(self, meal_name: str, quantity: int):
+        meal = next(filter(lambda m: m.name == meal_name, self.menu))
+        if meal.quantity < quantity:
+            raise Exception(f"Not enough quantity of {meal.__class__.__name__}: {meal_name}!")
