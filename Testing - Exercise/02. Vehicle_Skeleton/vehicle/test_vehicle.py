@@ -40,7 +40,7 @@ class TestVehicle(TestCase):
 
         self.assertEqual(60, self.vehicle.fuel)
 
-    def test_str_method_message(self):
+    def test_str_method_message_returns_string(self):
         expected_message = "The vehicle has 200 horse power with 100 fuel left and 1.25 fuel consumption"
         self.assertEqual(expected_message, self.vehicle.__str__())
 
