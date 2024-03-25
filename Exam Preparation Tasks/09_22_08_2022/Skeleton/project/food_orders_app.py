@@ -46,8 +46,8 @@ class FoodOrdersApp:
             meal.quantity -= meal_quantity
             ordered_meal = self.MEALS[meal.__class__.__name__](meal.name, meal.price, meal_quantity)
 
-            if ordered_meal.name not in client.ordered_meals.keys():
-                client.ordered_meals[ordered_meal] = 0
+            if self._check_if_meal_is_in_shopping_cart(ordered_meal, client.ordered_meals):
+                client.ordered_meals[ordered_meal] = meal_quantity
             client.ordered_meals[ordered_meal] += meal_quantity
 
         for ordered_meal in client.ordered_meals.keys():
@@ -55,9 +55,11 @@ class FoodOrdersApp:
             client.orders_price += ordered_meal.price * ordered_meal.quantity
         bill = client.orders_price
         client.bill = bill
+        orders = client.shopping_cart
+        client.shopping_cart.clear()
         client.orders_price = 0
         return (f"Client {client_phone_number} "
-                f"successfully ordered {', '.join(meal.name for meal in client.shopping_cart)} "
+                f"successfully ordered {', '.join(meal.name for meal in orders)} "
                 f"for {bill:.2f}lv.")
 
     def cancel_order(self, client_phone_number: str):
@@ -89,6 +91,10 @@ class FoodOrdersApp:
         return f"Food Orders App has {len(self.menu)} meals on the menu and {len(self.clients_list)} clients."
 
     # Helping functions
+
+    def _check_if_meal_is_in_shopping_cart(self, meal, ordered_meals):
+        result = [m for m in ordered_meals.keys() if m.name == meal.name]
+        return len(result) == 0
 
     def _check_if_menu_is_ready(self):
         if len(self.menu) < 5:
