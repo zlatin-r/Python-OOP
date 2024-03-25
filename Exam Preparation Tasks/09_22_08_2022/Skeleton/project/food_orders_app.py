@@ -46,7 +46,7 @@ class FoodOrdersApp:
             meal.quantity -= meal_quantity
             ordered_meal = self.MEALS[meal.__class__.__name__](meal.name, meal.price, meal_quantity)
 
-            if self._check_if_meal_is_in_shopping_cart(ordered_meal, client.ordered_meals):
+            if self._check_if_meal_is_in_ordered_meals(ordered_meal, client.ordered_meals):
                 client.ordered_meals[ordered_meal] = meal_quantity
             client.ordered_meals[ordered_meal] += meal_quantity
 
@@ -92,7 +92,7 @@ class FoodOrdersApp:
 
     # Helping functions
 
-    def _check_if_meal_is_in_shopping_cart(self, meal, ordered_meals):
+    def _check_if_meal_is_in_ordered_meals(self, meal, ordered_meals):
         result = [m for m in ordered_meals.keys() if m.name == meal.name]
         return len(result) == 0
 
