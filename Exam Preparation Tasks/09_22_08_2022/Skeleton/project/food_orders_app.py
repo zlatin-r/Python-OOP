@@ -1,10 +1,13 @@
+from project.meals.dessert import Dessert
+from project.meals.main_dish import MainDish
 from project.meals.meal import Meal
 from project.client import Client
+from project.meals.starter import Starter
 
 
 class FoodOrdersApp:
     RECEIPT_ID = 0
-    MEALS = ["Starter", "MainDish", "Dessert"]
+    MEALS = {"Starter": Starter, "MainDish": MainDish, "Dessert": Dessert}
 
     def __init__(self):
         self.menu = []
@@ -41,15 +44,21 @@ class FoodOrdersApp:
             meal = self._find_meal_by_name(meal_name)
 
             meal.quantity -= meal_quantity
-            ordered_meal = Meal(meal.name, meal.price, meal_quantity)
+            ordered_meal = self.MEALS[meal.__class__.__name__](meal.name, meal.price, meal_quantity)
 
             if ordered_meal.name not in client.ordered_meals.keys():
                 client.ordered_meals[ordered_meal] = 0
             client.ordered_meals[ordered_meal] += meal_quantity
-            client.orders_price += ordered_meal.quantity * meal.price
 
-        client.shopping_cart.append(client.ordered_meals.keys())
-        client.bill += client.orders_price
+        for ordered_meal in client.ordered_meals.keys():
+            client.shopping_cart.append(ordered_meal)
+            client.orders_price += ordered_meal.price * ordered_meal.quantity
+        bill = client.orders_price
+        client.bill = bill
+        client.orders_price = 0
+        return (f"Client {client_phone_number} "
+                f"successfully ordered {', '.join(meal.name for meal in client.shopping_cart)} "
+                f"for {bill:.2f}lv.")
 
     def cancel_order(self, client_phone_number: str):
         client = self._find_client_by_phone_number(client_phone_number)
@@ -74,7 +83,7 @@ class FoodOrdersApp:
         total_paid_money = client.bill
         client.bill, client.orders_price, client.shopping_cart, client.ordered_meals = 0, 0, [], {}
         return (f"Receipt #{self.RECEIPT_ID} with total amount of "
-                f"{total_paid_money} was successfully paid for {client_phone_number}.")
+                f"{total_paid_money:.2f} was successfully paid for {client_phone_number}.")
 
     def __str__(self):
         return f"Food Orders App has {len(self.menu)} meals on the menu and {len(self.clients_list)} clients."
