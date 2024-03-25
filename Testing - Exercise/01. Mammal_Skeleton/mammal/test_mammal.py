@@ -13,11 +13,12 @@ class TestMammal(TestCase):
         self.assertEqual("animals", self.mammal.get_kingdom())
 
     def test_make_sound_should_return_string(self):
-
         self.assertEqual("Simba makes Roar", self.mammal.make_sound())
 
-    def test_info_should_return_string_whit_animal_name_and_type(self):
+    def _test_get_kingdom_should_return_the_kingdom_string(self):
+        self.assertEqual("animals", self.mammal.get_kingdom())
 
+    def test_info_should_return_string_whit_animal_name_and_type(self):
         self.assertEqual("Simba is of type Lion", self.mammal.info())
 
 
