@@ -88,9 +88,6 @@ class FoodOrdersApp:
     def _find_meal_by_name(self, meal_name: str) -> Meal:
         return next(filter(lambda meal: meal.name == meal_name, self.menu))
 
-    # def _find_meal_price_by_name(self, meal_name: str):
-    #     return next(filter(lambda meal: meal.name == meal_name, self.menu)).price
-
     def _find_client_by_phone_number(self, client_phone_number: str):
         client = next(filter(lambda c: c.phone_number == client_phone_number, self.clients_list), None)
         if not client:
