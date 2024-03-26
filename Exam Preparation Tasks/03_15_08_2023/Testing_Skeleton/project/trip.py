@@ -53,5 +53,3 @@ Paid Amount: {paid_amount:.2f}""")
         result.append(f"""Number of Travelers: {self.travelers}
 Budget Left: {self.budget:.2f}""")
         return '\n'.join(result)
-
-
