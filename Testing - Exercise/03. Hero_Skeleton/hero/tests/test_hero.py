@@ -59,8 +59,28 @@ class TestHero(TestCase):
         self.assertEqual(expected_health, self.hero.health)
         self.assertEqual(expected_damage, self.hero.damage)
 
-    def test_battle_hero_lost_enemy_increases_level_health_damage(self):
-        pass
+    def test_battle_hero_lose_enemy_increases_level_health_damage(self):
+        self.hero, self.enemy = self.enemy, self.hero
+
+        expected_string = "You lose"
+
+        expected_level = self.enemy.level + 1
+        expected_health = self.enemy.health - self.hero.damage + 5
+        expected_damage = self.enemy.damage + 5
+
+        result = self.hero.battle(self.enemy)
+
+        self.assertEqual(expected_string, result)
+        self.assertEqual(expected_level, self.enemy.level)
+        self.assertEqual(expected_health, self.enemy.health)
+        self.assertEqual(expected_damage, self.enemy.damage)
+
+    def test_correct__str__(self):
+        expected_result = f"Hero {self.hero.username}: {self.hero.level} lvl\n" \
+                          f"Health: {self.hero.health}\n" \
+                          f"Damage: {self.hero.damage}\n"
+
+        self.assertEqual(expected_result, str(self.hero))
 
 
 if __name__ == '__main__':
