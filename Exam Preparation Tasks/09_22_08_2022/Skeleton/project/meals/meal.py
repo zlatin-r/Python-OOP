@@ -13,8 +13,8 @@ class Meal(ABC):
 
     @name.setter
     def name(self, value):
-        if not value.strip():
-            raise ValueError("Name cannot be an empty string!")
+        if len(value) == 0:
+            raise ValueError('Name cannot be an empty string!')
         self.__name = value
 
     @property
@@ -24,7 +24,7 @@ class Meal(ABC):
     @price.setter
     def price(self, value):
         if value <= 0:
-            raise ValueError("Invalid price!")
+            raise ValueError('Invalid price!')
         self.__price = value
 
     @abstractmethod
