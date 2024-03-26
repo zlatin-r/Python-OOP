@@ -1,4 +1,5 @@
 from unittest import TestCase, main
+
 from project.climbing_robot import ClimbingRobot
 
 
@@ -46,7 +47,58 @@ class TestProject(TestCase):
         self.robot.installed_software = [{'memory_consumption': 30}]
         self.assertEqual(self.robot.get_available_memory(), 170)
 
-    def test_install_software_if_capacity_and_memory_are_enough(self):
+    def test_install_software_success(self):
+        software = {'name': 'Software1', 'capacity_consumption': 30, 'memory_consumption': 50}
+
+        result = self.robot.install_software(software)
+        self.assertEqual(result, f"Software '{software['name']}' successfully installed on {self.robot.category} part.")
+        self.assertEqual(self.robot.installed_software, [software])
+
+    def test_install_software_exact_capacity_memory(self):
+        software = {'name': 'Software1', 'capacity_consumption': 30, 'memory_consumption': 50}
+
+        self.robot.capacity = software['capacity_consumption']
+        self.robot.memory = software['memory_consumption']
+
+        result = self.robot.install_software(software)
+
+        expected_message = f"Software '{software['name']}' successfully installed on {self.robot.category} part."
+        self.assertEqual(result, expected_message)
+        self.assertEqual(self.robot.installed_software, [software])
+
+    def test_install_software_memory_condition_only(self):
+        software = {'name': 'Software1', 'capacity_consumption': 30, 'memory_consumption': 50}
+
+        self.robot.capacity = software['capacity_consumption'] - 5
+        self.robot.memory = software['memory_consumption'] + 10
+
+        result = self.robot.install_software(software)
+
+
+        expected_message = f"Software '{software['name']}' cannot be installed on {self.robot.category} part."
+        self.assertEqual(result, expected_message)
+        self.assertEqual(self.robot.installed_software, [])
+
+    def test_install_software_capacity_condition_only(self):
+        software = {'name': 'Software1', 'capacity_consumption': 30, 'memory_consumption': 50}
+
+        self.robot.capacity = software['capacity_consumption'] + 10
+        self.robot.memory = software['memory_consumption'] - 5
+
+        result = self.robot.install_software(software)
+
+        expected_message = f"Software '{software['name']}' cannot be installed on {self.robot.category} part."
+        self.assertEqual(result, expected_message)
+        self.assertEqual(self.robot.installed_software, [])
+
+    def test_install_software_failure(self):
+        software = {'name': 'Software1', 'capacity_consumption': 150, 'memory_consumption': 250}
+
+        result = self.robot.install_software(software)
+
+        expected_message = f"Software '{software['name']}' cannot be installed on {self.robot.category} part."
+        self.assertEqual(result, expected_message)
+        self.assertEqual(self.robot.installed_software, [])
 
 
 if __name__ == '__main__':
