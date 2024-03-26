@@ -13,7 +13,7 @@ class TestHero(TestCase):
         self.assertEqual(100.00, self.hero.health)
         self.assertEqual(100.00, self.hero.damage)
 
-    def test_battle_username_and_enemy_name_are_same_raises_exception(self):
+    def test_battle_hero_whit_himself_raises_exception(self):
         with self.assertRaises(Exception) as ex:
             self.hero.battle(self.hero)
 
@@ -28,7 +28,7 @@ class TestHero(TestCase):
 
         self.assertEqual(expected_string, str(ex.exception))
 
-    def test_battle_with_zero_health_raises_exception(self):
+    def test_battle_hero_with_zero_health_raises_exception(self):
         self.hero.health = 0
         expected_massage = "Your health is lower than or equal to 0. You need to rest"
 
@@ -37,13 +37,15 @@ class TestHero(TestCase):
 
         self.assertEqual(expected_massage, str(ex.exception))
 
-    def test_battle_with_draw_result_returns_draw_and_decrease_health(self):
+    def test_battle_with_draw_result_returns_draw_and_decreases_both_heroes_health(self):
         self.hero.health = 50
 
         result = self.hero.battle(self.enemy)
 
         self.assertEqual("Draw", result)
-        self.assertEqual()
+        self.assertEqual(-50, self.enemy.health)
+        self.assertEqual(0, self.hero.health)
+
 
 if __name__ == '__main__':
     main()
