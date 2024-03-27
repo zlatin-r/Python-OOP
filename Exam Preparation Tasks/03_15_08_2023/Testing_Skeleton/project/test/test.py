@@ -27,6 +27,14 @@ class TestTrip(TestCase):
         result = self.traveler.book_a_trip("Aytos")
         self.assertEqual(expected, result)
 
+    # def test_book_a_trip_without_budget(self):
+    #     self.t = Trip(100, 1, True)
+    #
+    #     res = self.t.book_a_trip("Bulgaria")
+    #
+    #     self.assertEqual(self.t.booked_destinations_paid_amounts, {})
+    #     self.assertEqual(res, "Your budget is not enough!")
+
     def test_book_a_trip_destination_found_is_family_not_enough_budget(self):
         self.traveler.is_family = True
         self.traveler.budget = 1
@@ -47,9 +55,21 @@ class TestTrip(TestCase):
 
     def test_booking_status_without_any_bookings(self):
         self.t1 = Trip(10_000, 1, False)
-        self.t1.booked_destinations_paid_amounts = []
 
+        expected = f'No bookings yet. Budget: {self.t1.budget:.2f}'
+        result = self.t1.booking_status()
 
+        self.assertEqual(expected, result)
+
+    def test_booking_status_happy_case(self):
+        self.t = Trip(1_000, 1, False)
+        self.t.book_a_trip("Bulgaria")
+        self.assertEqual(self.t.booked_destinations_paid_amounts, {"Bulgaria": 500})
+        res = self.t.booking_status()
+        self.assertEqual(res, """Booked Destination: Bulgaria
+Paid Amount: 500.00
+Number of Travelers: 1
+Budget Left: 500.00""")
 
 
 if __name__ == '__main__':
