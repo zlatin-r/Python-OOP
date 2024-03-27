@@ -49,16 +49,17 @@ class TestSecondHandCar(TestCase):
         self.assertEqual(self.car.price, 29_000)
         self.assertEqual(res, "The promotional price has been successfully set.")
 
-    def test_need_repair_price_bigger_than_car_price_divided_to_two_returns_string(self):
+    def test_need_repair_price_bigger_than_car_half_price_returns_string(self):
         res = self.car.need_repair(15_001, "Engine Change")
 
         self.assertEqual("Repair is impossible!", res)
 
-    def test_need_repair_increase_car_price_add_description_to_repairs_returns_string(self):
+    def test_need_repair_happy_case_increase_car_price_add_description_to_repairs_returns_string(self):
         res = self.car.need_repair(15_000, "New Paint Job")
 
         self.assertEqual("Price has been increased due to repair charges.", res)
         self.assertEqual(self.car.price, 45_000)
+        self.assertEqual(self.car.repairs, ["New Paint Job"])
 
     def test__gt__type_missmatch(self):
         car1 = SecondHandCar("BMW", "Sedan", 100_000, 100_000)
