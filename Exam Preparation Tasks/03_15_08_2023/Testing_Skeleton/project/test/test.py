@@ -53,6 +53,14 @@ class TestTrip(TestCase):
         self.assertEqual({'New Zealand': 7500}, self.t1.booked_destinations_paid_amounts)
         self.assertEqual(expect, result)
 
+    def test_book_a_trip_happy_case_with_family_discount(self):
+        self.t = Trip(25_000, 2, True)
+
+        res = self.t.book_a_trip("Bulgaria")
+        self.assertEqual(self.t.booked_destinations_paid_amounts, {"Bulgaria": 900.0})
+        self.assertEqual(self.t.budget, 24100)
+        self.assertEqual(res, 'Successfully booked destination Bulgaria! Your budget left is 24100.00')
+
     def test_booking_status_without_any_bookings(self):
         self.t1 = Trip(10_000, 1, False)
 
