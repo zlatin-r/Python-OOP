@@ -41,3 +41,7 @@ class TennisPlayer:
                f"Age: {self.age}\n" \
                f"Points: {self.points:.1f}\n" \
                f"Tournaments won: {', '.join(self.wins)}"
+
+
+t1 = TennisPlayer("ivan", 30, 10)
+print(t1)

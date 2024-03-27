@@ -24,6 +24,45 @@ class TestTennisPlayer(TestCase):
 
         self.assertEqual("Players must be at least 18 years of age!", str(ve.exception))
 
+    def test_add_new_win_sad_case_tournament_already_in_wins_return_string(self):
+        self.tennis_player.wins = ["World Cup"]
+
+        res = self.tennis_player.add_new_win("World Cup")
+        expect = "World Cup has been already added to the list of wins!"
+
+        self.assertEqual(expect, res)
+
+    def test_add_new_win_happy_case_append_tournament_to_wins(self):
+        self.tennis_player.add_new_win("World Cup")
+
+        self.assertEqual(["World Cup"], self.tennis_player.wins)
+
+    def test__lt__second_player_is_better(self):
+        player = TennisPlayer("player", 30, 10)
+        other = TennisPlayer("other", 30, 11)
+
+        res = player < other
+
+        self.assertEqual("other is a top seeded player and he/she is better than player", res)
+
+    def test__lt__first_player_is_better(self):
+        player = TennisPlayer("player", 30, 12)
+        other = TennisPlayer("other", 30, 11)
+
+        res = player < other
+
+        self.assertEqual("player is a better player than other", res)
+
+    def test__str__correct_string_message(self):
+        self.tennis_player.wins = ["Win 1", "Win 2", "Win 3"]
+        res = self.tennis_player.__str__()
+        expected = f"Tennis Player: {self.tennis_player.name}\n" \
+                   f"Age: {self.tennis_player.age}\n" \
+                   f"Points: {self.tennis_player.points:.1f}\n" \
+                   f"Tournaments won: {', '.join(self.tennis_player.wins)}"
+
+        self.assertEqual(expected, res)
+
 
 if __name__ == '__main__':
     main()
