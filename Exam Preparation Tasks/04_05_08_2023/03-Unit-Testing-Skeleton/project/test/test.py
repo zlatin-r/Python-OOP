@@ -11,6 +11,7 @@ class TestSecondHandCar(TestCase):
         self.assertEqual("Combi", self.car.car_type)
         self.assertEqual(50_000, self.car.mileage)
         self.assertEqual(30_000, self.car.price)
+        self.assertEqual([], self.car.repairs)
 
     def test_setter_price_value_equal_to_one_raises_value_error(self):
         with self.assertRaises(ValueError) as ve:
@@ -73,7 +74,22 @@ class TestSecondHandCar(TestCase):
         self.assertTrue(car2 > car1)
 
     def test__str__no_repairs(self):
+        self.car.repairs = []
 
+        res = self.car.__str__()
+        expected = f"""Model {self.car.model} | Type {self.car.car_type} | Milage {self.car.mileage}km
+Current price: {self.car.price:.2f} | Number of Repairs: {len(self.car.repairs)}"""
+
+        self.assertEqual(expected, res)
+
+    def test__str__one_repair(self):
+        self.car.repairs = []
+
+        res = self.car.__str__()
+        expected = f"""Model {self.car.model} | Type {self.car.car_type} | Milage {self.car.mileage}km
+        Current price: {self.car.price:.2f} | Number of Repairs: {len(self.car.repairs)}"""
+
+        self.assertEqual(expected, res)
 
 
 if __name__ == '__main__':
