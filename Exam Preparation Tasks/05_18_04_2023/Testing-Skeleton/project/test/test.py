@@ -88,12 +88,29 @@ class TestRobot(TestCase):
         self.assertEqual(9, self.test_robot.available_capacity)
         self.assertEqual("Robot 12 was updated to version 3.0.", res)
 
-    def test__gt__price_bigger_than_other(self):
+    def test__gt__first_robot_more_expensive(self):
         r1 = Robot("12", "Education", 10, 100)
-        r2 = Robot("21", "Entertainment", 10, 200)
+        r2 = Robot("21", "Entertainment", 10, 99.99)
 
-        self.assertTrue(r2 > r1)
-        self.assertFalse(r2 > r1)
+        res = r1 > r2
+
+        self.assertEqual("Robot with ID 12 is more expensive than Robot with ID 21.", res)
+
+    def test__gt__first_robot_is_cheaper(self):
+        r1 = Robot("12", "Education", 10, 99.98)
+        r2 = Robot("21", "Entertainment", 10, 99.99)
+
+        res = r1 > r2
+
+        self.assertEqual("Robot with ID 12 is cheaper than Robot with ID 21.", res)
+
+    def test__gt__robots_are_equal(self):
+        r1 = Robot("12", "Education", 10, 99.99)
+        r2 = Robot("21", "Entertainment", 10, 99.99)
+
+        res = r1 > r2
+
+        self.assertEqual("Robot with ID 12 costs equal to Robot with ID 21.", res)
 
 
 if __name__ == '__main__':
