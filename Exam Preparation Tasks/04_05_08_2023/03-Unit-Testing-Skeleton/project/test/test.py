@@ -83,11 +83,11 @@ Current price: {self.car.price:.2f} | Number of Repairs: {len(self.car.repairs)}
         self.assertEqual(expected, res)
 
     def test__str__one_repair(self):
-        self.car.repairs = []
+        self.car.repairs = ["Repair 1", "Repair 2"]
 
         res = self.car.__str__()
         expected = f"""Model {self.car.model} | Type {self.car.car_type} | Milage {self.car.mileage}km
-        Current price: {self.car.price:.2f} | Number of Repairs: {len(self.car.repairs)}"""
+Current price: {self.car.price:.2f} | Number of Repairs: {len(self.car.repairs)}"""
 
         self.assertEqual(expected, res)
 
