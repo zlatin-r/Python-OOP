@@ -45,7 +45,11 @@ class TestTrip(TestCase):
         self.assertEqual({'New Zealand': 7500}, self.t1.booked_destinations_paid_amounts)
         self.assertEqual(expect, result)
 
-    # TODO NEXT TEST IS BOOKING STATUS
+    def test_booking_status_without_any_bookings(self):
+        self.t1 = Trip(10_000, 1, False)
+        self.t1.booked_destinations_paid_amounts = []
+
+
 
 
 if __name__ == '__main__':
