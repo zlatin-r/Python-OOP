@@ -27,14 +27,6 @@ class TestTrip(TestCase):
         result = self.traveler.book_a_trip("Aytos")
         self.assertEqual(expected, result)
 
-    # def test_book_a_trip_without_budget(self):
-    #     self.t = Trip(100, 1, True)
-    #
-    #     res = self.t.book_a_trip("Bulgaria")
-    #
-    #     self.assertEqual(self.t.booked_destinations_paid_amounts, {})
-    #     self.assertEqual(res, "Your budget is not enough!")
-
     def test_book_a_trip_destination_found_is_family_not_enough_budget(self):
         self.traveler.is_family = True
         self.traveler.budget = 1
