@@ -1,7 +1,7 @@
 from project.horse_specification.horse import Horse
 
 
-class ThoroughBred(Horse):
+class Thoroughbred(Horse):
     MAX_SPEED = 140
 
     def __init__(self, name, speed):

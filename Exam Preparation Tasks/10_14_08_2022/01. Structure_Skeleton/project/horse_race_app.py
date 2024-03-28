@@ -1,11 +1,11 @@
 from project.horse_race import HorseRace
 from project.horse_specification.appaloosa import Appaloosa
-from project.horse_specification.thoroughbred import ThoroughBred
+from project.horse_specification.thoroughbred import Thoroughbred
 from project.jockey import Jockey
 
 
 class HorseRaceApp:
-    VALID_HORSE_BREED_TYPES = {"Appaloosa": Appaloosa, "Thoroughbred": ThoroughBred}
+    VALID_HORSE_BREED_TYPES = {"Appaloosa": Appaloosa, "Thoroughbred": Thoroughbred}
 
     def __init__(self):
         self.horses = []
@@ -34,7 +34,7 @@ class HorseRaceApp:
             raise ValueError(f"Race {race_type} has been already created!")
 
         new_race = HorseRace(race_type)
-        self.horses.append(new_race)
+        self.horse_races.append(new_race)
         return f"Race {race_type} is created."
 
     def add_horse_to_jockey(self, jockey_name: str, horse_type: str):
@@ -47,7 +47,7 @@ class HorseRaceApp:
             raise Exception(f"Horse breed {horse_type} could not be found!")
 
         if jockey.horse is not None:
-            raise Exception(f"Jockey {jockey_name} already has a horse.")
+            return f"Jockey {jockey_name} already has a horse."
 
         horse = filtered_horses.pop()
         jockey.horse = horse
@@ -55,7 +55,8 @@ class HorseRaceApp:
         return f"Jockey {jockey_name} will ride the horse {horse.name}."
 
     def add_jockey_to_horse_race(self, race_type: str, jockey_name: str):
-        if not self._check_if_race_type_is_valid(race_type):
+        race = self._check_if_race_type_is_valid(race_type)
+        if not race:
             raise Exception(f"Race {race_type} could not be found!")
 
         jockey = self._find_jockey_by_name(jockey_name)
@@ -65,10 +66,10 @@ class HorseRaceApp:
         if jockey.horse is None:
             raise Exception(f"Jockey {jockey_name} cannot race without a horse!")
 
-        if self._check_if_jokey_is_added_in_the_race(jockey_name, race_type):
-            raise Exception(f"Jockey {jockey_name} has been already added to the {race_type} race.")
+        if self._check_if_jockey_is_added_in_the_race(jockey_name, race):
+            return f"Jockey {jockey_name} has been already added to the {race_type} race."
 
-        self.horse_races.append(jockey)
+        race.jockeys.append(jockey)
         return f"Jockey {jockey_name} added to the {race_type} race."
 
     def start_horse_race(self, race_type: str):
@@ -80,14 +81,18 @@ class HorseRaceApp:
             raise Exception(f"Horse race {race_type} needs at least two participants!")
 
         best_speed = 0
-        winner = ""
-        for jockey in race:
-            if jockey.horse.speed > best_speed:
-                winner = Jockey(jockey.horse.name, jockey.horse)
+        winner_name = ""
+        horse_name = ""
+        for jockey in race.jockeys:
+            speed = jockey.horse.speed
+            if speed > best_speed:
+                winner_name = jockey.name
+                best_speed = speed
+                horse_name = jockey.horse.name
 
         return (f"The winner of the {race_type} race, "
-                f"with a speed of {winner.horse.speed}km/h is "
-                f"{winner.name}! Winner's horse: {winner.horse.name}.")
+                f"with a speed of {best_speed}km/h is "
+                f"{winner_name}! Winner's horse: {horse_name}.")
 
     # HELPING METHODS
 
@@ -104,12 +109,12 @@ class HorseRaceApp:
         return race
 
     def _check_if_race_type_is_valid(self, race_type: str):
-        return race_type in ["Winter", "Spring", "Autumn", "Summer"]
+        race = next(filter(lambda r: r.race_type == race_type, self.horse_races), None)
+        return race
 
-    def _check_if_jokey_is_added_in_the_race(self, joke_name: str, race_type: str):
-        races = [r for r in self.horse_races if r.race_type == race_type]
-        if races:
-            return next(filter(lambda j: j.joke_name == joke_name, races), None)
+    def _check_if_jockey_is_added_in_the_race(self, joke_name: str, race: HorseRace):
+        jockey = next(filter(lambda j: j.name == joke_name, race.jockeys), None)
+        return jockey
 
     def _find_race_by_type(self, race_type: str):
         return next(filter(lambda r: r.race_type == race_type, self.horse_races), None)
