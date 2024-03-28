@@ -4,7 +4,7 @@ from project.truck_driver import TruckDriver
 
 class TestTruckDriver(TestCase):
     def setUp(self):
-        self.driver = TruckDriver("Jo", 10)
+        self.driver = TruckDriver("Jo", 1.40)
 
     def test_init(self):
         self.assertEqual("Jo", self.driver.name)
