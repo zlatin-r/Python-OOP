@@ -11,12 +11,12 @@ class FoodOrdersApp:
 
     def __init__(self):
         self.menu = []
-        self.clients = []
+        self.clients_list = []
 
     def register_client(self, client_phone_number: str):
         if self._find_client_by_phone_number(client_phone_number):
             raise Exception("The client has already been registered!")
-        self.clients.append(Client(client_phone_number))
+        self.clients_list.append(Client(client_phone_number))
         return f"Client {client_phone_number} registered successfully."
 
     def add_meals_to_menu(self, *meals: Meal):
@@ -38,7 +38,7 @@ class FoodOrdersApp:
         client = self._find_client_by_phone_number(client_phone_number)
         if not client:
             client = Client(client_phone_number)
-            self.clients.append(client)
+            self.clients_list.append(client)
 
         for meal_name, quantity in meal_names_and_quantities.items():
             menu_meal = self._find_meal_in_menu_by_name(meal_name)
@@ -82,7 +82,7 @@ class FoodOrdersApp:
 
     def __str__(self):
         return (f"Food Orders App has {len(self.menu)} "
-                f"meals on the menu and {len(self.clients)} clients.")
+                f"meals on the menu and {len(self.clients_list)} clients.")
 
     # Helping methods
     def _find_meal_in_menu_by_name(self, meal_name: str):
@@ -90,7 +90,7 @@ class FoodOrdersApp:
         return meal
 
     def _find_client_by_phone_number(self, phone_number: str):
-        client = next(filter(lambda c: c.phone_number == phone_number, self.clients), None)
+        client = next(filter(lambda c: c.phone_number == phone_number, self.clients_list), None)
         return client
 
     def _check_if_menu_is_ready(self):
