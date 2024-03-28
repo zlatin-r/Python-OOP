@@ -21,7 +21,7 @@ class FoodOrdersApp:
 
     def add_meals_to_menu(self, *meals: Meal):
         for meal in meals:
-            if meal.__class__.__name__ in self.MEALS:
+            if type(meal).__name__ in self.MEALS.keys():
                 self.menu.append(meal)
 
     def show_menu(self):
@@ -47,38 +47,43 @@ class FoodOrdersApp:
                 raise Exception(f"{meal_name} is not on the menu!")
 
             if quantity > menu_meal.quantity:
-                raise Exception(f"Not enough quantity of {menu_meal.__class__.__name__}: {meal_name}!")
+                raise Exception(f"Not enough quantity of {type(menu_meal).__name__}: {meal_name}!")
 
             menu_meal.quantity -= quantity
-            order = self.MEALS[menu_meal.__class__.__name__](meal_name, menu_meal.price, quantity)
+            order = self.MEALS[type(menu_meal).__name__](meal_name, menu_meal.price, quantity)
             client.shopping_cart.append(order)
 
             client.bill += order.quantity * order.price
 
         ordered_meal_names = [m.name for m in client.shopping_cart]
-        return f"Client {client_phone_number} successfully ordered {', '.join(ordered_meal_names)} for {client.bill:.2f}lv."
+        return (f"Client {client_phone_number} successfully ordered "
+                f"{', '.join(ordered_meal_names)} for {client.bill:.2f}lv.")
 
     def cancel_order(self, phone_number: str):
         client = self._find_client_by_phone_number(phone_number)
 
-        if client.shopping_cart:
-            for meal in client.shopping_cart:
-                for menu_meal in self.menu:
-                    if meal.name == menu_meal.name:
-                        client.bill -= meal.price * meal.quantity
-                        menu_meal.quantity += meal.quantity
-                        client.shopping_cart.remove(meal)
-            client.orders = {}
-            return f"Client {phone_number} successfully canceled his order."
-        raise Exception("There are no ordered meals!")
+        if not client.shopping_cart:
+            raise Exception("There are no ordered meals!")
+
+        for meal in client.shopping_cart:
+            for menu_meal in self.menu:
+                if meal.name == menu_meal.name:
+                    menu_meal.quantity += meal.quantity
+        client.shopping_cart = []
+        client.bill = 0
+        return f"Client {phone_number} successfully canceled his order."
 
     def finish_order(self, phone_number: str):
-        self.RECEIPT_ID += 1
         client = self._find_client_by_phone_number(phone_number)
-        if client.shopping_cart:
-            return (f"Receipt #{self.RECEIPT_ID} with total amount of "
-                    f"{client.bill:.2f} was successfully paid for {phone_number}.")
-        raise Exception("There are no ordered meals!")
+        if not client.shopping_cart:
+            raise Exception("There are no ordered meals!")
+
+        self.RECEIPT_ID += 1
+        total_paid_money = client.bill
+        client.bill = 0
+        client.shopping_cart = []
+        return (f"Receipt #{self.RECEIPT_ID} with total amount of "
+                f"{total_paid_money:.2f} was successfully paid for {phone_number}.")
 
     def __str__(self):
         return (f"Food Orders App has {len(self.menu)} "
