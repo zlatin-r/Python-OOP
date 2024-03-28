@@ -81,6 +81,10 @@ class FoodOrdersApp:
                     f"{client.bill:.2f} was successfully paid for {phone_number}.")
         raise Exception("There are no ordered meals!")
 
+    def __str__(self):
+        return (f"Food Orders App has {len(self.menu)} "
+                f"meals on the menu and {len(self.clients)} clients.")
+
     # Helping methods
     def _find_meal_in_menu_by_name(self, meal_name: str):
         meal = next(filter(lambda m: m.name == meal_name, self.menu), None)
