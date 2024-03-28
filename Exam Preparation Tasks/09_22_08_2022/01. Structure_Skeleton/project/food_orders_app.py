@@ -58,6 +58,8 @@ class FoodOrdersApp:
                     client.shopping_cart.append(meal)
                     client.bill += meal.price * q
                     meal.quantity -= q
+        ordered_meal_names = [name for name in client.orders.keys()]
+        return f"Client {client_phone_number} successfully ordered {', '.join(ordered_meal_names)} for {client.bill:.2f}lv."
 
     def cancel_order(self, phone_number: str):
         client = self._find_client_by_phone_number(phone_number)
