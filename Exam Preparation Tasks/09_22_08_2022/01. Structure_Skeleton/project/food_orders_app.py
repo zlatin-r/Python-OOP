@@ -1,9 +1,12 @@
 from project.client import Client
+from project.meals.dessert import Dessert
+from project.meals.main_dish import MainDish
 from project.meals.meal import Meal
+from project.meals.starter import Starter
 
 
 class FoodOrdersApp:
-    MEALS = ["Starter", "MainDish", "Dessert"]
+    MEALS = {"Starter": Starter, "MainDish": MainDish, "Dessert": Dessert}
     RECEIPT_ID = 0
 
     def __init__(self):
@@ -47,18 +50,12 @@ class FoodOrdersApp:
                 raise Exception(f"Not enough quantity of {menu_meal.__class__.__name__}: {meal_name}!")
 
             menu_meal.quantity -= quantity
+            order = self.MEALS[menu_meal.__class__.__name__](meal_name, menu_meal.price, quantity)
+            client.shopping_cart.append(order)
 
-            if menu_meal.name not in client.orders.keys():
-                client.orders[menu_meal.name] = 0
-            client.orders[menu_meal.name] += quantity
+            client.bill += order.quantity * order.price
 
-        for ordered_meal, q in client.orders.items():
-            for meal in self.menu:
-                if meal.name == ordered_meal:
-                    client.shopping_cart.append(meal)
-                    client.bill += meal.price * q
-                    meal.quantity -= q
-        ordered_meal_names = [name for name in client.orders.keys()]
+        ordered_meal_names = [m.name for m in client.shopping_cart]
         return f"Client {client_phone_number} successfully ordered {', '.join(ordered_meal_names)} for {client.bill:.2f}lv."
 
     def cancel_order(self, phone_number: str):
