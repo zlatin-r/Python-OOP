@@ -18,7 +18,7 @@ class MovieApp:
     def upload_movie(self, username: str, movie: Movie):
         user = self._find_user_by_username(username)
 
-        if user:
+        if not user:
             raise Exception("This user does not exist!")
 
         self._check_if_user_own_the_movie(user, movie)
@@ -102,7 +102,7 @@ class MovieApp:
         return user
 
     def _check_if_user_own_the_movie(self, user: User, movie: Movie):
-        if movie not in user.movies_owned:
+        if movie.owner.username != user.username:
             raise Exception(f"{user.username} is not the owner of the movie {movie.title}!")
 
     def _check_if_movie_is_uploaded(self, movie: Movie):
