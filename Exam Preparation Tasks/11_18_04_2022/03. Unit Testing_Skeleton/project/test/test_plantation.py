@@ -32,9 +32,25 @@ class TestPlantation(TestCase):
         self.assertEqual(["Worker"], self.plantation.workers)
 
     def test__len__(self):
-        self.plantation.plants = {"Iva": "flower"}
-        self.assertEqual(6, len(self.plantation))
+        self.plantation.plants = {"Iva": ["flower", "shroom"]}
+        self.assertEqual(2, len(self.plantation))
 
+    def test_planting_worker_not_in_workers_raises_error(self):
+        self.plantation.workers = []
+        with self.assertRaises(ValueError) as ve:
+            self.plantation.planting("Jack", "rose")
+
+        self.assertEqual("Worker with name Jack is not hired!", str(ve.exception))
+
+    def test_planting_plantation_is_full_raises_exception(self):
+        self.plantation.size = 1
+        self.plantation.workers = ["Jim", "Sam"]
+        self.plantation.planting("Jim", "tulips")
+
+        with self.assertRaises(ValueError) as ve:
+            self.plantation.planting("Sam", "roses")
+
+        self.assertEqual("The plantation is full!", str(ve.exception))
 
 if __name__ == '__main__':
     main()
