@@ -31,7 +31,10 @@ class TestPlantation(TestCase):
         self.assertEqual("Worker successfully hired.", res)
         self.assertEqual(["Worker"], self.plantation.workers)
 
-    def tesr
+    def test__len__(self):
+        self.plantation.plants = {"Iva": "flower"}
+        self.assertEqual(6, len(self.plantation))
+
 
 if __name__ == '__main__':
     main()
