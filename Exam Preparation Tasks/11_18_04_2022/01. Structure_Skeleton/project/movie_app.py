@@ -95,7 +95,6 @@ class MovieApp:
             movies = [m.title for m in self.movies_collection]
             result.append(f"All movies:{', '.join(movies)}")
 
-
     # HELPING METHODS:
 
     def _find_user_by_username(self, username: str):
