@@ -35,8 +35,8 @@ class MovieApp:
         self._check_if_user_own_the_movie(user, movie)
         self._check_if_movie_is_uploaded(movie)
 
-        for key, value in kwargs.items():
-            movie.key = value
+        for attr, new_value in kwargs.items():
+            setattr(movie, attr, new_value)
 
         return f"{username} successfully edited {movie.title} movie."
 
@@ -87,13 +87,15 @@ class MovieApp:
             result.append("All users: No users.")
         else:
             users = [u.username for u in self.users_collection]
-            result.append(f"All users:{', '.join(users)}")
+            result.append(f"All users: {', '.join(users)}")
 
         if not self.movies_collection:
             result.append("All movies: No movies.")
         else:
             movies = [m.title for m in self.movies_collection]
-            result.append(f"All movies:{', '.join(movies)}")
+            result.append(f"All movies: {', '.join(movies)}")
+
+        return "\n".join(result)
 
     # HELPING METHODS:
 
@@ -107,7 +109,7 @@ class MovieApp:
 
     def _check_if_movie_is_uploaded(self, movie: Movie):
         if movie not in self.movies_collection:
-            raise Exception("The movie {movie_title} is not uploaded!")
+            raise Exception(f"The movie {movie.title} is not uploaded!")
 
     def _check_if_user_likes_the_movie(self, user: User, movie: Movie):
         return movie in user.movies_liked
