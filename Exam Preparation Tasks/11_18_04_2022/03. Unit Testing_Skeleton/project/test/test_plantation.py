@@ -52,5 +52,8 @@ class TestPlantation(TestCase):
 
         self.assertEqual("The plantation is full!", str(ve.exception))
 
+    def test_planting_worker_has_already_planted_plans(self):
+        pass
+
 if __name__ == '__main__':
     main()
