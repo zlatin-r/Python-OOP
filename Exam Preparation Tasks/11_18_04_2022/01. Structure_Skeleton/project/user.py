@@ -26,16 +26,16 @@ class User:
         self.__age = value
 
     def __str__(self):
+        result = [f"Username: {self.username}, Age: {self.age}", "Liked movies:"]
         if self.movies_liked:
-            result = [f"Username: {self.username},"
-                    f" Age: {self.age}"
-                    f"Liked movies:{}"]  # TODO ADD ALL MOVIES DETAILS
+            for movie in self.movies_liked:
+                result.append(movie.details())
         else:
-            result = ["No movies liked."]
-
+            result.append("No movies liked.")
+        result.append(f"Owned movies:")
         if self.movies_owned:
-            result.append(f"Owned movies:"
-                          f"{}")  # TODO ADD DETAILS OF ALL OWNED MOVIES
+            for movie in self.movies_owned:
+                result.append(movie.details())
         else:
             result.append("No movies owned.")
 
