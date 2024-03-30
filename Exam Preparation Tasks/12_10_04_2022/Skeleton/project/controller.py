@@ -1,4 +1,5 @@
 from project.player import Player
+from project.supply.food import Food
 from project.supply.supply import Supply
 
 
@@ -54,8 +55,8 @@ class Controller:
     def next_day(self):
         for player in self.players:
             self._reduce_stamina(player)
-            self.sustain(player, "Food")
-            self.sustain(player, "Drink")
+            self.sustain(player.name, "Food")
+            self.sustain(player.name, "Drink")
 
     def __str__(self):
         result = []
@@ -80,7 +81,7 @@ class Controller:
         return result
 
     def _check_if_have_sustenance(self, sustenance_type: str):
-        result = next(filter(lambda s: type(s).__name__ == sustenance_type, self.supplies[::-1]), None)
+        result = next(filter(lambda s: type(s).__name__ == sustenance_type, self.supplies), None)
         # TODO CHECK IF RETURNS THE LAST ADDED SUPPLY FROM THIS TYPE
         if result:
             self.supplies.remove(result)
