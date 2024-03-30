@@ -32,7 +32,7 @@ class TestPlantation(TestCase):
         self.assertEqual(["Worker"], self.plantation.workers)
 
     def test__len__(self):
-        self.plantation.plants = {"Iva": ["flower", "shroom"]}
+        self.plantation.plants = {"Iva": ["flower", "mushrooms"]}
         self.assertEqual(2, len(self.plantation))
 
     def test_planting_worker_not_in_workers_raises_error(self):
