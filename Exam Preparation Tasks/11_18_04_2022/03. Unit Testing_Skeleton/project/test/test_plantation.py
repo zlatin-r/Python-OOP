@@ -86,6 +86,5 @@ class TestPlantation(TestCase):
         self.assertEqual(expect, result)
 
 
-
 if __name__ == '__main__':
     main()
