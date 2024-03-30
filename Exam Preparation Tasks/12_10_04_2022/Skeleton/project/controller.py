@@ -1,5 +1,4 @@
 from project.player import Player
-from project.supply.food import Food
 from project.supply.supply import Supply
 
 
@@ -68,8 +67,6 @@ class Controller:
 
         return "\n".join(result)
 
-
-
     # Helping methods:
 
     def _check_if_player_is_already_added(self, player: Player):
@@ -81,11 +78,14 @@ class Controller:
         return result
 
     def _check_if_have_sustenance(self, sustenance_type: str):
-        result = next(filter(lambda s: type(s).__name__ == sustenance_type, self.supplies), None)
-        # TODO CHECK IF RETURNS THE LAST ADDED SUPPLY FROM THIS TYPE
+        result = None
+
+        for i in range(len(self.supplies) - 1, 0, -1):
+            if type(self.supplies[i]).__name__ == sustenance_type:
+                result = self.supplies.pop(i)
+                break
+
         if result:
-            self.supplies.remove(result)
-            # TODO CHECK IF IS REMOVED FROM SUPPLYS LIST
             return result
         else:
             raise Exception(f"There are no {sustenance_type.lower()} supplies left!")
@@ -115,4 +115,3 @@ class Controller:
 
     def _reduce_stamina(self, player: Player):
         player.stamina = max(player.stamina - player.age * 2, 0)
-
