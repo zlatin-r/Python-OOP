@@ -36,7 +36,6 @@ class TestPlantation(TestCase):
         self.assertEqual(2, len(self.plantation))
 
     def test_planting_worker_not_in_workers_raises_error(self):
-        self.plantation.workers = []
         with self.assertRaises(ValueError) as ve:
             self.plantation.planting("Jack", "rose")
 
