@@ -38,7 +38,13 @@ class Controller:
         player1 = self._find_player_by_name(first_player_name)
         player2 = self._find_player_by_name(second_player_name)
 
-        self._check_if_players_have_stamina(player1, player2)
+        if player1.stamina == 0 and player2.stamina == 0:
+            return (f"Player {player1.name} does not have enough stamina.\n"
+                    f"Player {player2.name} does not have enough stamina.")
+
+        for player in (player1, player2):
+            if player.stamina == 0:
+                return f"Player {player.name} does not have enough stamina."
 
         attacker, defender = self._first_attacker_defender(player1, player2)
 
@@ -82,15 +88,6 @@ class Controller:
             return result
         else:
             raise Exception(f"There are no {sustenance_type.lower()} supplies left!")
-
-    def _check_if_players_have_stamina(self, player1: Player, player2: Player):
-        if player1.stamina == 0 and player2.stamina == 0:
-            return (f"{player1.name} does not have enough stamina.\n"
-                    f"{player2.name} does not have enough stamina.")
-
-        for player in (player1, player2):
-            if player.stamina == 0:
-                return f"{player.name} does not have enough stamina."
 
     def _first_attacker_defender(self, player1: Player, player2: Player):
         if player1.stamina < player2.stamina:
