@@ -51,3 +51,9 @@ class Plantation:
         result += f'Size: {self.size}\n'
         result += f'Workers: {", ".join(self.workers)}'
         return result
+
+
+pl = Plantation(10)
+pl.hire_worker("John")
+pl.planting("John", "roses")
+print(pl.__repr__())

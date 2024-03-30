@@ -53,7 +53,38 @@ class TestPlantation(TestCase):
         self.assertEqual("The plantation is full!", str(ve.exception))
 
     def test_planting_worker_has_already_planted_plans(self):
-        pass
+        self.plantation.workers = ["John"]
+        self.plantation.plants = {"John": ["Tulips"]}
+        res = self.plantation.planting("John", "Roses")
+
+        self.assertEqual("John planted Roses.", res)
+        self.assertEqual({"John": ["Tulips", "Roses"]}, self.plantation.plants)
+
+    def test_planting_worker_has_no_planted_plans(self):
+        self.plantation.workers = ["John"]
+        res = self.plantation.planting("John", "Roses")
+
+        self.assertEqual({"John": ["Roses"]}, self.plantation.plants)
+        self.assertEqual("John planted it's first Roses.", res)
+
+    def test__str__(self):
+        self.plantation.hire_worker("Ivan")
+        self.plantation.planting("Ivan", "Grape")
+
+        expect = "Plantation size: 10\nIvan\nIvan planted: Grape"
+        result = str(self.plantation)
+
+        self.assertEqual(expect, result)
+
+    def test__repr__(self):
+        self.plantation.hire_worker("Ivan")
+        self.plantation.planting("Ivan", "Grape")
+
+        expect = "Size: 10\nWorkers: Ivan"
+        result = str(self.plantation.__repr__())
+
+        self.assertEqual(expect, result)
+
 
 
 if __name__ == '__main__':
