@@ -56,6 +56,18 @@ class TestShopping(TestCase):
         self.assertEqual(expected_message, res)
         self.assertEqual({}, self.cart.products)
 
+    def test_add_method(self):
+        first = ShoppingCart('Test', 200)
+        first.add_to_cart('from_first', 1)
+        second = ShoppingCart('SecondTest', 100)
+        second.add_to_cart('from_second', 2)
+
+        merged = first + second
+
+        self.assertEqual('TestSecondTest', merged.shop_name)
+        self.assertEqual(300, merged.budget)
+        self.assertEqual({'from_first': 1, 'from_second': 2}, merged.products)
+
 
 if __name__ == "__main__":
     main()
