@@ -1,10 +1,12 @@
 from project.car.car import Car
+from project.car.muscle_car import MuscleCar
+from project.car.sports_car import SportsCar
 from project.driver import Driver
 from project.race import Race
 
 
 class Controller:
-    VALID_CAR_TYPES = ["MuscleCar", "SportsCar"]
+    VALID_CAR_TYPES = {"MuscleCar": MuscleCar, "SportsCar": SportsCar}
 
     def __init__(self):
         self.cars = []
@@ -12,11 +14,11 @@ class Controller:
         self.races = []
 
     def create_car(self, car_type: str, model: str, speed_limit: int):
-        if next(filter(lambda car: car.model_type == car_type, self.cars), None):
+        if next(filter(lambda car: car.model == model, self.cars), None):
             raise Exception(f"Car {model} is already created!")
 
         if self._is_car_type_valid(car_type):
-            new_car = Car(car_type, speed_limit)
+            new_car = self.VALID_CAR_TYPES[car_type](model, speed_limit)
             new_car.speed_limit = speed_limit
 
             self.cars.append(new_car)
@@ -43,14 +45,15 @@ class Controller:
         if not driver:
             raise Exception(f"Driver {driver_name} could not be found!")
 
-        if car_type in self.VALID_CAR_TYPES:
+        if car_type in self.VALID_CAR_TYPES.keys():
             car = self._find_available_car(car_type)
 
             if driver.car:
                 car.is_taken = True
-                old_model = driver.car.model
+                old_car = driver.car
+                old_car.is_taken = False
                 driver.car = car
-                return f"Driver {driver.name} changed his car from {old_model} to {driver.car}."
+                return f"Driver {driver.name} changed his car from {old_car.model} to {driver.car.model}."
 
             driver.car = car
             car.is_taken = True
@@ -71,7 +74,7 @@ class Controller:
         if self._check_if_driver_is_already_in_race(driver, race):
             return f"Driver {driver_name} is already added in {race_name} race."
 
-        self.races.append(driver)
+        race.drivers.append(driver)
         return f"Driver {driver_name} added in {race_name} race."
 
     def start_race(self, race_name: str):
@@ -85,7 +88,7 @@ class Controller:
         sorted_cars = sorted(race.drivers, key=lambda d: -d.car.speed_limit)
         result = []
         for driver in sorted_cars[0:3]:
-            driver.wins += 1
+            driver.number_of_wins += 1
             result.append(f"Driver {driver.name} wins the {race_name} race with a speed of {driver.car.speed_limit}.")
 
         return "\n".join(result)
@@ -96,9 +99,10 @@ class Controller:
         return car_type in self.VALID_CAR_TYPES
 
     def _find_available_car(self, car_type: str):
-        for c in range(len(self.cars), - 1, 1):
-            if self.cars[c].model == car_type and not self.cars[c].is_taken:
-                return self.cars[c]
+        for c in range(len(self.cars) - 1, -1, -1):
+            if type(self.cars[c]).__name__ == car_type:
+                if not self.cars[c].is_taken:
+                    return self.cars[c]
         raise Exception(f"Car {car_type} could not be found!")
 
     def _check_if_driver_exists(self, driver_name: str):
