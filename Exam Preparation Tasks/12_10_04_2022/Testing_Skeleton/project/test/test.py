@@ -45,5 +45,42 @@ class TestMovie(TestCase):
 
         self.assertEqual('"Test" is better than "Test2"', res)
 
+    def test__gt__second_better(self):
+        m1 = Movie("Test", 2024, 6.5)
+        m2 = Movie("Test2", 2020, 7.5)
+
+        res = m1 > m2
+
+        self.assertEqual('"Test2" is better than "Test"', res)
+
+    def test__repr__no_actors(self):
+        res = f"Name: {self.movie.name}\n" \
+              f"Year of Release: {self.movie.year}\n" \
+              f"Rating: {self.movie.rating:.2f}\n" \
+              f"Cast: {', '.join(self.movie.actors)}"
+
+        expect = f"Name: Test\n" \
+                 f"Year of Release: 2024\n" \
+                 f"Rating: 6.50\n" \
+                 f"Cast: "
+
+        self.assertEqual(expect, repr(self.movie))
+
+    def test__repr__with_actors(self):
+        self.movie.add_actor("Ivan")
+
+        res = f"Name: {self.movie.name}\n" \
+              f"Year of Release: {self.movie.year}\n" \
+              f"Rating: {self.movie.rating:.2f}\n" \
+              f"Cast: {', '.join(self.movie.actors)}"
+
+        expect = f"Name: Test\n" \
+                 f"Year of Release: 2024\n" \
+                 f"Rating: 6.50\n" \
+                 f"Cast: Ivan"
+
+        self.assertEqual(expect, repr(self.movie))
+
+
 if __name__ == '__main__':
     main()
