@@ -68,6 +68,23 @@ class TestShopping(TestCase):
         self.assertEqual(300, merged.budget)
         self.assertEqual({'from_first': 1, 'from_second': 2}, merged.products)
 
+    def test_buy_products_to_expensive_product_raises_value_error(self):
+        self.cart.products = {"Monitor": 100, "Mouse": 50}
+        with self.assertRaises(ValueError) as ve:
+            self.cart.buy_products()
+
+        expect = "Not enough money to buy the products! Over budget with 50.00lv!"
+
+        self.assertEqual(expect, str(ve.exception))
+
+    def test_buy_products_happy_case(self):
+        self.cart.products = {"Monitor": 80, "Mouse": 15}
+
+        res = self.cart.buy_products()
+        expect = 'Products were successfully bought! Total cost: 95.00lv.'
+
+        self.assertEqual(expect, res)
+
 
 if __name__ == "__main__":
     main()
