@@ -74,6 +74,21 @@ class Controller:
         self.races.append(driver)
         return f"Driver {driver_name} added in {race_name} race."
 
+    def start_race(self, race_name: str):
+        race = self._check_if_race_exists(race_name)
+        if not race:
+            raise Exception(f"Race {race_name} could not be")
+
+        if len(race.drivers) < 3:
+            raise Exception(f"Race {race_name} cannot start with less than 3 participants!")
+
+        sorted_cars = sorted(race.drivers, key=lambda d: -d.car.speed_limit)
+        result = []
+        for driver in sorted_cars[0:3]:
+            driver.wins += 1
+            result.append(f"Driver {driver.name} wins the {race_name} race with a speed of {driver.car.speed_limit}.")
+
+        return "\n".join(result)
 
     # Helping methods:
 
