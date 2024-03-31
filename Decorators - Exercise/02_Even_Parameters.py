@@ -6,9 +6,7 @@ def even_parameters(func):
                     continue
 
             return "Please use only even numbers!"
-
         return func(*args)
-
     return wrapper
 
 
