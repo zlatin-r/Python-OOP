@@ -1,7 +1,7 @@
 def even_numbers(function):
     def wrapper(*args, **kwargs):
-        result = [el for el in args if el % 2 == 0]
-        return function(result)
+        result = function(*args, **kwargs)
+        return [el for el in result if el % 2 == 0]
 
     return wrapper
 
