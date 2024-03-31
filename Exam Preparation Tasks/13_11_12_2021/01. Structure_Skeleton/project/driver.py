@@ -13,4 +13,3 @@ class Driver:
         if not value.strip():
             raise ValueError("Name should contain at least one character!")
         self.__name = value
-
