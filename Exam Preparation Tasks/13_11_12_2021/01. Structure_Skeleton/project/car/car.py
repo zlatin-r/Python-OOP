@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class Car(ABC):
@@ -16,3 +16,7 @@ class Car(ABC):
         if len(value) < 4:
             raise ValueError(f"Model {value} is less than 4 symbols!")
         self.__model = value
+
+    @abstractmethod
+    def speed_limit_check(self):
+        pass
