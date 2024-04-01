@@ -7,8 +7,12 @@ class Meteorologist(Astronaut):
     def __init__(self, name):
         super().__init__(name, Meteorologist.INITIAL_OXYGEN)
 
+    @property
+    def breath_unit(self):
+        return 15
+
     def breathe(self):
-        self.oxygen -= 15
+        self.oxygen -= self.breath_unit
 
     def increase_oxygen(self, amount: int) -> None:
         self.oxygen += amount

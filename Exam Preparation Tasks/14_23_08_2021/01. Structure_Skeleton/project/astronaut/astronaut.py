@@ -8,6 +8,7 @@ class Astronaut(ABC):
         self.name = name
         self.oxygen = oxygen
         self.backpack: List = []
+        self.breath = 10
 
     @property
     def name(self):
