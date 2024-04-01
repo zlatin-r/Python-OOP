@@ -51,3 +51,6 @@ class Team:
         members = list(sorted(self.members.items(), key=lambda x: (-x[1], x[0])))
         result.extend([f"Member: {x[0]} - {x[1]}-years old" for x in members])
         return "\n".join(result)
+
+
+

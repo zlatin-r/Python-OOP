@@ -16,11 +16,25 @@ class TestTeam(TestCase):
 
         self.assertEqual("Team Name can contain only letters!", str(ve.exception))
 
+    def test_add_member(self):
+        res = self.team.add_member(Ivan=35, Gosho=33)
+
+        self.assertEqual(self.team.members, {"Ivan": 35, "Gosho": 33})
+        self.assertEqual(res, "Successfully added: Ivan, Gosho")
+
     def test_remove_member_name_does_not_exist(self):
         res = self.team.remove_member("Peter")
         expect = "Member with name Peter does not exist"
 
         self.assertEqual(expect, res)
+
+    def test_remove_member_happy_case(self):
+        self.team.add_member(Todor=30)
+        res = self.team.remove_member("Todor")
+        expect = "Member Todor removed"
+
+        self.assertEqual(expect, res)
+        self.assertEqual(self.team.members, {})
 
 
 if __name__ == '__main__':
