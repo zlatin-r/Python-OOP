@@ -36,6 +36,24 @@ class TestTeam(TestCase):
         self.assertEqual(expect, res)
         self.assertEqual(self.team.members, {})
 
+    def test__gt__first_team_bigger(self):
+        t1 = Team("TestTeam")
+        t1.add_member(Pesho=20, Dian=34)
+        t2 = Team("TestTeam")
+        t2.add_member(Doncho=37)
+
+        res = t1 > t2
+        self.assertTrue(res, True)
+
+    def test__gt__second_team_bigger(self):
+        t1 = Team("TestTeam")
+        t1.add_member(Pesho=20)
+        t2 = Team("TestTeam")
+        t2.add_member(Doncho=37, Dian=34)
+
+        res = t1 > t2
+        self.assertFalse(res, False)
+
 
 if __name__ == '__main__':
     main()
