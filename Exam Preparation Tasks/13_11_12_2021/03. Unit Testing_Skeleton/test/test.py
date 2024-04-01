@@ -54,6 +54,27 @@ class TestTeam(TestCase):
         res = t1 > t2
         self.assertFalse(res, False)
 
+    def test__len__(self):
+        self.team.add_member(Kolyo=39, Dancho=31)
+
+        self.assertEqual(len(self.team), 2)
+
+    def test__add__(self):
+        t1 = Team("FirstTeam")
+        t2 = Team("SecondTeam")
+        new_team = t1 + t2
+        new_team.add_member(Pesho=21, Todor=22)
+
+        self.assertEqual(new_team.name, "FirstTeamSecondTeam")
+        self.assertEqual(new_team.members, {"Pesho": 21, "Todor": 22})
+
+    def test__str__(self):
+        self.team.add_member(Gosho=21, Tosho=31)
+        res = self.team.__str__()
+        expect = "Team name: TestTeam\nMember: Tosho - 31-years old\nMember: Gosho - 21-years old"
+
+        self.assertEqual(res, expect)
+
 
 if __name__ == '__main__':
     main()
