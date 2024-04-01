@@ -16,6 +16,11 @@ class TestTeam(TestCase):
 
         self.assertEqual("Team Name can contain only letters!", str(ve.exception))
 
+    def test_name_happy_case(self):
+        self.team.name = "TeamOne"
+
+        self.assertEqual("TeamOne", self.team.name)
+
     def test_add_member(self):
         res = self.team.add_member(Ivan=35, Gosho=33)
 
@@ -61,12 +66,14 @@ class TestTeam(TestCase):
 
     def test__add__(self):
         t1 = Team("FirstTeam")
+        t1.add_member(Stefan=35)
         t2 = Team("SecondTeam")
+        t2.add_member(Niki=31)
         new_team = t1 + t2
         new_team.add_member(Pesho=21, Todor=22)
 
         self.assertEqual(new_team.name, "FirstTeamSecondTeam")
-        self.assertEqual(new_team.members, {"Pesho": 21, "Todor": 22})
+        self.assertEqual(new_team.members, {'Niki': 31, 'Pesho': 21, 'Stefan': 35, 'Todor': 22})
 
     def test__str__(self):
         self.team.add_member(Gosho=21, Tosho=31)
