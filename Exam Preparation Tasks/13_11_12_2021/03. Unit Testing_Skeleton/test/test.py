@@ -10,6 +10,12 @@ class TestTeam(TestCase):
         self.assertEqual(self.team.name, "TestTeam")
         self.assertEqual(self.team.members, {})
 
+    def test_name_setter_value_with_digit_raises_value_error(self):
+        with self.assertRaises(ValueError) as ve:
+            self.team.name = "Na8me"
+
+        self.assertEqual("Team Name can contain only letters!", str(ve.exception))
+
 
 if __name__ == '__main__':
     main()
