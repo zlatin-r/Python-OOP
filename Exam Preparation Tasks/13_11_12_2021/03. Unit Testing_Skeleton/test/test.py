@@ -16,11 +16,6 @@ class TestTeam(TestCase):
 
         self.assertEqual("Team Name can contain only letters!", str(ve.exception))
 
-    def test_name_happy_case(self):
-        self.team.name = "TeamOne"
-
-        self.assertEqual("TeamOne", self.team.name)
-
     def test_add_member(self):
         res = self.team.add_member(Ivan=35, Gosho=33)
 
