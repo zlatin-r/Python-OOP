@@ -9,3 +9,6 @@ class Meteorologist(Astronaut):
 
     def breathe(self):
         self.oxygen -= 15
+
+    def increase_oxygen(self, amount: int) -> None:
+        self.oxygen += amount

@@ -9,3 +9,6 @@ class Biologist(Astronaut):
 
     def breathe(self):
         self.oxygen -= 5
+
+    def increase_oxygen(self, amount: int) -> None:
+        self.oxygen += amount

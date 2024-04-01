@@ -9,3 +9,6 @@ class Geodesist(Astronaut):
 
     def breathe(self):
         pass
+
+    def increase_oxygen(self, amount: int) -> None:
+        self.oxygen += amount

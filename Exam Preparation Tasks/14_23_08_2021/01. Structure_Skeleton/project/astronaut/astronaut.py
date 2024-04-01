@@ -23,5 +23,6 @@ class Astronaut(ABC):
     def breathe(self):
         pass
 
-    def increase_oxygen(self, amount: int) -> None:
-        self.oxygen += amount
+    @abstractmethod
+    def increase_oxygen(self, amount) -> None:
+        pass
