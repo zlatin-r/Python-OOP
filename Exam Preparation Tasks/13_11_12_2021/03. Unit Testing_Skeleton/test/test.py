@@ -16,6 +16,12 @@ class TestTeam(TestCase):
 
         self.assertEqual("Team Name can contain only letters!", str(ve.exception))
 
+    def test_remove_member_name_does_not_exist(self):
+        res = self.team.remove_member("Peter")
+        expect = "Member with name Peter does not exist"
+
+        self.assertEqual(expect, res)
+
 
 if __name__ == '__main__':
     main()
