@@ -1,5 +1,4 @@
 from typing import List
-
 from project.route import Route
 from project.user import User
 from project.vehicles.base_vehicle import BaseVehicle
@@ -7,7 +6,7 @@ from project.vehicles.cargo_van import CargoVan
 from project.vehicles.passenger_car import PassengerCar
 
 
-class ManagerApp:
+class ManagingApp:
     VALID_VEHICLE_TYPES = {"PassengerCar": PassengerCar, "CargoVan": CargoVan}
     ROADS_COUNT = 0
 
@@ -54,7 +53,7 @@ class ManagerApp:
                   is_accident_happened: bool):
         user = next(filter(lambda usr: usr.driving_license_number == driving_license_number, self.users))
         vehicle = next(filter(lambda vhc: vhc.license_plate_number == license_plate_number, self.vehicles))
-        road = next(filter(lambda r: r.road_id == route_id, self.routes))
+        road = next(filter(lambda r: r.route_id == route_id, self.routes))
 
         if user.is_blocked:
             return f"User {driving_license_number} is blocked in the platform! This trip is not allowed"
@@ -89,5 +88,4 @@ class ManagerApp:
         sorted_users = sorted(self.users, key=lambda u: -u.rating)
 
         result = ["*** E-Drive-Rent ***", "\n".join(str(u) for u in sorted_users)]
-
         return result
