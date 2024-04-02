@@ -3,7 +3,7 @@ class User:
         self.first_name = first_name
         self.last_name = last_name
         self.driving_license_number = driving_license_number
-        self.rating = 0
+        self.rating = 0.0
         self.is_blocked = False
 
     @property
@@ -47,17 +47,15 @@ class User:
         self.__rating = value
 
     def increase_rating(self):
-        self.rating += 0.5
-        if self.rating > 10:
-            self.rating = 10
+        self.rating = min((self.rating + 0.5), 10)
 
     def decrease_rating(self):
-        if self.rating - 2 < 0:
+        self.rating -= 2
+        if self.rating < 0:
             self.rating = 0
             self.is_blocked = True
-        else:
-            self.rating -= 2
 
     def __str__(self):
         return (f"{self.first_name} {self.last_name} "
-                f"Driving license: {self.driving_license_number} Rating: {self.rating}")
+                f"Driving license: {self.driving_license_number} "
+                f"Rating: {self.rating}")
