@@ -35,7 +35,6 @@ class ManagingApp:
             return f"{brand} {model} was successfully uploaded with LPN-{license_plate_number}."
 
     def allow_route(self, start_point: str, end_point: str, length: float):
-        self.ROADS_COUNT += 1
 
         for road in self.routes:
             if road.start_point == start_point and road.end_point == end_point:
@@ -46,6 +45,7 @@ class ManagingApp:
                 else:
                     road.is_locked = True
 
+        self.ROADS_COUNT += 1
         self.routes.append(Route(start_point, end_point, length, self.ROADS_COUNT))
         return f"{start_point}/{end_point} - {length} km is unlocked and available to use."
 
@@ -56,7 +56,7 @@ class ManagingApp:
         road = next(filter(lambda r: r.route_id == route_id, self.routes))
 
         if user.is_blocked:
-            return f"User {driving_license_number} is blocked in the platform! This trip is not allowed"
+            return f"User {driving_license_number} is blocked in the platform! This trip is not allowed."
 
         if vehicle.is_damaged:
             return f"Vehicle {license_plate_number} is damaged! This trip is not allowed."
@@ -87,5 +87,6 @@ class ManagingApp:
     def users_report(self):
         sorted_users = sorted(self.users, key=lambda u: -u.rating)
 
-        result = ["*** E-Drive-Rent ***", "\n".join(str(u) for u in sorted_users)]
-        return result
+        result = ["*** E-Drive-Rent ***"]
+        result.append(('\n'.join(str(user) for user in sorted_users)))
+        return '\n'.join(result)
