@@ -3,11 +3,11 @@ from project.band_members.musician import Musician
 
 class Singer(Musician):
     TYPE = "Singer"
-    AVAILABLE_SKILLS = ["sing high pitch notes",
-                        "sing low pitch notes"]
+    SINGER_AVAILABLE_SKILLS = ("sing high pitch notes",
+                               "sing low pitch notes")
 
     def learn_new_skill(self, new_skill: str):
-        if new_skill not in self.AVAILABLE_SKILLS:
+        if new_skill not in self.SINGER_AVAILABLE_SKILLS:
             raise ValueError(f"{new_skill} is not a needed skill!")
 
         if new_skill in self.skills:

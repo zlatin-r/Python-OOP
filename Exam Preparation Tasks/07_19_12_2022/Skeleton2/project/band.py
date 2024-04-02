@@ -5,7 +5,7 @@ from project.band_members.musician import Musician
 class Band:
     def __init__(self, name: str):
         self.name = name
-        self.members: List = [Musician]
+        self.members: List[Musician] = []
 
     @property
     def name(self):

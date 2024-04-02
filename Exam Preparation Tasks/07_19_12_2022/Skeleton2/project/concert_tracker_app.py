@@ -11,9 +11,9 @@ class ConcertTrackerApp:
     VALID_MUSICIAN_TYPES = {"Guitarist": Guitarist, "Drummer": Drummer, "Singer": Singer}
 
     def __init__(self):
-        self.bands: List = [Band]
-        self.musicians: List = [Musician]
-        self.concerts: List = [Concert]
+        self.bands: List[Band] = []
+        self.musicians: List[Musician] = []
+        self.concerts: List[Concert] = []
 
     def create_musician(self, musician_type: str, name: str, age: int):
         if musician_type not in self.VALID_MUSICIAN_TYPES.keys():
