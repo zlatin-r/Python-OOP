@@ -85,9 +85,8 @@ class ManagingApp:
         return f"{len(vehicles)} vehicles were successfully repaired!"
 
     def users_report(self):
-        result = ["*** E-Drive-Rent ***"]
-
         sorted_users = sorted(self.users, key=lambda u: -u.rating)
-        result.append('\n'.join(str(user) for user in sorted_users))
 
+        result = ["*** E-Drive-Rent ***"]
+        result.append(('\n'.join(str(user) for user in sorted_users)))
         return '\n'.join(result)
