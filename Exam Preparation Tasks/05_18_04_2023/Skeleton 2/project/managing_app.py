@@ -74,3 +74,20 @@ class ManagerApp:
             user.increase_rating()
 
         return str(vehicle)
+
+    def repair_vehicles(self, count: int):
+        damaged_vehicles = [v for v in self.vehicles if v.is_damaged]
+        vehicles = sorted(damaged_vehicles, key=lambda v: (v.brand, v.model))[:count]
+
+        for vehicle in vehicles:
+            vehicle.is_damaged = False
+            vehicle.recharge()
+
+        return f"{len(vehicles)} vehicles were successfully repaired!"
+
+    def users_report(self):
+        sorted_users = sorted(self.users, key=lambda u: -u.rating)
+
+        result = ["*** E-Drive-Rent ***", "\n".join(str(u) for u in sorted_users)]
+
+        return result
