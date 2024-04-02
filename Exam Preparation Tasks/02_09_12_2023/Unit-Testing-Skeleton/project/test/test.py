@@ -78,6 +78,5 @@ class TestRailwayStation(TestCase):
         self.assertTrue(actual)
 
 
-
 if __name__ == '__main__':
     main()
