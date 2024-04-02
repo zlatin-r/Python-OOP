@@ -75,10 +75,13 @@ class ConcertTrackerApp:
         self._check_member_types_in_band(band)
 
         concert = next(filter(lambda c: c.place == concert_place, self.concerts))
-        self._check_if_band_can_play(band, concert)
+        if not self._check_if_band_can_play(band, concert):
+            raise Exception(f"The {band_name} band is not ready to play at the concert!")
 
-    @staticmethod
-    def _check_if_band_can_play(band_obj, concert_obj):
+        profit = (concert.audience * concert.ticket_price) - concert.expenses
+        return f"{band_name} gained {profit}$ from the {concert.genre} concert in {concert_place}."
+
+    def _check_if_band_can_play(self, band_obj, concert_obj):
         if concert_obj.genre == "Rock":
             needed_skills = {"Singer": "sing high pitch notes",
                              "Drummer": "play the drums with drumsticks",
@@ -104,7 +107,6 @@ class ConcertTrackerApp:
                     return False
         return True
 
-    @staticmethod
     def _check_member_types_in_band(self, band: Band):
         types = ["Guitarist", "Drummer", "Singer"]
 
