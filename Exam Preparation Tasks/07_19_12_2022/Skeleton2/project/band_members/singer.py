@@ -11,7 +11,7 @@ class Singer(Musician):
             raise ValueError(f"{new_skill} is not a needed skill!")
 
         if new_skill in self.skills:
-            raise ValueError(f"{new_skill} is already learned!")
+            raise Exception(f"{new_skill} is already learned!")
 
         self.skills.append(new_skill)
         return f"{self.name} learned to {new_skill}."
