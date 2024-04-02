@@ -1,5 +1,5 @@
 from unittest import TestCase, main
-from project.railway_station import Train
+from project.train.train import Train
 
 
 class TestTrain(TestCase):
