@@ -2,6 +2,7 @@ from project.band_members.musician import Musician
 
 
 class Drummer(Musician):
+    TYPE = "Drummer"
     AVAILABLE_SKILLS = ["play the drums with drumsticks",
                         "play the drums with drum brushes",
                         "read sheet music"]

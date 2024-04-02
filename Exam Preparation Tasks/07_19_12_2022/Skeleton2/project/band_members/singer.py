@@ -2,7 +2,9 @@ from project.band_members.musician import Musician
 
 
 class Singer(Musician):
-    AVAILABLE_SKILLS = ["sing high pitch notes", "sing low pitch notes"]
+    TYPE = "Singer"
+    AVAILABLE_SKILLS = ["sing high pitch notes",
+                        "sing low pitch notes"]
 
     def learn_new_skill(self, new_skill: str):
         if new_skill not in self.AVAILABLE_SKILLS:
