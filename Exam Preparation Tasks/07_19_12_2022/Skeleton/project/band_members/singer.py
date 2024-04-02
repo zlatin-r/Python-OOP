@@ -1,6 +1,4 @@
-from pr"play the drums with drumsticks",
-                        "play the drums with drum brushes",
-                        "read sheet music"oject.band_members.musician import Musician
+from project.band_members.musician import Musician
 
 
 class Singer(Musician):

@@ -54,7 +54,7 @@ class ConcertTrackerApp:
         if not band:
             raise Exception(f"{band_name} isn't a band!")
 
-        band.musicians.append(musician)
+        band.members.append(musician)
         return f"{musician_name} was added to {band_name}."
 
     def remove_musician_from_band(self, musician_name: str, band_name: str):
@@ -79,7 +79,7 @@ class ConcertTrackerApp:
             raise Exception(f"The {band_name} band is not ready to play at the concert!")
 
         profit = (concert.audience * concert.ticket_price) - concert.expenses
-        return f"{band_name} gained {profit}$ from the {concert.genre} concert in {concert_place}."
+        return f"{band_name} gained {profit:.2f}$ from the {concert.genre} concert in {concert_place}."
 
     def _check_if_band_can_play(self, band_obj, concert_obj):
         if concert_obj.genre == "Rock":
@@ -111,8 +111,8 @@ class ConcertTrackerApp:
         types = ["Guitarist", "Drummer", "Singer"]
 
         for member in band.members:
-            if member.TYPE in types:
-                types.pop(member.TYPE)
+            if member.TYPE_ in types:
+                types.remove(member.TYPE_)
 
         if not len(types) == 0:
             raise Exception(f"{band.name} can't start the concert because it doesn't have enough members!")

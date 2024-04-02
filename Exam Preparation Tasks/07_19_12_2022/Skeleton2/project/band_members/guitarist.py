@@ -2,7 +2,7 @@ from project.band_members.musician import Musician
 
 
 class Guitarist(Musician):
-    TYPE = "Guitarist"
+    TYPE_ = "Guitarist"
     GUITARIST_AVAILABLE_SKILLS = ("play metal",
                                   "play rock",
                                   "play jazz")

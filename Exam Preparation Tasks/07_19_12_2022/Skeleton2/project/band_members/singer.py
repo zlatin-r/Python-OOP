@@ -2,7 +2,7 @@ from project.band_members.musician import Musician
 
 
 class Singer(Musician):
-    TYPE = "Singer"
+    TYPE_ = "Singer"
     SINGER_AVAILABLE_SKILLS = ("sing high pitch notes",
                                "sing low pitch notes")
 
