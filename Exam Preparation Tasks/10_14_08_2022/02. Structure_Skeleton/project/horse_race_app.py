@@ -64,6 +64,24 @@ class HorseRaceApp:
         race.jockeys.append(jockey)
         return f"Jockey {jockey_name} added to the {race_type} race."
 
+    def start_horse_race(self, race_type: str):
+        race = self._find_race_by_type(race_type)
+
+        if len(race.jockeys) < 2:
+            raise Exception(f"Horse race {race_type} needs at least two participants!")
+
+        fastest_speed = 0
+        winner = None
+
+        for jockey in race.jockeys:
+            if jockey.horse.speed > fastest_speed:
+                fastest_speed = jockey.horse.speed
+                winner = jockey
+
+        return (f"The winner of the {race_type} race, "
+                f"with a speed of {fastest_speed}km/h is {winner.name}! "
+                f"Winner's horse: {winner.horse.name}.")
+
     def _find_race_by_type(self, race_type: str):
         race = next(filter(lambda r: r.race_type == race_type, self.horse_races), None)
         if not race:
