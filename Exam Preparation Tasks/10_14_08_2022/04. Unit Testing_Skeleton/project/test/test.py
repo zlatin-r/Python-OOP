@@ -17,10 +17,20 @@ class TestBookstore(TestCase):
 
         self.assertEqual("Books limit of -1 is not valid", str(ve.exception))
 
-    def test__len__returns_total_books_in_store(self):
-        self.bookstore.availability_in_store_by_book_titles = {"Book1": 2, "Book2": 3, "Book3": 5}
+    def test_books_limit_with_value_zero_raises_value_error(self):
+        with self.assertRaises(ValueError) as ve:
+            self.bookstore.books_limit = 0
 
-        self.assertEqual(10, len(self.bookstore))
+        self.assertEqual("Books limit of 0 is not valid", str(ve.exception))
+
+    def test__len__returns_total_books_in_store(self):
+        self.bookstore.availability_in_store_by_book_titles = {"Book1": 1, "Book2": 2, "Book3": 3}
+
+        self.assertEqual(6, len(self.bookstore))
+
+        second_result = self.bookstore.receive_book("Book1", 4)
+        self.assertEqual("5 copies of Book1 are available in the bookstore.", second_result)
+        self.assertEqual(len(self.bookstore), 10)
 
     def test_receive_book_if_not_enough_space_in_store_raise_exception(self):
         self.bookstore.books_limit = 1
