@@ -8,4 +8,4 @@ class Appaloosa(Horse):
         super().__init__(name, speed)
 
     def train(self):
-        self.speed += 2
+        self.speed = min((self.speed + 2), 120)
