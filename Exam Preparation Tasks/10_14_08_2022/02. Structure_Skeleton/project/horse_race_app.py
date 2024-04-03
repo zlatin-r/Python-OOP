@@ -46,7 +46,7 @@ class HorseRaceApp:
         horse = self._find_horse_by_type(horse_type)
 
         if jockey.horse:
-            return f"Jockey {jockey_name} already has a horse"
+            return f"Jockey {jockey_name} already has a horse."
 
         jockey.horse = horse
         return f"Jockey {jockey_name} will ride the horse {horse.name}."
@@ -92,7 +92,7 @@ class HorseRaceApp:
         for i in range(len(self.horses) - 1, -1, -1):
             if self.horses[i].TYPE_ == horse_type:
                 if not self.horses[i].is_taken:
-                    return self.horses.pop(i)
+                    return self.horses[i]
         raise Exception(f"Horse breed {horse_type} could not be found!")
 
     def _find_jockey_by_name(self, jockey_name: str):
