@@ -62,6 +62,7 @@ class FoodOrdersApp:
 
     def cancel_order(self, client_phone_number: str):
         client = self._validate_client(client_phone_number)
+
         if client.shopping_cart:
             for meal in client.shopping_cart:
                 menu_meal = next(filter(lambda m: m.name == meal.name, self.menu))
