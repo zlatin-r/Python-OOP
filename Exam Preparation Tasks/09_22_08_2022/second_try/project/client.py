@@ -1,5 +1,7 @@
 from typing import List
 
+from project.meals.meal import Meal
+
 
 class Client:
     def __init__(self, phone_number: str):
