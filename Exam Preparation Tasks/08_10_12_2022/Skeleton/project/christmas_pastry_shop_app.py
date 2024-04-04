@@ -52,7 +52,7 @@ class ChristmasPastryShopApp:
         bill = sum([b.price for b in booth.delicacy_orders]) + booth.price_for_reservation
         self.income += bill
         booth.delicacy_orders = []
-        booth.price_for_reservation = 0
+        booth.price_for_reservation = 0.0
         booth.is_reserved = False
         return f"Booth {booth_number}:\nBill: {bill:.2f}lv."
 
