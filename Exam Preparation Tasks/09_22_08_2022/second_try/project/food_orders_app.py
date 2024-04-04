@@ -51,13 +51,14 @@ class FoodOrdersApp:
                 raise Exception(f"Not enough quantity of {type(meal).__name__}: {meal_name}!")
 
             meal.quantity -= quantity
-            ordered_meal = meal
-            ordered_meal.quantity = quantity
+            ordered_meal = self.VALID_MEAL_TYPES[type(meal).__name__](meal.name, meal.price, quantity)
             current_order.append(ordered_meal)
             current_bill += ordered_meal.price * quantity
 
         client.shopping_cart.extend(current_order)
         client.bill += current_bill
+        return (f"Client {client_phone_number} successfully ordered "
+                f"{', '.join(m.name for m in client.shopping_cart)} for {client.bill:.2f}lv.")
 
     def cancel_order(self, client_phone_number: str):
         client = self._validate_client(client_phone_number)
@@ -79,9 +80,10 @@ class FoodOrdersApp:
 
         self.RECEIPT_ID += 1
         client.shopping_cart = []
+        final_bill = client.bill
         client.bill = 0.0
 
-        return (f"Receipt #{self.RECEIPT_ID} with total amount of {client.bill} "
+        return (f"Receipt #{self.RECEIPT_ID} with total amount of {final_bill:.2f} "
                 f"was successfully paid for {client_phone_number}.")
 
     def __str__(self):
