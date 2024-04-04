@@ -1,5 +1,4 @@
 from typing import List
-
 from project.meals.meal import Meal
 
 
