@@ -15,7 +15,7 @@ class Movie(ABC):
 
     @title.setter
     def title(self, value):
-        if not value.strip():
+        if len(value) == 0:
             raise ValueError("The title cannot be empty string!")
         self.__title = value
 
@@ -35,7 +35,7 @@ class Movie(ABC):
 
     @owner.setter
     def owner(self, value):
-        if type(value).__name__ != "User":
+        if not type(value).__name__ == "User":
             raise ValueError("The owner must be an object of type User!")
         self.__owner = value
 
