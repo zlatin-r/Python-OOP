@@ -25,6 +25,7 @@ class Delicacy(ABC):
     def price(self, value):
         if value <= 0:
             raise ValueError("Price cannot be less or equal to zero!")
+        self.__price = value
 
     @abstractmethod
     def details(self):
