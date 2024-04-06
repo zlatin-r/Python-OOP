@@ -1,7 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import List
-
-from project.campaigns.base_campaign import BaseCampaign
 
 
 class BaseInfluencer(ABC):
@@ -9,7 +6,7 @@ class BaseInfluencer(ABC):
         self.username = username
         self.followers = followers
         self.engagement_rate = engagement_rate
-        self.campaigns_participated: List[BaseCampaign] = []
+        self.campaigns_participated = []
 
     @property
     def username(self):
@@ -42,7 +39,7 @@ class BaseInfluencer(ABC):
         self.__engagement_rate = value
 
     @abstractmethod
-    def calculate_payment(self, campaign: BaseCampaign):
+    def calculate_payment(self, campaign):
         pass
 
     @abstractmethod
@@ -57,8 +54,7 @@ class BaseInfluencer(ABC):
                   f"participated in the following campaigns:"]
 
         for c in self.campaigns_participated:
-            result.append(f" - Campaign ID: {c.campaign_id}, Brand: {c.brand}, "
-                          f"Reached followers: {self.reached_followers(c.__class__.__name__)}")
-        # TODO CHECK Reached followers
+            result.append(f"  - Campaign ID: {c.campaign_id}, Brand: {c.brand}, "
+                          f"Reached followers: {int(self.reached_followers(c.__class__.__name__))}")
 
         return "\n".join(result)

@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List
 
-from project.influencers.base_influencer import BaseInfluencer
 
 
 class BaseCampaign(ABC):
@@ -12,7 +10,7 @@ class BaseCampaign(ABC):
         self.brand = brand
         self.budget = budget
         self.required_engagement = required_engagement
-        self.approved_influencers: List[BaseInfluencer] = []
+        self.approved_influencers = []
 
     @property
     def campaign_id(self):
@@ -22,9 +20,10 @@ class BaseCampaign(ABC):
     def campaign_id(self, value):
         if value < 0:
             raise ValueError("Campaign ID must be a positive integer greater than zero.")
-        if value in self.CAMPAIGN_IDS:
+        elif value in self.CAMPAIGN_IDS:
             raise ValueError(f"Campaign with ID {value} already exists. Campaign IDs must be unique.")
-        self.CAMPAIGN_IDS.append(value)
+        else:
+            self.CAMPAIGN_IDS.append(value)
         self.__campaign_id = value
 
     @abstractmethod
