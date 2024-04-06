@@ -58,7 +58,7 @@ class BaseInfluencer(ABC):
 
         for c in self.campaigns_participated:
             result.append(f" - Campaign ID: {c.campaign_id}, Brand: {c.brand}, "
-                          f"Reached followers: {self.followers}")
+                          f"Reached followers: {self.reached_followers(c.__class__.__name__)}")
         # TODO CHECK Reached followers
 
         return "\n".join(result)
