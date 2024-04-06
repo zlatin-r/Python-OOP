@@ -51,14 +51,16 @@ class InfluencerManagerApp:
             return f"Campaign with ID {campaign_id} not found."
 
         if not campaign.check_eligibility(influencer.engagement_rate):
-            return f"Influencer '{influencer_username}' does not meet the eligibility criteria for the campaign with ID {campaign_id}."
+            return (f"Influencer '{influencer_username}' does not meet the eligibility criteria "
+                    f"for the campaign with ID {campaign_id}.")
 
         influencer_payment = influencer.calculate_payment(campaign)
         if influencer_payment > 0.0:
             campaign.approved_influencers.append(influencer)
             campaign.budget -= influencer_payment
             influencer.campaigns_participated.append(campaign)
-            return f"Influencer '{influencer_username}' has successfully participated in the campaign with ID {campaign_id}."
+            return (f"Influencer '{influencer_username}' has successfully participated in the "
+                    f"campaign with ID {campaign_id}.")
 
     def calculate_total_reached_followers(self):
         result = {}

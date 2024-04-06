@@ -34,7 +34,7 @@ class BaseInfluencer(ABC):
 
     @engagement_rate.setter
     def engagement_rate(self, value):
-        if not 0.0 <= value <= 5.0:
+        if not 0 <= value <= 5:
             raise ValueError("Engagement rate should be between 0 and 5.")
         self.__engagement_rate = value
 

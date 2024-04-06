@@ -13,6 +13,6 @@ class PremiumInfluencer(BaseInfluencer):
 
     def reached_followers(self, campaign_type: str):
         if campaign_type == "HighBudgetCampaign":
-            return (self.followers * self.engagement_rate) * 1.5
+            return int(self.followers * self.engagement_rate * 1.5)
         if campaign_type == "LowBudgetCampaign":
-            return (self.followers * self.engagement_rate) * 0.8
+            return int(self.followers * self.engagement_rate * 0.8)
