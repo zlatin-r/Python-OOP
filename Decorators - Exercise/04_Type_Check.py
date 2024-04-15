@@ -18,3 +18,12 @@ def sum_numbers(a, b):
 
 
 print(sum_numbers(5, 6.5))
+
+
+@type_check(int)
+def times2(num):
+    return num * 2
+
+
+print(times2(2))
+print(times2('Not A Number'))
