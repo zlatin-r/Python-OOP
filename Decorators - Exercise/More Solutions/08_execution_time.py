@@ -1,6 +1,14 @@
+from time import time
+
+
 def exec_time(func):
     def wrapper(*args, **kwargs):
-        pass
+        start = time()
+        func(*args, **kwargs)
+        end = time()
+
+        return end - start
+
     return wrapper
 
 
@@ -12,4 +20,4 @@ def loop(start, end):
     return total
 
 
-print(loop(1, 10000000))
+print(loop(1, 100_000_000))
