@@ -62,12 +62,20 @@ class InfluencerManagerApp:
     def calculate_total_reached_followers(self):
         result = {}
 
-        for campaign in self.campaigns:
-            if campaign.approved_influencers:
-                result[campaign.campaign_id] = 0
-                for inf in campaign.approved_influencers:
-                    for camp in inf.campaigns_participated:
-                        result[campaign.campaign_id] += inf.reached_followers(camp.__class__.__name__)
+        for influencer in self.influencers:
+            for campaign in influencer.campaigns_participated:
+                reached_followers = influencer.reached_followers(type(campaign).__name__)
+                result[campaign] = result.get(campaign, 0) + reached_followers
+
+        # My Wrong Solution:
+
+        # for campaign in self.campaigns:
+        #     if campaign.approved_influencers:
+        #         result[campaign.campaign_id] = 0
+        #         for inf in campaign.approved_influencers:
+        #             for camp in inf.campaigns_participated:
+        #                 result[campaign.campaign_id] += inf.reached_followers(camp.__class__.__name__)
+        #
 
         return result
 
