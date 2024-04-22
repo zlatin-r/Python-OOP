@@ -50,10 +50,11 @@ class BaseInfluencer(ABC):
         if not self.campaigns_participated:
             return f"{self.username} has not participated in any campaigns."
 
-        result = [f"{self.username.__class__.__name__} :) {self.username} :) "
+        result = [f"{self.__class__.__name__} :) {self.username} :) "
                   f"participated in the following campaigns:"]
 
-        for campaign in self.campaigns_participated:
-            result.append(campaign.reached_followers(campaign.__class__.__name__))
+        for c in self.campaigns_participated:
+            result.append(f"  - Campaign ID: {c.campaign_id}, Brand: {c.brand}, "
+                          f"Reached followers: {int(self.reached_followers(c.__class__.__name__))}")
 
         return "\n".join(result)

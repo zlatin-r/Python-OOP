@@ -81,10 +81,7 @@ class InfluencerManagerApp:
         if not influencer.campaigns_participated:
             return f"{username} has not participated in any campaigns."
 
-        result = [f"{influencer.__class__.__name__} :) {username} :) participated in the following campaigns:",
-                  influencer.display_campaigns_participated()]
-
-        return "\n".join(result)
+        return influencer.display_campaigns_participated()
 
     def campaign_statistics(self):
         sorted_campaigns = sorted(self.campaigns, key=lambda c: (len(c.approved_influencers), -c.budget))
