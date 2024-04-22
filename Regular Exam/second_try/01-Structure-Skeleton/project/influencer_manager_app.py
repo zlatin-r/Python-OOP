@@ -31,6 +31,8 @@ class InfluencerManagerApp:
         try:
             next(filter(lambda camp: campaign_id == camp.campaign_id, self.campaigns))
             return f"Campaign ID {campaign_id} has already been created."
+            # TODO CHECK HERE IF IS OK
         except StopIteration:
             self.campaigns.append(self.VALID_CAMPAIGNS_TYPES[campaign_type](campaign_id, brand, required_engagement))
+            return f"Campaign ID {campaign_id} for {brand} is successfully created as a {campaign_type}."
 
