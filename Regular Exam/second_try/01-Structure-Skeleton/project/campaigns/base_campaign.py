@@ -17,12 +17,13 @@ class BaseCampaign(ABC):
 
     @campaign_id.setter
     def campaign_id(self, value):
-        if value < 0:
+        if value <= 0 or not isinstance(value, int):
             raise ValueError("Campaign ID must be a positive integer greater than zero.")
 
         if value in self.USED_CAMP_IDS:
             raise ValueError(f"Campaign with ID {value} already exists. Campaign IDs must be unique.")
 
+        self.USED_CAMP_IDS.append(value)
         self.__campaign_id = value
 
     @abstractmethod
