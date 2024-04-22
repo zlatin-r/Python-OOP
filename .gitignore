@@ -165,3 +165,14 @@ cython_debug/
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/Python-OOP-2024.iml
 /.idea/vcs.xml
+/Regular Exam/01. Structure_Author's Solution.zip
+/Regular Exam/01. Structure_Author's Solution/project/campaigns/__init__.py
+/Regular Exam/01. Structure_Author's Solution/project/influencers/__init__.py
+/Regular Exam/01. Structure_Author's Solution/project/campaigns/base_campaign.py
+/Regular Exam/01. Structure_Author's Solution/project/influencers/base_influencer.py
+/Regular Exam/01. Structure_Author's Solution/project/campaigns/high_budget_campaign.py
+/Regular Exam/01. Structure_Author's Solution/project/influencer_manager_app.py
+/Regular Exam/01. Structure_Author's Solution/project/campaigns/low_budget_campaign.py
+/Regular Exam/01. Structure_Author's Solution/project/influencers/premium_influencer.py
+/Regular Exam/project.zip
+/Regular Exam/01. Structure_Author's Solution/project/influencers/standard_influencer.py
