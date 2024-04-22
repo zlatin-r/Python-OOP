@@ -17,21 +17,21 @@ class BaseInfluencer(ABC):
         if not value.strip():
             raise ValueError("Username cannot be empty or consist only of whitespace!")
         self.__username = value
-        
+
     @property
     def followers(self):
         return self.__followers
-    
+
     @followers.setter
     def followers(self, value):
         if value < 0:
             raise ValueError("Followers must be a non-negative integer!")
         self.__followers = value
-        
+
     @property
     def engagement_rate(self):
         return self.__engagement_rate
-    
+
     @engagement_rate.setter
     def engagement_rate(self, value):
         if not 0 <= value <= 5:
@@ -54,6 +54,6 @@ class BaseInfluencer(ABC):
                   f"participated in the following campaigns:"]
 
         for campaign in self.campaigns_participated:
-                result.append(campaign.reached_followers(campaign.__class__.__name__))
+            result.append(campaign.reached_followers(campaign.__class__.__name__))
 
         return "\n".join(result)

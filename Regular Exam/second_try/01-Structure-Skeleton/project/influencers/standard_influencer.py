@@ -5,7 +5,7 @@ class StandardInfluencer(BaseInfluencer):
     PAYMENT_PERCENTAGE = 0.45
 
     def calculate_payment(self, campaign):
-        return campaign.BUDGET * self.PAYMENT_PERCENTAGE
+        return campaign.budget * self.PAYMENT_PERCENTAGE
 
     def reached_followers(self, campaign_type: str):
         if campaign_type == 'HighBudgetCampaign':
