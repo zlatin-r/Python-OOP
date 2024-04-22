@@ -67,10 +67,10 @@ class InfluencerManagerApp:
 
         for campaign in self.campaigns:
             if campaign.approved_influencers:
-                result[campaign.CAMPAIGN_IDS] = 0
+                result[campaign.campaign_id] = 0
                 for inf in campaign.approved_influencers:
                     for camp in inf.campaigns_participated:
-                        result[campaign.CAMPAIGN_IDS] += inf.reached_followers(camp.__class__.__name__)
+                        result[campaign.campaign_id] += inf.reached_followers(camp.__class__.__name__)
 
         return result
 
