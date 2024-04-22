@@ -6,7 +6,7 @@ from project.influencers.standard_influencer import StandardInfluencer
 
 class InfluencerManagerApp:
     VALID_INFLUENCER_TYPES = {"PremiumInfluencer": PremiumInfluencer, "StandardInfluencer": StandardInfluencer}
-    VALID_CAMPAIGNS_TYPES = {"HighBudgetCampaign": HighBudgetCampaign, "LowBudgetCampaign":LowBudgetCampaign}
+    VALID_CAMPAIGNS_TYPES = {"HighBudgetCampaign": HighBudgetCampaign, "LowBudgetCampaign": LowBudgetCampaign}
 
     def __init__(self):
         self.influencers = []
@@ -64,4 +64,40 @@ class InfluencerManagerApp:
                     f"in the campaign with ID {campaign_id}.")
 
     def calculate_total_reached_followers(self):
+        result = {}
 
+        for campaign in self.campaigns:
+            if campaign.approved_influencers:
+                result[campaign.campaign_id] = 0
+                for inf in campaign.approved_influencers:
+                    for camp in inf.campaigns_participated:
+                        result[campaign.campaign_id] += inf.reached_followers(camp.__class__.__name__)
+
+        return result
+
+    def influencer_campaign_report(self, username: str):
+        influencer = next(filter(lambda inf: inf.username == username, self.influencers))
+
+        if not influencer.campaigns_participated:
+            return f"{username} has not participated in any campaigns."
+
+        result = [f"{influencer.__class__.__name__} :) {username} :) participated in the following campaigns:",
+                  influencer.display_campaigns_participated()]
+
+        return "\n".join(result)
+
+    def campaign_statistics(self):
+        sorted_campaigns = sorted(self.campaigns, key=lambda c: (len(c.approved_influencers), -c.budget))
+        result = ["$$ Campaign Statistics $$"]
+
+        for campaign in sorted_campaigns:
+            total_reached_followers = 0
+            for inf in campaign.approved_influencers:
+                total_reached_followers += inf.reached_followers(campaign.__class__.__name__)
+
+            result.append(f"  * Brand: {campaign.brand}, "
+                          f"Total influencers: {len(campaign.approved_influencers)}, "
+                          f"Total budget: ${campaign.budget:.2f}, "
+                          f"Total reached followers: {int(total_reached_followers)}")
+
+        return "\n".join(result)
