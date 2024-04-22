@@ -33,6 +33,35 @@ class InfluencerManagerApp:
             return f"Campaign ID {campaign_id} has already been created."
             # TODO CHECK HERE IF IS OK
         except StopIteration:
+            # budget = self.VALID_CAMPAIGNS_TYPES[campaign_type].budget
             self.campaigns.append(self.VALID_CAMPAIGNS_TYPES[campaign_type](campaign_id, brand, required_engagement))
             return f"Campaign ID {campaign_id} for {brand} is successfully created as a {campaign_type}."
+            # TODO CHECK IF CAMPAIGN IS CREATED "BUDGET"?
+
+    def participate_in_campaign(self, influencer_username: str, campaign_id: int):
+        try:
+            influencer = next(filter(lambda inf: inf.username == influencer_username, self.influencers))
+        except StopIteration:
+            return f"Influencer '{influencer_username}' not found."
+
+        try:
+            campaign = next(filter(lambda camp: camp.campaign_id == campaign_id, self.campaigns))
+        except StopIteration:
+            return f"Campaign with ID {campaign_id} not found."
+
+        if not campaign.check_eligibility(influencer.engagement_rate):
+            return (f"Influencer '{influencer_username}' does not meet the eligibility criteria "
+                    f"for the campaign with ID {campaign_id}.")
+
+        inf_payment = influencer.calculate_payment(campaign)
+
+        if inf_payment > 0:
+            campaign.approved_influencers.append(influencer)
+            campaign.budget -= inf_payment
+            influencer.campaigns_participated.append(campaign)
+
+            return (f"Influencer '{influencer_username}' has successfully participated "
+                    f"in the campaign with ID {campaign_id}.")
+
+    def calculate_total_reached_followers(self):
 
