@@ -38,16 +38,14 @@ class SphereRestaurantApp:
         try:
             waiter = next(filter(lambda w: w.name == waiter_name, self.waiters))
             return waiter.report_shift()
-            # TODO CHECK REFERENCE OR CALL report_shift METHOD
         except StopIteration:
             return f"No waiter found with the name {waiter_name}."
 
-    def process_client_order(self,client_name: str, order_amount: float):
+    def process_client_order(self, client_name: str, order_amount: float):
         try:
             client = next(filter(lambda c: c.name == client_name, self.clients))
             points_earned = int(client.earning_points(order_amount))
             return f"{client_name} earned {points_earned} points from the order."
-            # TODO CHECK REFERENCE OR CALL earning_points METHOD
         except StopIteration:
             return f"{client_name} is not a registered client."
 

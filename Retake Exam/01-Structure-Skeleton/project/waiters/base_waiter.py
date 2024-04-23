@@ -36,4 +36,3 @@ class BaseWaiter(ABC):
 
     def __str__(self):
         return f"Name: {self.name}, Total earnings: ${self.calculate_earnings():.2f}"
-        # TODO CHECK HERE REFERENCE OR CALL METHOD
