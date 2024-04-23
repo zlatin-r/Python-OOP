@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class BaseWaiter(ABC):
-    def __init__(self,name: str, hours_worked: int):
+    def __init__(self, name: str, hours_worked: int):
         self.name = name
         self.hours_worked = hours_worked
 
@@ -35,5 +35,5 @@ class BaseWaiter(ABC):
         pass
 
     def __str__(self):
-        return f"Name: {self.name}, Total earnings: ${self.calculate_earnings:.2f}"
-                                                # TODO CHECK HERE REFERENCE OR CALL METHOD
+        return f"Name: {self.name}, Total earnings: ${self.calculate_earnings():.2f}"
+        # TODO CHECK HERE REFERENCE OR CALL METHOD

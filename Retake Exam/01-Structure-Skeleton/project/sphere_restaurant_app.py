@@ -41,3 +41,37 @@ class SphereRestaurantApp:
             # TODO CHECK REFERENCE OR CALL report_shift METHOD
         except StopIteration:
             return f"No waiter found with the name {waiter_name}."
+
+    def process_client_order(self,client_name: str, order_amount: float):
+        try:
+            client = next(filter(lambda c: c.name == client_name, self.clients))
+            return client.earning_points(order_amount)
+            # TODO CHECK REFERENCE OR CALL earning_points METHOD
+        except StopIteration:
+            return f"{client_name} is not a registered client."
+
+    def apply_discount_to_client(self, client_name: str):
+        try:
+            client = next(filter(lambda c: c.name == client_name, self.clients))
+            discount, remaining_points = client.apply_discount()
+            return f"{client_name} received a {discount}% discount. Remaining points {remaining_points}"
+        except StopIteration:
+            return f"{client_name} cannot get a discount because this client is not admitted!"
+
+    def generate_report(self):
+        sorted_waiters = sorted(self.waiters, key=lambda w: -w.calculate_earnings())
+
+        total_earnings = sum([w.calculate_earnings() for w in self.waiters])
+        total_unused_client_points = sum([c.points for c in self.clients])
+        total_clients = len(self.clients)
+
+        result = [f"$$ Monthly Report $$\n"
+                  f"Total Earnings: ${total_earnings:.2f}\n"
+                  f"Total Clients Unused Points: {total_unused_client_points}\n"
+                  f"Total Clients Count: {total_clients}\n"
+                  f"** Waiter Details **\n"]
+
+        for waiter in sorted_waiters:
+            result.append(waiter.__str__())
+
+        return "\n".join(result)
