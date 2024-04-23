@@ -34,6 +34,10 @@ class SphereRestaurantApp:
             self.clients.append(self._VALID_CLIENT_TYPES[client_type](client_name))
             return f"{client_name} is successfully admitted as a {client_type}."
 
-    def process_shifts(self,waiter_name: str):
-
-
+    def process_shifts(self, waiter_name: str):
+        try:
+            waiter = next(filter(lambda w: w.name == waiter_name, self.waiters))
+            return waiter.report_shift()
+            # TODO CHECK REFERENCE OR CALL report_shift METHOD
+        except StopIteration:
+            return f"No waiter found with the name {waiter_name}."
