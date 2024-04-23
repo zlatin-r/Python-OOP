@@ -45,7 +45,8 @@ class SphereRestaurantApp:
     def process_client_order(self,client_name: str, order_amount: float):
         try:
             client = next(filter(lambda c: c.name == client_name, self.clients))
-            return client.earning_points(order_amount)
+            points_earned = int(client.earning_points(order_amount))
+            return f"{client_name} earned {points_earned} points from the order."
             # TODO CHECK REFERENCE OR CALL earning_points METHOD
         except StopIteration:
             return f"{client_name} is not a registered client."
@@ -54,7 +55,7 @@ class SphereRestaurantApp:
         try:
             client = next(filter(lambda c: c.name == client_name, self.clients))
             discount, remaining_points = client.apply_discount()
-            return f"{client_name} received a {discount}% discount. Remaining points {remaining_points}"
+            return f"{client_name} received a {discount}% discount. Remaining points {int(remaining_points)}"
         except StopIteration:
             return f"{client_name} cannot get a discount because this client is not admitted!"
 
@@ -67,9 +68,9 @@ class SphereRestaurantApp:
 
         result = [f"$$ Monthly Report $$\n"
                   f"Total Earnings: ${total_earnings:.2f}\n"
-                  f"Total Clients Unused Points: {total_unused_client_points}\n"
+                  f"Total Clients Unused Points: {int(total_unused_client_points)}\n"
                   f"Total Clients Count: {total_clients}\n"
-                  f"** Waiter Details **\n"]
+                  f"** Waiter Details **"]
 
         for waiter in sorted_waiters:
             result.append(waiter.__str__())

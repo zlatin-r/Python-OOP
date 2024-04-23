@@ -38,8 +38,7 @@ class BaseClient(ABC):
 
         elif 50 <= self.points < 100:
             self.points -= 50
-            return (50, self.points)
+            return (5, self.points)
 
         else:
             return (0, self.points)
-            # TODO CHECK 0 DISCOUNT
