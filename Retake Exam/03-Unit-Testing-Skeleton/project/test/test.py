@@ -53,7 +53,6 @@ class TestRestaurant(TestCase):
         self.assertEqual(self.restaurant.add_waiter("Jo"), "The waiter Jo already exists!")
 
     def test_add_waiter_happy_case(self):
-
         self.assertEqual(self.restaurant.add_waiter("Jo"), "The waiter Jo has been added.")
 
         self.assertEqual(self.restaurant.waiters, [{"name": "Jo"}])
@@ -75,6 +74,7 @@ class TestRestaurant(TestCase):
         self.restaurant.waiters = [waiter_1, waiter_2, waiter_3]
 
         self.assertEqual(self.restaurant.get_total_earnings(), 3)
+
 
 if __name__ == '__main__':
     main()
